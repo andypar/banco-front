@@ -1,7 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
+import axios from "axios";
+import React, { Component }  from 'react';
+
+const apiBaseUrl = "http://localhost:3000/";
+const apiTimeout = 1000 * 15; // 15 sec
+
+
+const api = axios.create({
+	baseURL: apiBaseUrl,
+	timeout: apiTimeout,
+	headers: {
+		Accept: "application/json",
+		"Content-Type": "application/json",
+	},
+});
 
 function App() {
+
   return (
     <div className="App">
       <header className="App-header">
