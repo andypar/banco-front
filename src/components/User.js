@@ -7,12 +7,13 @@ function User({ data, userList, setUserList }) {
 
 	const { userName, _id } = data;
 	const [userNameModified, setUserNameModified] = useState(data.username);
+	const [userInfo, setUserInfo]=useState(null);
 
 	const loguearInfoCompleta = async () => {
-		console.log(data)
-		console.log(_id)
-		const { data: userInfo } = await userService.getUserById(_id);
-		console.log("userInfo: ", userInfo);
+		// const { data: userInfo } = await userService.getUserById(_id);
+		const user = await userService.getUserById(_id);
+		console.log("userInfo: ", user);
+		setUserInfo(user.data);
 	};
 
 	const modificarUsuario = async () => {
@@ -40,12 +41,11 @@ function User({ data, userList, setUserList }) {
 				value={userNameModified}
 				onChange={(e) => setUserNameModified(e.target.value)}
 			/>
-			{/* <button onClick={() => loguearInfoCompleta()}>Ver Detalle</button> */}
 			<Button type="primary" onClick={() => loguearInfoCompleta()}>
 				Ver Detalle
 			</Button>
+			{userInfo}
 			<button onClick={() => modificarUsuario()}>Modificar</button>
-			{/* <button onClick={() => eliminarUsuario()}>Borrar</button> */}
 			<Button danger disabled={true} onClick={() => eliminarUsuario()}>
 				Borrar
 			</Button>
