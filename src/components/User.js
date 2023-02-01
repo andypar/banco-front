@@ -1,19 +1,21 @@
 
 import { useState } from "react";
-import { Button } from "antd";
+import { Button, Modal } from "antd";
 import userService from "../services/users";
 
 function User({ data, userList, setUserList }) {
-
-	const { userName, _id } = data;
+	const { userName, _id} = data;
 	const [userNameModified, setUserNameModified] = useState(data.username);
-	const [userInfo, setUserInfo]=useState(null);
+	const [cuitCuil, setCuitCuil] = useState('');
+	const [open, setOpen] = useState(false);
+	const [userInfo, setUserInfo] = useState({})
 
 	const loguearInfoCompleta = async () => {
-		// const { data: userInfo } = await userService.getUserById(_id);
-		const user = await userService.getUserById(_id);
-		console.log("userInfo: ", user);
-		setUserInfo(user.data);
+		//data: userInfo } = await userService.getUserById(_id);
+		const userInfo = await userService.getUserById(_id);
+		setCuitCuil(userInfo.cuilCuit)
+		setUserInfo(userInfo)
+		console.log("userInfo: ", userInfo);
 	};
 
 	const modificarUsuario = async () => {
@@ -34,23 +36,52 @@ function User({ data, userList, setUserList }) {
 		}
 	};
 
+	function UserModal({open, userInfo, onCancel}){
+		return (
+			<Modal
+			open={open}
+			title="Detalle del usuario"
+			onCancel={onCancel}
+			>
+				<div>
+				<h4>Fecha de Nacimiento: <p>{userInfo.dateBirth}</p></h4>
+				<h4>e-Mail: <p>{userInfo.email}</p></h4>
+
+				</div>
+			</Modal>
+	
+		)
+	}
+
 	return (
 		<div>
 			<p>{userName}</p>
+			<h4>CUIL: <p>{cuitCuil}</p></h4>
 			<input
 				value={userNameModified}
 				onChange={(e) => setUserNameModified(e.target.value)}
 			/>
-			<Button type="primary" onClick={() => loguearInfoCompleta()}>
+			<Button type="primary" onClick={() => {
+				loguearInfoCompleta();
+				setOpen(true)
+			}}>
 				Ver Detalle
 			</Button>
-			{userInfo}
+			<UserModal open={open} userInfo={userInfo}
+			onCancel={() => {
+				setOpen(false);
+			}}
+			></UserModal>
+
 			<button onClick={() => modificarUsuario()}>Modificar</button>
 			<Button danger disabled={true} onClick={() => eliminarUsuario()}>
 				Borrar
 			</Button>
+			
 		</div>
 	);
 }
+
+
 
 export default User;

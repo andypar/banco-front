@@ -110,8 +110,8 @@ function UserList() {
 				<User
 					key={x._id}
 					data={x}
-					userList={users}
-					setUserList={setUsers}
+					usersList={users}
+					setUsersList={setUsers}
 				></User>
 			))}
 		</div>
