@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Button, Modal } from "antd";
+import { Button, Modal} from "antd";
 import userService from "../services/users";
 import moment from "moment";
 import "moment/locale/es";
+
 
 function User({ data, userList, setUserList }) {
   const { dni, name, username, _id } = data;
@@ -173,7 +174,7 @@ function User({ data, userList, setUserList }) {
           setOpenModify(true);
         }}
       >
-        Modificar2
+        Modificar
       </Button>
       <UserModalModify
         open={openModify}
@@ -183,7 +184,6 @@ function User({ data, userList, setUserList }) {
         }}
       ></UserModalModify>
 
-      <Button onClick={() => modificarUsuario()}>Modificar</Button>
       <Button onClick={() => eliminarUsuario()}>Borrar</Button>
     </div>
   );
