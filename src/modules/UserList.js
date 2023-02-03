@@ -1,19 +1,28 @@
 import { useState, useEffect } from "react";
+import moment from "moment";
+import "moment/locale/es";
 import User from "../components/User";
-import { Button, Form, Input, Modal, message } from "antd";
+import { Button, Form, Input, Modal, message, DatePicker } from "antd";
 import { LanguageContext } from "../context/LanguageContext";
 import { useContext } from "react";
 import userService from "../services/users";
 
+
 const CreateUser = ({ open, onCreate, onCancel }) => {
+  const [date, setDate] = useState(false);
+
+  function onSelectDate(date, dateString) {
+    setDate(dateString);
+  }
+
   const [form] = Form.useForm();
 
   return (
     <Modal
       open={open}
-      title="Create a new user"
-      okText="Create"
-      cancelText="Cancel"
+      title="Registrar Usuario"
+      okText="Crear"
+      cancelText="Cancelar"
       onCancel={onCancel}
       onOk={() => {
         form
@@ -36,6 +45,94 @@ const CreateUser = ({ open, onCreate, onCancel }) => {
         }}
       >
         <Form.Item
+          name="firstName"
+          label="Nombre/s"
+          rules={[
+            { type: "firstName" },
+            {
+              required: true,
+              message: "Please input the firstName!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="lastName"
+          label="Apellido/s"
+          rules={[
+            { type: "lastName" },
+            {
+              required: true,
+              message: "Please input the lastName!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="gender"
+          label="Género"
+          rules={[
+            { type: "gender" },
+            {
+              required: true,
+              message: "Please input the gender!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="Fecha de Nacimiento" name="dateBirth">
+          <DatePicker onChange={onSelectDate} format={"YYYY-MM-DD"} />
+        </Form.Item>
+
+        <Form.Item
+          name="telephone"
+          label="Teléfono"
+          rules={[
+            { type: "telephone" },
+            {
+              required: true,
+              message: "Please input the telephone!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="dni"
+          label="DNI"
+          rules={[
+            { type: "dni" },
+            {
+              required: true,
+              message: "Please input the dni!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="cuilCuit"
+          label="CUIL/CUIT"
+          rules={[
+            { type: "cuilCuit" },
+            {
+              required: true,
+              message: "Please input the cuilCuit!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
           name="email"
           label="Email"
           rules={[
@@ -43,6 +140,48 @@ const CreateUser = ({ open, onCreate, onCancel }) => {
             {
               required: true,
               message: "Please input the email!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="username"
+          label="Usuario"
+          rules={[
+            { type: "username" },
+            {
+              required: true,
+              message: "Please input the username!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="password"
+          label="Contraseña"
+          rules={[
+            { type: "password" },
+            {
+              required: true,
+              message: "Please input the password!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="personType"
+          label="Tipo Persona"
+          rules={[
+            { type: "personType" },
+            {
+              required: true,
+              message: "Please input the personType!",
             },
           ]}
         >
@@ -66,9 +205,20 @@ function UserList() {
   const onCreate = async (values) => {
     try {
       console.log("Received values of form: ", values);
+      console.log(values.dateBirth);
+
       const newUser = await userService.createUser({
-        userName: values.email,
-        role: "admin",
+        name: { firstName: values.firstName, lastName: values.lastName },
+        gender: values.gender,
+        dni: values.dni,
+        dateBirth: moment(values.dateBirth).format("YYYY-MM-DD"),
+        email: values.email,
+        password: values.password,
+        username: values.username,
+        telephone: values.telephone,
+        personType: values.personType,
+        cuilCuit: values.cuilCuit,
+        roleType: "user",
         isActive: true,
       });
       setUsers([...users, newUser]);
@@ -111,6 +261,7 @@ function UserList() {
           data={x}
           usersList={users}
           setUsersList={setUsers}
+          refreshFunction={useEffect}
         ></User>
       ))}
     </div>

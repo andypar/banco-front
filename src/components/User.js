@@ -21,6 +21,7 @@ function User({ data, userList, setUserList }) {
   const [openModify, setOpenModify] = useState(false);
   const [userInfo, setUserInfo] = useState({});
 
+
   const loguearInfoCompleta = async () => {
     //const { data: userInfo } = await userService.getUserById(_id);
     const userInfo = await userService.getUserById(_id);
@@ -58,6 +59,7 @@ function User({ data, userList, setUserList }) {
       console.log(err);
     }
   };
+
 
   function UserModal({ open, userInfo, onCancel, handleOk }) {
     return (
@@ -136,10 +138,6 @@ function User({ data, userList, setUserList }) {
       <p>
         {name?.firstName} {name?.lastName}, {dni}, {username}
       </p>
-      {/* <input
-        value={usernameModified}
-        onChange={(e) => setUsernameModified(e.target.value)}
-      /> */}
       <Button
         type="primary"
         onClick={() => {
@@ -184,7 +182,11 @@ function User({ data, userList, setUserList }) {
         }}
       ></UserModalModify>
 
-      <Button onClick={() => eliminarUsuario()}>Borrar</Button>
+      <Button 
+      onClick={() => eliminarUsuario()}
+      >Borrar
+      
+      </Button>
     </div>
   );
 }
