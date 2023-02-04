@@ -1,19 +1,13 @@
 import { useState, useEffect } from "react";
-import moment from "moment";
-import "moment/locale/es";
+import "dayjs/locale/es";
 import User from "../components/User";
 import { Button, Form, Input, Modal, message, DatePicker } from "antd";
 import { LanguageContext } from "../context/LanguageContext";
 import { useContext } from "react";
 import userService from "../services/users";
-
+import dayjs from "dayjs";
 
 const CreateUser = ({ open, onCreate, onCancel }) => {
-  const [date, setDate] = useState(false);
-
-  function onSelectDate(date, dateString) {
-    setDate(dateString);
-  }
 
   const [form] = Form.useForm();
 
@@ -87,8 +81,8 @@ const CreateUser = ({ open, onCreate, onCancel }) => {
         </Form.Item>
 
         <Form.Item label="Fecha de Nacimiento" name="dateBirth">
-          <DatePicker onChange={onSelectDate} format={"YYYY-MM-DD"} />
-        </Form.Item>
+            <DatePicker format="YYYY/MM/DD" />
+          </Form.Item>
 
         <Form.Item
           name="telephone"
@@ -205,13 +199,12 @@ function UserList() {
   const onCreate = async (values) => {
     try {
       console.log("Received values of form: ", values);
-      console.log(values.dateBirth);
-
+      
       const newUser = await userService.createUser({
         name: { firstName: values.firstName, lastName: values.lastName },
         gender: values.gender,
         dni: values.dni,
-        dateBirth: moment(values.dateBirth).format("YYYY-MM-DD"),
+        dateBirth: dayjs(values.dateBirth.toDate()).format('YYYY-MM-DD'),
         email: values.email,
         password: values.password,
         username: values.username,
@@ -261,7 +254,6 @@ function UserList() {
           data={x}
           usersList={users}
           setUsersList={setUsers}
-          refreshFunction={useEffect}
         ></User>
       ))}
     </div>

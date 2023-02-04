@@ -1,48 +1,37 @@
-import { useState } from "react";
-import { Button, Modal} from "antd";
+import { useState, useEffect } from "react";
+import { Button, Modal, Form, Input, DatePicker } from "antd";
 import userService from "../services/users";
-import moment from "moment";
-import "moment/locale/es";
-
+import "dayjs/locale/es";
+import dayjs from "dayjs";
 
 function User({ data, userList, setUserList }) {
   const { dni, name, username, _id } = data;
-  const [firstNameModified, setFirstNameModified] = useState(data.firstName);
-  const [lastNameModified, setLastNameModified] = useState(data.lastName);
-  const [dateBirthModified, setDateBirthModified] = useState(data.dateBirth);
-  const [usernameModified, setUsernameModified] = useState(data.username);
-  const [emailModified, setEmailModified] = useState(data.email);
-  const [telephoneModified, setTelephoneModified] = useState(data.telephone);
-  const [genderModified, setGenderModified] = useState(data.gender);
-  const [personTypeModified, setPersonTypeModifiedeModified] = useState(
-    data.personType
-  );
   const [open, setOpen] = useState(false);
   const [openModify, setOpenModify] = useState(false);
   const [userInfo, setUserInfo] = useState({});
 
-
   const loguearInfoCompleta = async () => {
-    //const { data: userInfo } = await userService.getUserById(_id);
     const userInfo = await userService.getUserById(_id);
     setUserInfo(userInfo);
     console.log("userInfo: ", userInfo);
   };
 
-  const modificarUsuario = async () => {
+  const modificarUsuario = async (values) => {
     try {
       const response = await userService.updateUserById(_id, {
-        name:{firstName: firstNameModified,
-        lastName: lastNameModified
-        },
-        dateBirth: dateBirthModified,
-        email: emailModified,
-        username: usernameModified,
-        telephone: telephoneModified,
-        gender: genderModified,
-        personType: personTypeModified,
+        name: { firstName: values.firstName, lastName: values.lastName },
+        gender: values.gender,
+        dni: values.dni,
+        dateBirth: dayjs(values.dateBirth.toDate()).format("YYYY-MM-DD"),
+        email: values.email,
+        password: values.password,
+        username: values.username,
+        telephone: values.telephone,
+        personType: values.personType,
+        cuilCuit: values.cuilCuit,
       });
       console.log("Response: ", response);
+      setOpenModify(false);
     } catch (err) {
       console.log("There was an error update user ", _id);
       console.log(err);
@@ -60,7 +49,6 @@ function User({ data, userList, setUserList }) {
     }
   };
 
-
   function UserModal({ open, userInfo, onCancel, handleOk }) {
     return (
       <Modal
@@ -74,7 +62,7 @@ function User({ data, userList, setUserList }) {
             Nombre: {userInfo?.name?.firstName} {userInfo?.name?.lastName}
           </p>
           <p>DNI: {userInfo.dni}</p>
-          <p>Fecha de Nacimiento: {moment(userInfo.dateBirth).format("L")}</p>
+          <p>Fecha de Nacimiento: {dayjs(userInfo.dateBirth).format("YYYY-MM-DD")}</p>
           <p>Género: {userInfo?.gender?.description.toUpperCase()}</p>
           <p>Usuario: {userInfo.username}</p>
           <p>E-mail: {userInfo.email}</p>
@@ -88,47 +76,150 @@ function User({ data, userList, setUserList }) {
     );
   }
 
-  function UserModalModify({ open, onFinish, userInfo, onCancel }) {
+  function UserModalModify({ open, userInfo, modificarUsuario, onCancel }) {
+    const [form] = Form.useForm();
+
+    useEffect(() => {
+      form.setFieldsValue({
+        username: userInfo.username,
+        firstName: userInfo?.name?.firstName,
+        lastName: userInfo?.name?.lastName,
+        gender: userInfo?.gender?.description,
+        email: userInfo.email,
+        dateBirth: dayjs(new Date(userInfo.dateBirth)),
+        telephone: userInfo.telephone,
+        cuilCuit: userInfo.cuilCuit,
+        personType: userInfo?.personType?.description,
+      });
+    });
+
     return (
       <Modal
         open={open}
-        title="Modificar usuario"
+        title="Modificar Usuario"
+        okText="Modificar"
+        cancelText="Cancelar"
         onCancel={onCancel}
-        onOk={onFinish}
+        onOk={() => {
+          form
+            .validateFields()
+            .then((values) => {
+              modificarUsuario(values);
+            })
+            .catch((info) => {
+              console.log("Validate Failed:", info);
+            });
+        }}
       >
-        <input
-          value={firstNameModified}
-          onChange={(e) => setFirstNameModified(e.target.value)}
-        />
-        <input
-          value={lastNameModified}
-          onChange={(e) => setLastNameModified(e.target.value)}
-        />
-        <input
-          value={dateBirthModified}
-          onChange={(e) => setDateBirthModified(e.target.value)}
-        />
-        <input
-          value={genderModified}
-          onChange={(e) => setGenderModified(e.target.value)}
-        />
-        <input
-          value={usernameModified}
-          onChange={(e) => setUsernameModified(e.target.value)}
-        />
-        <input
-          value={emailModified}
-          onChange={(e) => setEmailModified(e.target.value)}
-        />
-        <input
-          value={telephoneModified}
-          onChange={(e) => setTelephoneModified(e.target.value)}
-        />
-        <input
-          value={personTypeModified}
-          onChange={(e) => setPersonTypeModifiedeModified(e.target.value)}
-        />
-        <Button onClick={() => modificarUsuario()}>Modificar</Button>
+        <Form
+          form={form}
+          layout="vertical"
+          name="form_in_modal"
+          initialValues={{
+            remember: true,
+            dateBirth: dayjs(),
+          }}
+        >
+          <Form.Item
+            name="firstName"
+            label="Nombre/s"
+            rules={[
+              { type: "firstName" },
+              {
+                required: true,
+                message: "Please input the firstName!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="lastName"
+            label="Apellido/s"
+            rules={[
+              { type: "lastName" },
+              {
+                required: true,
+                message: "Please input the lastName!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="gender"
+            label="Género"
+            rules={[
+              { type: "gender" },
+              {
+                required: true,
+                message: "Please input the gender!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item label="Fecha de Nacimiento" name="dateBirth">
+            <DatePicker format="YYYY/MM/DD" />
+          </Form.Item>
+
+          <Form.Item
+            name="telephone"
+            label="Teléfono"
+            rules={[
+              { type: "telephone" },
+              {
+                required: true,
+                message: "Please input the telephone!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="email"
+            label="Email"
+            rules={[
+              { type: "email" },
+              {
+                required: true,
+                message: "Please input the email!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="username"
+            label="Usuario"
+            rules={[
+              { type: "username" },
+              {
+                required: true,
+                message: "Please input the username!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="personType"
+            label="Tipo Persona"
+            rules={[
+              { type: "personType" },
+              {
+                required: true,
+                message: "Please input the personType!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        </Form>
       </Modal>
     );
   }
@@ -153,22 +244,11 @@ function User({ data, userList, setUserList }) {
         onCancel={() => {
           setOpen(false);
         }}
-        handleOk={() => {
-          setOpen(false);
-        }}
       ></UserModal>
 
       <Button
         onClick={() => {
           loguearInfoCompleta();
-          setFirstNameModified(userInfo?.name?.firstName);
-          setLastNameModified(userInfo?.name?.lastName);
-          setDateBirthModified(userInfo.dateBirth);
-          setGenderModified(userInfo?.gender?.description);
-          setUsernameModified(userInfo.username);
-          setEmailModified(userInfo.email);
-          setTelephoneModified(userInfo.telephone);
-          setPersonTypeModifiedeModified(userInfo?.personType?.description);
           setOpenModify(true);
         }}
       >
@@ -176,17 +256,14 @@ function User({ data, userList, setUserList }) {
       </Button>
       <UserModalModify
         open={openModify}
+        modificarUsuario={modificarUsuario}
         userInfo={userInfo}
         onCancel={() => {
           setOpenModify(false);
         }}
       ></UserModalModify>
 
-      <Button 
-      onClick={() => eliminarUsuario()}
-      >Borrar
-      
-      </Button>
+      <Button onClick={() => eliminarUsuario()}>Borrar</Button>
     </div>
   );
 }
