@@ -1,14 +1,19 @@
-import { useState, useEffect } from "react";
-import { Button, Modal, Form, Input, DatePicker } from "antd";
+import { useState } from "react";
+import { Button, Modal, Form, Input, DatePicker, Radio } from "antd";
 import userService from "../services/users";
 import "dayjs/locale/es";
 import dayjs from "dayjs";
+const genderOptions = ['Femenino', 'Masculino', 'Indeterminado'];
+const personTypeOptions = ['Física', 'Jurídica'];
 
-function User({ data, userList, setUserList }) {
+
+function User({ data, usersList, setUsersList }) {
+
   const { dni, name, username, _id } = data;
   const [open, setOpen] = useState(false);
   const [openModify, setOpenModify] = useState(false);
   const [userInfo, setUserInfo] = useState({});
+
 
   const loguearInfoCompleta = async () => {
     const userInfo = await userService.getUserById(_id);
@@ -41,7 +46,7 @@ function User({ data, userList, setUserList }) {
   const eliminarUsuario = async () => {
     try {
       const response = await userService.deleteUserById(_id);
-      setUserList(userList.filter((x) => x._id !== _id));
+      setUsersList(usersList.filter((x) => x._id !== _id));
       console.log("Response: ", response);
     } catch (err) {
       console.log("There was an error deleting user ", _id);
@@ -62,14 +67,14 @@ function User({ data, userList, setUserList }) {
             Nombre: {userInfo?.name?.firstName} {userInfo?.name?.lastName}
           </p>
           <p>DNI: {userInfo.dni}</p>
-          <p>Fecha de Nacimiento: {dayjs(userInfo.dateBirth).format("YYYY-MM-DD")}</p>
-          <p>Género: {userInfo?.gender?.description.toUpperCase()}</p>
+          <p>Fecha de Nacimiento: {dayjs(userInfo.dateBirth).format("DD-MM-YYYY")}</p>
+          <p>Género: {userInfo?.gender?.description}</p>
           <p>Usuario: {userInfo.username}</p>
           <p>E-mail: {userInfo.email}</p>
           <p>Teléfono: {userInfo.telephone}</p>
           <p>Cuil/Cuit: {userInfo.cuilCuit}</p>
           <p>
-            Tipo de Persona: {userInfo?.personType?.description.toUpperCase()}
+            Tipo de Persona: {userInfo?.personType?.description}
           </p>
         </div>
       </Modal>
@@ -77,21 +82,8 @@ function User({ data, userList, setUserList }) {
   }
 
   function UserModalModify({ open, userInfo, modificarUsuario, onCancel }) {
+    
     const [form] = Form.useForm();
-
-    useEffect(() => {
-      form.setFieldsValue({
-        username: userInfo.username,
-        firstName: userInfo?.name?.firstName,
-        lastName: userInfo?.name?.lastName,
-        gender: userInfo?.gender?.description,
-        email: userInfo.email,
-        dateBirth: dayjs(new Date(userInfo.dateBirth)),
-        telephone: userInfo.telephone,
-        cuilCuit: userInfo.cuilCuit,
-        personType: userInfo?.personType?.description,
-      });
-    });
 
     return (
       <Modal
@@ -114,10 +106,18 @@ function User({ data, userList, setUserList }) {
         <Form
           form={form}
           layout="vertical"
-          name="form_in_modal"
+          name="form-modify"
           initialValues={{
             remember: true,
-            dateBirth: dayjs(),
+            dateBirth: dayjs(userInfo.dateBirth),
+            username: userInfo.username,
+            firstName: userInfo?.name?.firstName,
+            lastName: userInfo?.name?.lastName,
+            gender: userInfo?.gender?.description,
+            email: userInfo.email,
+            telephone: userInfo.telephone,
+            cuilCuit: userInfo.cuilCuit,
+            personType: userInfo?.personType?.description,
           }}
         >
           <Form.Item
@@ -157,11 +157,11 @@ function User({ data, userList, setUserList }) {
               },
             ]}
           >
-            <Input />
+            <Radio.Group options={genderOptions}/>
           </Form.Item>
 
           <Form.Item label="Fecha de Nacimiento" name="dateBirth">
-            <DatePicker format="YYYY/MM/DD" />
+            <DatePicker format="DD/MM/YYYY" />
           </Form.Item>
 
           <Form.Item
@@ -217,7 +217,7 @@ function User({ data, userList, setUserList }) {
               },
             ]}
           >
-            <Input />
+            <Radio.Group options={personTypeOptions} />
           </Form.Item>
         </Form>
       </Modal>
@@ -263,7 +263,9 @@ function User({ data, userList, setUserList }) {
         }}
       ></UserModalModify>
 
-      <Button onClick={() => eliminarUsuario()}>Borrar</Button>
+      <Button 
+      onClick={() => eliminarUsuario()}
+      >Borrar</Button>
     </div>
   );
 }

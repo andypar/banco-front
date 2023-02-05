@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
 import "dayjs/locale/es";
 import User from "../components/User";
-import { Button, Form, Input, Modal, message, DatePicker } from "antd";
+import { Button, Form, Input, Modal, message, DatePicker, Radio } from "antd";
 import { LanguageContext } from "../context/LanguageContext";
 import { useContext } from "react";
 import userService from "../services/users";
 import dayjs from "dayjs";
+import { EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
+const genderOptions = ['Femenino', 'Masculino', 'Indeterminado'];
+const personTypeOptions = ['Física', 'Jurídica'];
+
 
 const CreateUser = ({ open, onCreate, onCancel }) => {
 
   const [form] = Form.useForm();
-
+  
   return (
     <Modal
       open={open}
@@ -33,9 +37,11 @@ const CreateUser = ({ open, onCreate, onCancel }) => {
       <Form
         form={form}
         layout="vertical"
-        name="form_in_modal"
+        name="form-create"
         initialValues={{
           modifier: "public",
+          gender:"Femenino",
+          personType:"Física"
         }}
       >
         <Form.Item
@@ -77,12 +83,12 @@ const CreateUser = ({ open, onCreate, onCancel }) => {
             },
           ]}
         >
-          <Input />
+          <Radio.Group options={genderOptions} />
         </Form.Item>
 
         <Form.Item label="Fecha de Nacimiento" name="dateBirth">
-            <DatePicker format="YYYY/MM/DD" />
-          </Form.Item>
+          <DatePicker format="DD/MM/YYYY" />
+        </Form.Item>
 
         <Form.Item
           name="telephone"
@@ -165,7 +171,12 @@ const CreateUser = ({ open, onCreate, onCancel }) => {
             },
           ]}
         >
-          <Input />
+          <Input.Password
+            placeholder="input password"
+            iconRender={(visible) =>
+              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+            }
+          />
         </Form.Item>
 
         <Form.Item
@@ -179,7 +190,7 @@ const CreateUser = ({ open, onCreate, onCancel }) => {
             },
           ]}
         >
-          <Input />
+          <Radio.Group options={personTypeOptions}/>
         </Form.Item>
       </Form>
     </Modal>
@@ -199,12 +210,12 @@ function UserList() {
   const onCreate = async (values) => {
     try {
       console.log("Received values of form: ", values);
-      
+
       const newUser = await userService.createUser({
         name: { firstName: values.firstName, lastName: values.lastName },
-        gender: values.gender,
+        gender: values.gender.toLowerCase(),
         dni: values.dni,
-        dateBirth: dayjs(values.dateBirth.toDate()).format('YYYY-MM-DD'),
+        dateBirth: dayjs(values.dateBirth.toDate()).format("YYYY-MM-DD"),
         email: values.email,
         password: values.password,
         username: values.username,
