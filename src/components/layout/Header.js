@@ -1,14 +1,4 @@
-/*!
-  =========================================================
-  * Muse Ant Design Dashboard - v1.0.0
-  =========================================================
-  * Product Page: https://www.creative-tim.com/product/muse-ant-design-dashboard
-  * Copyright 2021 Creative Tim (https://www.creative-tim.com)
-  * Licensed under MIT (https://github.com/creativetimofficial/muse-ant-design-dashboard/blob/main/LICENSE.md)
-  * Coded by Creative Tim
-  =========================================================
-  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+
 
 import { useState, useEffect } from "react";
 
@@ -29,14 +19,14 @@ import {
 
 import {
   SearchOutlined,
-  StarOutlined,
-  TwitterOutlined,
-  FacebookFilled,
+  // StarOutlined,
+  // TwitterOutlined,
+  // FacebookFilled,
 } from "@ant-design/icons";
 
 import { NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
-import avtar from "../../assets/team-2.jpg";
+import avtar from "../../assets/images/team-2.jpg";
 
 const ButtonContainer = styled.div`
   .ant-btn-primary {
@@ -396,15 +386,15 @@ function Header({
                   <Title level={5}>Navbar Fixed </Title>
                   <Switch onChange={(e) => handleFixedNavbar(e)} />
                 </div>
-                <div className="ant-docment">
+                {/* <div className="ant-docment">
                   <ButtonContainer>
                     <Button type="black" size="large">
                       FREE DOWNLOAD
                     </Button>
                     <Button size="large">VIEW DOCUMENTATION</Button>
                   </ButtonContainer>
-                </div>
-                <div className="viewstar">
+                </div> */}
+                {/* <div className="viewstar">
                   <a href="#pablo">{<StarOutlined />} Star</a>
                   <a href="#pablo"> 190</a>
                 </div>
@@ -417,7 +407,7 @@ function Header({
                     <Button type="black">{<TwitterOutlined />}TWEET</Button>
                     <Button type="black">{<FacebookFilled />}SHARE</Button>
                   </ButtonContainer>
-                </div>
+                </div> */}
               </div>
             </div>
           </Drawer>

@@ -1,19 +1,9 @@
-/*!
-  =========================================================
-  * Muse Ant Design Dashboard - v1.0.0
-  =========================================================
-  * Product Page: https://www.creative-tim.com/product/muse-ant-design-dashboard
-  * Copyright 2021 Creative Tim (https://www.creative-tim.com)
-  * Licensed under MIT (https://github.com/creativetimofficial/muse-ant-design-dashboard/blob/main/LICENSE.md)
-  * Coded by Creative Tim
-  =========================================================
-  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+
 
 // import { useState } from "react";
 import { Menu, Button } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/images/logo.svg";
 
 function Sidenav({ color }) {
   const { pathname } = useLocation();
@@ -164,7 +154,7 @@ function Sidenav({ color }) {
     <>
       <div className="brand">
         <img src={logo} alt="" />
-        <span>Muse Dashboard</span>
+        <span>Banco</span>
       </div>
       <hr />
       <Menu theme="light" mode="inline">
@@ -233,23 +223,23 @@ function Sidenav({ color }) {
             >
               {profile}
             </span>
-            <span className="label">Profile</span>
+            <span className="label">Perfil</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="7">
           <NavLink to="/sign-in">
             <span className="icon">{signin}</span>
-            <span className="label">Sign In</span>
+            <span className="label">Inicio Sesión</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="8">
           <NavLink to="/sign-up">
             <span className="icon">{signup}</span>
-            <span className="label">Sign Up</span>
+            <span className="label">Registración</span>
           </NavLink>
         </Menu.Item>
       </Menu>
-      <div className="aside-footer">
+      {/* <div className="aside-footer">
         <div
           className="footer-box"
           style={{
@@ -265,7 +255,7 @@ function Sidenav({ color }) {
             DOCUMENTATION
           </Button>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
