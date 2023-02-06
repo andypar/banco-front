@@ -1,20 +1,19 @@
 import { useState, useEffect } from "react";
 import "dayjs/locale/es";
 import User from "../components/User";
+import { MailOutlined, UserOutlined, PhoneOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal, message, DatePicker, Radio } from "antd";
 import { LanguageContext } from "../context/LanguageContext";
 import { useContext } from "react";
 import userService from "../services/users";
 import dayjs from "dayjs";
 import { EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
-const genderOptions = ['Femenino', 'Masculino', 'Indeterminado'];
-const personTypeOptions = ['Física', 'Jurídica'];
-
+const genderOptions = ["Femenino", "Masculino", "Indeterminado"];
+const personTypeOptions = ["Física", "Jurídica"];
 
 const CreateUser = ({ open, onCreate, onCancel }) => {
-
   const [form] = Form.useForm();
-  
+
   return (
     <Modal
       open={open}
@@ -40,18 +39,27 @@ const CreateUser = ({ open, onCreate, onCancel }) => {
         name="form-create"
         initialValues={{
           modifier: "public",
-          gender:"Femenino",
-          personType:"Física"
+          gender: "Femenino",
+          personType: "Física",
         }}
       >
         <Form.Item
           name="firstName"
           label="Nombre/s"
           rules={[
-            { type: "firstName" },
+            { type: "string" },
             {
               required: true,
-              message: "Please input the firstName!",
+              message: "Por favor ingrese el primer nombre!",
+            },
+            {
+              whitespace: true,
+              message: "El primer nombre no debe quedar en blanco",
+            },
+            {
+              min: 3,
+              max: 100,
+              message: "El primer nombre debe tener al menos 3 caracteres",
             },
           ]}
         >
@@ -62,10 +70,19 @@ const CreateUser = ({ open, onCreate, onCancel }) => {
           name="lastName"
           label="Apellido/s"
           rules={[
-            { type: "lastName" },
+            { type: "string" },
             {
               required: true,
-              message: "Please input the lastName!",
+              message: "Por favor ingrese el apellido!",
+            },
+            {
+              whitespace: true,
+              message: "El apellido no debe quedar en blanco",
+            },
+            {
+              min: 3,
+              max: 100,
+              message: "El apellido debe tener al menos 3 caracteres",
             },
           ]}
         >
@@ -86,32 +103,79 @@ const CreateUser = ({ open, onCreate, onCancel }) => {
           <Radio.Group options={genderOptions} />
         </Form.Item>
 
-        <Form.Item label="Fecha de Nacimiento" name="dateBirth">
-          <DatePicker format="DD/MM/YYYY" />
+        <Form.Item
+          name="dateBirth"
+          label="Fecha de Nacimiento"
+          rules={[
+            { type: "date" },
+            {
+              required: true,
+              message: "Por favor ingrese la fecha de nacimiento!",
+            },
+          ]}
+          hasFeedback
+        >
+          <DatePicker
+            format="DD/MM/YYYY"
+            disabledDate={(d) => !d || d.isAfter(new Date())}
+          />
         </Form.Item>
 
         <Form.Item
           name="telephone"
           label="Teléfono"
           rules={[
-            { type: "telephone" },
+            {
+              pattern: /^[0-9]*$/,
+              message: "El valor ingresado debe ser numérico!",
+            },
+            {
+              whitespace: true,
+              message: "El teléfono no debe quedar en blanco",
+            },
             {
               required: true,
-              message: "Please input the telephone!",
+              message: "Por favor ingrese el teléfono!",
+            },
+            {
+              min: 8,
+              max: 12,
+              message: "El teléfono debe tener al menos 8 caracteres",
             },
           ]}
         >
-          <Input />
+          <Input
+            prefix={
+              <PhoneOutlined
+                type="number"
+                style={{ color: "rgba(0,0,0,.25)" }}
+              />
+            }
+            placeholder="Teléfono"
+          />
         </Form.Item>
 
         <Form.Item
           name="dni"
           label="DNI"
           rules={[
-            { type: "dni" },
+            {
+              pattern: /^[0-9]*$/,
+              message:
+                "El valor ingresado debe ser numérico, sin caracteres especiales!",
+            },
+            {
+              whitespace: true,
+              message: "El DNI no debe quedar en blanco",
+            },
             {
               required: true,
-              message: "Please input the dni!",
+              message: "Por favor ingrese el DNI!",
+            },
+            {
+              min: 7,
+              max: 9,
+              message: "El DNI debe tener al menos 7 caracteres",
             },
           ]}
         >
@@ -122,10 +186,23 @@ const CreateUser = ({ open, onCreate, onCancel }) => {
           name="cuilCuit"
           label="CUIL/CUIT"
           rules={[
-            { type: "cuilCuit" },
+            {
+              pattern: /^[0-9]*$/,
+              message:
+                "El valor ingresado debe ser numérico, sin caracteres especiales!",
+            },
+            {
+              whitespace: true,
+              message: "El CUIL/CUIT no debe quedar en blanco",
+            },
             {
               required: true,
-              message: "Please input the cuilCuit!",
+              message: "Por favor ingrese el CUIL/CUIT!",
+            },
+            {
+              min: 10,
+              max: 13,
+              message: "El CUIL/CUIT debe tener al menos 10 caracteres",
             },
           ]}
         >
@@ -136,28 +213,54 @@ const CreateUser = ({ open, onCreate, onCancel }) => {
           name="email"
           label="Email"
           rules={[
-            { type: "email" },
+            {
+              type: "email",
+              message: "El email ingresado tiene un formato inválido!",
+            },
+            {
+              whitespace: true,
+              message: "El email no debe quedar en blanco",
+            },
             {
               required: true,
-              message: "Please input the email!",
+              message: "Por favor ingrese el mail!",
             },
           ]}
+          hasFeedback
         >
-          <Input />
+          <Input
+            prefix={
+              <MailOutlined type="mail" style={{ color: "rgba(0,0,0,.25)" }} />
+            }
+            placeholder="Email"
+          />
         </Form.Item>
 
         <Form.Item
           name="username"
           label="Usuario"
           rules={[
-            { type: "username" },
+            { type: "string" },
             {
               required: true,
               message: "Please input the username!",
             },
+            {
+              min: 5,
+              max: 50,
+              message: "El usuario debe tener al menos 5 caracteres",
+            },
           ]}
         >
-          <Input />
+          <Input
+            prefix={
+              <UserOutlined
+                type="username"
+                style={{ color: "rgba(0,0,0,.25)" }}
+              />
+            }
+            placeholder="Usuario"
+          />
         </Form.Item>
 
         <Form.Item
@@ -167,7 +270,13 @@ const CreateUser = ({ open, onCreate, onCancel }) => {
             { type: "password" },
             {
               required: true,
-              message: "Please input the password!",
+              message: "Por favor ingrese la contraseña!",
+            },
+            {
+              pattern:
+                /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/,
+              message:
+                "La contraseña debe ser una combinación de una mayúscula, una minúscula, un carácter especial, un dígito y un mínimo de 8, un máximo de 20 caracteres de largo",
             },
           ]}
         >
@@ -190,7 +299,7 @@ const CreateUser = ({ open, onCreate, onCancel }) => {
             },
           ]}
         >
-          <Radio.Group options={personTypeOptions}/>
+          <Radio.Group options={personTypeOptions} />
         </Form.Item>
       </Form>
     </Modal>

@@ -1,19 +1,17 @@
 import { useState } from "react";
+import { MailOutlined, UserOutlined, PhoneOutlined } from "@ant-design/icons";
 import { Button, Modal, Form, Input, DatePicker, Radio } from "antd";
 import userService from "../services/users";
 import "dayjs/locale/es";
 import dayjs from "dayjs";
-const genderOptions = ['Femenino', 'Masculino', 'Indeterminado'];
-const personTypeOptions = ['Física', 'Jurídica'];
-
+const genderOptions = ["Femenino", "Masculino", "Indeterminado"];
+const personTypeOptions = ["Física", "Jurídica"];
 
 function User({ data, usersList, setUsersList }) {
-
   const { dni, name, username, _id } = data;
   const [open, setOpen] = useState(false);
   const [openModify, setOpenModify] = useState(false);
   const [userInfo, setUserInfo] = useState({});
-
 
   const loguearInfoCompleta = async () => {
     const userInfo = await userService.getUserById(_id);
@@ -67,22 +65,22 @@ function User({ data, usersList, setUsersList }) {
             Nombre: {userInfo?.name?.firstName} {userInfo?.name?.lastName}
           </p>
           <p>DNI: {userInfo.dni}</p>
-          <p>Fecha de Nacimiento: {dayjs(userInfo.dateBirth).format("DD-MM-YYYY")}</p>
+          <p>
+            Fecha de Nacimiento:{" "}
+            {dayjs(userInfo.dateBirth).format("DD-MM-YYYY")}
+          </p>
           <p>Género: {userInfo?.gender?.description}</p>
           <p>Usuario: {userInfo.username}</p>
           <p>E-mail: {userInfo.email}</p>
           <p>Teléfono: {userInfo.telephone}</p>
           <p>Cuil/Cuit: {userInfo.cuilCuit}</p>
-          <p>
-            Tipo de Persona: {userInfo?.personType?.description}
-          </p>
+          <p>Tipo de Persona: {userInfo?.personType?.description}</p>
         </div>
       </Modal>
     );
   }
 
   function UserModalModify({ open, userInfo, modificarUsuario, onCancel }) {
-    
     const [form] = Form.useForm();
 
     return (
@@ -124,12 +122,22 @@ function User({ data, usersList, setUsersList }) {
             name="firstName"
             label="Nombre/s"
             rules={[
-              { type: "firstName" },
+              { type: "string" },
               {
                 required: true,
-                message: "Please input the firstName!",
+                message: "Por favor ingrese el primer nombre!",
+              },
+              {
+                whitespace: true,
+                message: "El primer nombre no debe quedar en blanco",
+              },
+              {
+                min: 3,
+                max: 100,
+                message: "El primer nombre debe tener al menos 3 caracteres",
               },
             ]}
+            hasFeedback
           >
             <Input />
           </Form.Item>
@@ -137,12 +145,22 @@ function User({ data, usersList, setUsersList }) {
             name="lastName"
             label="Apellido/s"
             rules={[
-              { type: "lastName" },
+              { type: "string" },
               {
                 required: true,
-                message: "Please input the lastName!",
+                message: "Por favor ingrese el apellido!",
+              },
+              {
+                whitespace: true,
+                message: "El apellido no debe quedar en blanco",
+              },
+              {
+                min: 3,
+                max: 100,
+                message: "El apellido debe tener al menos 3 caracteres",
               },
             ]}
+            hasFeedback
           >
             <Input />
           </Form.Item>
@@ -150,70 +168,134 @@ function User({ data, usersList, setUsersList }) {
             name="gender"
             label="Género"
             rules={[
-              { type: "gender" },
+              { type: "string" },
               {
                 required: true,
-                message: "Please input the gender!",
+                message: "Por favor ingrese el género!",
               },
             ]}
           >
-            <Radio.Group options={genderOptions}/>
+            <Radio.Group options={genderOptions} />
           </Form.Item>
 
-          <Form.Item label="Fecha de Nacimiento" name="dateBirth">
-            <DatePicker format="DD/MM/YYYY" />
+          <Form.Item
+            name="dateBirth"
+            label="Fecha de Nacimiento"
+            rules={[
+              { type: "date" },
+              {
+                required: true,
+                message: "Por favor ingrese la fecha de nacimiento!",
+              },
+            ]}
+            hasFeedback
+          >
+            <DatePicker
+              format="DD/MM/YYYY"
+              disabledDate={(d) => !d || d.isAfter(new Date())}
+            />
           </Form.Item>
 
           <Form.Item
             name="telephone"
             label="Teléfono"
             rules={[
-              { type: "telephone" },
+              {
+                pattern: /^[0-9]*$/,
+                message: "El valor ingresado debe ser numérico!",
+              },
+              {
+                whitespace: true,
+                message: "El teléfono no debe quedar en blanco",
+              },
               {
                 required: true,
-                message: "Please input the telephone!",
+                message: "Por favor ingrese el teléfono!",
+              },
+              {
+                min: 8,
+                max: 12,
+                message: "El teléfono debe tener al menos 8 caracteres",
               },
             ]}
+            hasFeedback
           >
-            <Input />
+            <Input
+              prefix={
+                <PhoneOutlined
+                  type="number"
+                  style={{ color: "rgba(0,0,0,.25)" }}
+                />
+              }
+              placeholder="Teléfono"
+            />
           </Form.Item>
 
           <Form.Item
             name="email"
             label="Email"
             rules={[
-              { type: "email" },
+              {
+                type: "email",
+                message: "El email ingresado tiene un formato inválido!",
+              },
+              {
+                whitespace: true,
+                message: "El email no debe quedar en blanco",
+              },
               {
                 required: true,
-                message: "Please input the email!",
+                message: "Por favor ingrese el mail!",
               },
             ]}
+            hasFeedback
           >
-            <Input />
+            <Input
+              prefix={
+                <MailOutlined
+                  type="mail"
+                  style={{ color: "rgba(0,0,0,.25)" }}
+                />
+              }
+              placeholder="Email"
+            />
           </Form.Item>
 
           <Form.Item
             name="username"
             label="Usuario"
             rules={[
-              { type: "username" },
+              { type: "string" },
               {
                 required: true,
                 message: "Please input the username!",
               },
+              {
+                min: 5,
+                max: 50,
+                message: "El usuario debe tener al menos 5 caracteres",
+              },
             ]}
           >
-            <Input />
+            <Input
+              prefix={
+                <UserOutlined
+                  type="username"
+                  style={{ color: "rgba(0,0,0,.25)" }}
+                />
+              }
+              placeholder="Usuario"
+            />
           </Form.Item>
 
           <Form.Item
             name="personType"
             label="Tipo Persona"
             rules={[
-              { type: "personType" },
+              { type: "string" },
               {
                 required: true,
-                message: "Please input the personType!",
+                message: "Por favor ingrese el tipo de persona!",
               },
             ]}
           >
@@ -263,9 +345,7 @@ function User({ data, usersList, setUsersList }) {
         }}
       ></UserModalModify>
 
-      <Button 
-      onClick={() => eliminarUsuario()}
-      >Borrar</Button>
+      <Button onClick={() => eliminarUsuario()}>Borrar</Button>
     </div>
   );
 }
