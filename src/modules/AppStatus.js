@@ -38,7 +38,7 @@ function AppStatus() {
 	}, []);
 
 	// return <div>{JSON.stringify(status)}</div>;
-	return <div>{JSON.stringify(token)}</div>;
+	return (<div>{JSON.stringify(token)}</div>);
 }
 
 export default AppStatus;

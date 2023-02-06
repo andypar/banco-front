@@ -351,7 +351,7 @@ function UserList() {
   }, []);
 
   return (
-    <div>
+    <>
       <p>{language}</p>
       <Button
         type="primary"
@@ -376,7 +376,7 @@ function UserList() {
           setUsersList={setUsers}
         ></User>
       ))}
-    </div>
+    </>
   );
 }
 
