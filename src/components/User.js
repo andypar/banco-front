@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { MailOutlined, UserOutlined, PhoneOutlined } from "@ant-design/icons";
-import { Button, Modal, Form, Input, DatePicker, Radio } from "antd";
+import { Button, Modal, Form, Input, DatePicker, Radio, Alert } from "antd";
 import userService from "../services/users";
 import "dayjs/locale/es";
 import dayjs from "dayjs";
 const genderOptions = ["Femenino", "Masculino", "Indeterminado"];
 const personTypeOptions = ["Física", "Jurídica"];
+
 
 function User({ data, usersList, setUsersList }) {
   const { dni, name, username, _id } = data;
@@ -97,6 +98,12 @@ function User({ data, usersList, setUsersList }) {
               modificarUsuario(values);
             })
             .catch((info) => {
+              <Alert
+                type="error"
+                message="Ha ocurrido un error"
+                description={info}
+                closable
+              ></Alert>;
               console.log("Validate Failed:", info);
             });
         }}
