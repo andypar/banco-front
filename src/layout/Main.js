@@ -29,6 +29,12 @@ function Main({ children }) {
     }
   }, [pathname]);
 
+  
+// Para que no se me extienda el login hasta Main
+  if(pathname === 'sign-in'){
+    return (<></>)
+  }
+
   return (
     <Layout
       className={`layout-dashboard ${
@@ -36,6 +42,7 @@ function Main({ children }) {
       } 
       `}
     >
+      
       <Drawer
         title={false}
         placement={placement === "right" ? "left" : "right"}

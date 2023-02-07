@@ -1,5 +1,3 @@
-
-
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -13,22 +11,16 @@ import {
   Input,
   Switch,
 } from "antd";
-import signinbg from "../assets/images/img-signin.jpg";
-import {
-  DribbbleOutlined,
-  TwitterOutlined,
-  InstagramOutlined,
-  GithubOutlined,
-} from "@ant-design/icons";
+
 function onChange(checked) {
   console.log(`switch to ${checked}`);
 }
 const { Title } = Typography;
-const { Header, Footer, Content } = Layout;
-
+const { Header, Content } = Layout;
 
 const template = [
-  <svg key= "1"
+  <svg
+    key="1"
     data-v-4ebdc598=""
     width="20"
     height="20"
@@ -57,26 +49,6 @@ const template = [
   </svg>,
 ];
 
-const signup = [
-  <svg key= "2"
-    data-v-4ebdc598=""
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      data-v-4ebdc598=""
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M6 2C5.44772 2 5 2.44772 5 3V4H4C2.89543 4 2 4.89543 2 6V16C2 17.1046 2.89543 18 4 18H16C17.1046 18 18 17.1046 18 16V6C18 4.89543 17.1046 4 16 4H15V3C15 2.44772 14.5523 2 14 2C13.4477 2 13 2.44772 13 3V4H7V3C7 2.44772 6.55228 2 6 2ZM6 7C5.44772 7 5 7.44772 5 8C5 8.55228 5.44772 9 6 9H14C14.5523 9 15 8.55228 15 8C15 7.44772 14.5523 7 14 7H6Z"
-      fill="#111827"
-      className="fill-muted"
-    ></path>
-  </svg>,
-];
-
 export default class SignIn extends Component {
   render() {
     const onFinish = (values) => {
@@ -92,27 +64,18 @@ export default class SignIn extends Component {
         <Layout className="layout-default layout-signin">
           <Header>
             <div className="header-col header-brand">
-              <h5>Muse Dashboard</h5>
+              <h5>Administración Banco</h5>
             </div>
             <div className="header-col header-nav">
               <Menu mode="horizontal" defaultSelectedKeys={["1"]}>
                 <Menu.Item key="1">
                   <Link to="/dashboard">
                     {template}
-                    <span> Dashboard</span>
+                    <span> Inicio</span>
                   </Link>
                 </Menu.Item>
-
-                <Menu.Item key="3">
-                  <Link to="/sign-up">
-                    {signup}
-                    <span> Sign Up</span>
-                  </Link>
-                </Menu.Item>
-
               </Menu>
             </div>
-
           </Header>
           <Content className="signin">
             <Row gutter={[24, 0]} justify="space-around">
@@ -121,10 +84,7 @@ export default class SignIn extends Component {
                 lg={{ span: 6, offset: 2 }}
                 md={{ span: 12 }}
               >
-                <Title className="mb-15">Sign In</Title>
-                <Title className="font-regular text-muted" level={5}>
-                  Enter your email and password to sign in
-                </Title>
+                <Title className="mb-15">Iniciar Sesión</Title>
                 <Form
                   onFinish={onFinish}
                   onFinishFailed={onFinishFailed}
@@ -159,41 +119,22 @@ export default class SignIn extends Component {
                     <Input placeholder="Password" />
                   </Form.Item>
 
-                  <Form.Item
-                    name="remember"
-                    className="aligin-center"
-                    valuePropName="checked"
-                  >
-                    <Switch defaultChecked onChange={onChange} />
-                    Remember me
+                  <Form.Item className="aligin-center" valuePropName="checked">
+                    <Switch
+                      name="remember"
+                      defaultChecked
+                      onChange={onChange}
+                    />
+                    Recordarme
                   </Form.Item>
 
                   <Form.Item>
-                    <Button
-                      type="primary"
-                      htmlType="submit"
-                      style={{ width: "100%" }}
-                    >
-                      SIGN IN
+                    <Button type="primary" style={{ width: "100%" }}>
+                      INGRESAR
                     </Button>
                   </Form.Item>
-                  <p className="font-semibold text-muted">
-                    Don't have an account?{" "}
-                    <Link to="/sign-up" className="text-dark font-bold">
-                      Sign Up
-                    </Link>
-                  </p>
                 </Form>
               </Col>
-              {/* <Col
-                className="sign-img"
-                style={{ padding: 12 }}
-                xs={{ span: 24 }}
-                lg={{ span: 12 }}
-                md={{ span: 12 }}
-              >
-                <img src={signinbg} alt="" />
-              </Col> */}
             </Row>
           </Content>
         </Layout>

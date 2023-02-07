@@ -4,14 +4,6 @@ import userService from "../services/users";
 import localStorage from "../services/localStorage";
 
 function AppStatus() {
-	// const [status, setStatus] = useState("");
-	// useEffect(() => {
-	// 	async function fetchData() {
-	// 		const response = await axios.get("http://localhost:4000");
-	// 		setStatus(response.data);
-	// 	}
-	// 	fetchData();
-	// }, []);
 
 	const [token, setToken] = useState({});
 	useEffect(() => {
@@ -19,7 +11,8 @@ function AppStatus() {
 			try {
 				const userLogged = localStorage.get();
 				if (!userLogged) {
-					const response = await userService.createGlarriera2Token();
+					// const response = await userService.createGlarriera2Token();
+					const response = await userService.login();
 					console.log(response)
 					if (response.token) {
 						const payload = { token: response.token, user: response.user };

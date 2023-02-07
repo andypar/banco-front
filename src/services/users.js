@@ -21,10 +21,13 @@ userService.getUserById = async function (id) {
 	return userInfo
 };
 
-userService.createGlarriera2Token = () =>
-	api.post("/login", {
-		username: "andypar29",
-		password: "Perritos123!",
-	});
+// userService.createGlarriera2Token = () =>
+// 	api.post("/login", {
+// 		username: "andypar29",
+// 		password: "Perritos123!",
+// 	});
+
+userService.login = () =>
+api.post("/login", {});
 
 export default userService;
