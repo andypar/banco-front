@@ -4,7 +4,6 @@ import AppStatus from "../modules/AppStatus";
 import Main from "../layout/Main";
 import SignIn from "../modules/SignIn";
 
-
 function Router() {
   return (
     <BrowserRouter>

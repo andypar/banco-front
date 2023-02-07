@@ -25,8 +25,10 @@ function onChange(checked) {
 }
 const { Title } = Typography;
 const { Header, Footer, Content } = Layout;
+
+
 const template = [
-  <svg
+  <svg key= "1"
     data-v-4ebdc598=""
     width="20"
     height="20"
@@ -56,7 +58,7 @@ const template = [
 ];
 
 const signup = [
-  <svg
+  <svg key= "2"
     data-v-4ebdc598=""
     width="20"
     height="20"
@@ -183,7 +185,7 @@ export default class SignIn extends Component {
                   </p>
                 </Form>
               </Col>
-              <Col
+              {/* <Col
                 className="sign-img"
                 style={{ padding: 12 }}
                 xs={{ span: 24 }}
@@ -191,7 +193,7 @@ export default class SignIn extends Component {
                 md={{ span: 12 }}
               >
                 <img src={signinbg} alt="" />
-              </Col>
+              </Col> */}
             </Row>
           </Content>
         </Layout>
