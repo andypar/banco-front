@@ -1,10 +1,8 @@
-
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Layout, Drawer, Affix } from "antd";
 import Sidenav from "./Sidenav";
 import Header from "./Header";
-// import Footer from "./Footer";
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
@@ -35,25 +33,20 @@ function Main({ children }) {
     <Layout
       className={`layout-dashboard ${
         pathname === "profile" ? "layout-profile" : ""
-      } ${pathname === "rtl" ? "layout-dashboard-rtl" : ""}`}
+      } 
+      `}
     >
       <Drawer
         title={false}
         placement={placement === "right" ? "left" : "right"}
         closable={false}
         onClose={() => setVisible(false)}
-        visible={visible}
+        open={visible}
         key={placement === "right" ? "left" : "right"}
         width={250}
-        className={`drawer-sidebar ${
-          pathname === "rtl" ? "drawer-sidebar-rtl" : ""
-        } `}
+        className={`drawer-sidebar`}
       >
-        <Layout
-          className={`layout-dashboard ${
-            pathname === "rtl" ? "layout-dashboard-rtl" : ""
-          }`}
-        >
+        <Layout className={`layout-dashboard`}>
           <Sider
             trigger={null}
             width={250}

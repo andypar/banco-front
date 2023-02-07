@@ -1,15 +1,12 @@
-
-
-// import { useState } from "react";
-import { Menu, Button } from "antd";
+import { Menu } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
-import logo from "../../assets/images/logo.svg";
+import logo from "../assets/images/logo.svg";
 
 function Sidenav({ color }) {
   const { pathname } = useLocation();
   const page = pathname.replace("/", "");
 
-  const dashboard = [
+  const home = [
     <svg
       width="20"
       height="20"
@@ -32,7 +29,7 @@ function Sidenav({ color }) {
     </svg>,
   ];
 
-  const tables = [
+  const user = [
     <svg
       width="20"
       height="20"
@@ -71,24 +68,6 @@ function Sidenav({ color }) {
         fillRule="evenodd"
         clipRule="evenodd"
         d="M18 9H2V14C2 15.1046 2.89543 16 4 16H16C17.1046 16 18 15.1046 18 14V9ZM4 13C4 12.4477 4.44772 12 5 12H6C6.55228 12 7 12.4477 7 13C7 13.5523 6.55228 14 6 14H5C4.44772 14 4 13.5523 4 13ZM9 12C8.44772 12 8 12.4477 8 13C8 13.5523 8.44772 14 9 14H10C10.5523 14 11 13.5523 11 13C11 12.4477 10.5523 12 10 12H9Z"
-        fill={color}
-      ></path>
-    </svg>,
-  ];
-
-  const rtl = [
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      key={0}
-    >
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M3 6C3 4.34315 4.34315 3 6 3H16C16.3788 3 16.725 3.214 16.8944 3.55279C17.0638 3.89157 17.0273 4.29698 16.8 4.6L14.25 8L16.8 11.4C17.0273 11.703 17.0638 12.1084 16.8944 12.4472C16.725 12.786 16.3788 13 16 13H6C5.44772 13 5 13.4477 5 14V17C5 17.5523 4.55228 18 4 18C3.44772 18 3 17.5523 3 17V6Z"
         fill={color}
       ></path>
     </svg>,
@@ -150,6 +129,95 @@ function Sidenav({ color }) {
     </svg>,
   ];
 
+  // const items = [
+  //   {
+  //     label: (
+  //       <a href="/home">
+  //         <span
+  //           className="icon"
+  //           style={{
+  //             background: page === "home" ? color : "",
+  //           }}
+  //         >
+  //           {home}
+  //         </span>
+  //         <span className="label">Inicio</span>
+  //       </a>
+  //     ),
+  //     key: "1",
+  //   },
+  //   {
+  //     label: (
+  //       <a href="/user">
+  //         <span
+  //           className="icon"
+  //           style={{
+  //             background: page === "user" ? color : "",
+  //           }}
+  //         >
+  //           {user}
+  //         </span>
+  //         <span className="label">Personas</span>
+  //       </a>
+  //     ),
+  //     key: "2",
+  //   },
+  //   {
+  //     label: (
+  //       <a href="/billing">
+  //         <span
+  //           className="icon"
+  //           style={{
+  //             background: page === "billing" ? color : "",
+  //           }}
+  //         >
+  //           {billing}
+  //         </span>
+  //         <span className="label">Movimientos</span>
+  //       </a>
+  //     ),
+  //     key: 3,
+  //   },
+  //   {
+  //     label: (<span className="label">Cuenta</span>),
+  //     key: "5",
+  //   },
+  //   {
+  //     label: (
+  //       <a href="/profile">
+  //         <span
+  //           className="icon"
+  //           style={{
+  //             background: page === "profile" ? color : "",
+  //           }}
+  //         >
+  //           {profile}
+  //         </span>
+  //         <span className="label">Perfil</span>
+  //       </a>
+  //     ),
+  //     key: "6",
+  //   },
+  //   {
+  //     label: (
+  //       <a href="/sign-in">
+  //         <span className="icon">{signin}</span>
+  //         <span className="label">Inicio Sesión</span>
+  //       </a>
+  //     ),
+  //     key: "7",
+  //   },
+  //   {
+  //     label: (
+  //       <a href="/sign-up">
+  //         <span className="icon">{signup}</span>
+  //         <span className="label">Registración</span>
+  //       </a>
+  //     ),
+  //     key: "8",
+  //   },
+  // ];
+
   return (
     <>
       <div className="brand">
@@ -159,29 +227,29 @@ function Sidenav({ color }) {
       <hr />
       <Menu theme="light" mode="inline">
         <Menu.Item key="1">
-          <NavLink to="/dashboard">
+          <NavLink to="/home">
             <span
               className="icon"
               style={{
-                background: page === "dashboard" ? color : "",
+                background: page === "home" ? color : "",
               }}
             >
-              {dashboard}
+              {home}
             </span>
-            <span className="label">Dashboard</span>
+            <span className="label">Inicio</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="2">
-          <NavLink to="/tables">
+          <NavLink to="/user">
             <span
               className="icon"
               style={{
-                background: page === "tables" ? color : "",
+                background: page === "user" ? color : "",
               }}
             >
-              {tables}
+              {user}
             </span>
-            <span className="label">Tables</span>
+            <span className="label">Personas</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="3">
@@ -194,24 +262,11 @@ function Sidenav({ color }) {
             >
               {billing}
             </span>
-            <span className="label">Billing</span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="4">
-          <NavLink to="/rtl">
-            <span
-              className="icon"
-              style={{
-                background: page === "rtl" ? color : "",
-              }}
-            >
-              {rtl}
-            </span>
-            <span className="label">RTL</span>
+            <span className="label">Movimientos</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item className="menu-item-header" key="5">
-          Account Pages
+          Cuenta
         </Menu.Item>
         <Menu.Item key="6">
           <NavLink to="/profile">
@@ -237,25 +292,8 @@ function Sidenav({ color }) {
             <span className="icon">{signup}</span>
             <span className="label">Registración</span>
           </NavLink>
-        </Menu.Item>
+        </Menu.Item> 
       </Menu>
-      {/* <div className="aside-footer">
-        <div
-          className="footer-box"
-          style={{
-            background: color,
-          }}
-        >
-          <span className="icon" style={{ color }}>
-            {dashboard}
-          </span>
-          <h6>Need Help?</h6>
-          <p>Please check our docs</p>
-          <Button type="primary" className="ant-btn-sm ant-btn-block">
-            DOCUMENTATION
-          </Button>
-        </div>
-      </div> */}
     </>
   );
 }
