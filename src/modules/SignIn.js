@@ -54,25 +54,7 @@ const template = [
     ></path>
   </svg>,
 ];
-const profile = [
-  <svg
-    data-v-4ebdc598=""
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      data-v-4ebdc598=""
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M18 10C18 14.4183 14.4183 18 10 18C5.58172 18 2 14.4183 2 10C2 5.58172 5.58172 2 10 2C14.4183 2 18 5.58172 18 10ZM12 7C12 8.10457 11.1046 9 10 9C8.89543 9 8 8.10457 8 7C8 5.89543 8.89543 5 10 5C11.1046 5 12 5.89543 12 7ZM9.99993 11C7.98239 11 6.24394 12.195 5.45374 13.9157C6.55403 15.192 8.18265 16 9.99998 16C11.8173 16 13.4459 15.1921 14.5462 13.9158C13.756 12.195 12.0175 11 9.99993 11Z"
-      fill="#111827"
-      className="fill-muted"
-    ></path>
-  </svg>,
-];
+
 const signup = [
   <svg
     data-v-4ebdc598=""
@@ -92,19 +74,7 @@ const signup = [
     ></path>
   </svg>,
 ];
-const signin = [
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="14"
-    height="14"
-    viewBox="0 0 14 14"
-  >
-    <path
-      className="fill-muted"
-      d="M12.25,14H1.75A1.752,1.752,0,0,1,0,12.25V3.5A1.752,1.752,0,0,1,1.75,1.75h.876V.875a.875.875,0,0,1,1.75,0V1.75h5.25V.875a.875.875,0,0,1,1.75,0V1.75h.875A1.752,1.752,0,0,1,14,3.5v8.75A1.752,1.752,0,0,1,12.25,14ZM3.5,4.375a.875.875,0,0,0,0,1.75h7a.875.875,0,0,0,0-1.75Z"
-    />
-  </svg>,
-];
+
 export default class SignIn extends Component {
   render() {
     const onFinish = (values) => {
@@ -114,6 +84,7 @@ export default class SignIn extends Component {
     const onFinishFailed = (errorInfo) => {
       console.log("Failed:", errorInfo);
     };
+
     return (
       <>
         <Layout className="layout-default layout-signin">
@@ -129,29 +100,17 @@ export default class SignIn extends Component {
                     <span> Dashboard</span>
                   </Link>
                 </Menu.Item>
-                {/* <Menu.Item key="2">
-                  <Link to="/profile">
-                    {profile}
-                    <span>Profile</span>
-                  </Link>
-                </Menu.Item> */}
+
                 <Menu.Item key="3">
                   <Link to="/sign-up">
                     {signup}
                     <span> Sign Up</span>
                   </Link>
                 </Menu.Item>
-                {/* <Menu.Item key="4">
-                  <Link to="/sign-in">
-                    {signin}
-                    <span> Sign In</span>
-                  </Link>
-                </Menu.Item> */}
+
               </Menu>
             </div>
-            {/* <div className="header-col header-btn">
-              <Button type="primary">FREE DOWNLOAD</Button>
-            </div> */}
+
           </Header>
           <Content className="signin">
             <Row gutter={[24, 0]} justify="space-around">
