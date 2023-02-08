@@ -1,6 +1,8 @@
 import { Menu } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 import logo from "../assets/images/logo.svg";
+import userService from "../services/users";
+import localStorage from "../services/localStorage";
 
 function Sidenav({ color }) {
   const { pathname } = useLocation();
@@ -128,6 +130,21 @@ function Sidenav({ color }) {
       />
     </svg>,
   ];
+
+  async function logout() {
+    try {
+      const userLogged = localStorage.get("user");
+      if (userLogged) {
+        localStorage.delete();
+        await userService.logout();
+      } else {
+        console.log("User not logged: ", userLogged.user);
+      }
+    } catch (err) {
+      console.log("Error trying to logout: ", err);
+      return err;
+    }
+  }
 
   // const items = [
   //   {
@@ -281,16 +298,22 @@ function Sidenav({ color }) {
             <span className="label">Perfil</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="7">
+        {/* <Menu.Item key="7">
           <NavLink to="/sign-in">
             <span className="icon">{signin}</span>
             <span className="label">Inicio Sesión</span>
           </NavLink>
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item key="8">
           <NavLink to="/sign-up">
             <span className="icon">{signup}</span>
             <span className="label">Registración</span>
+          </NavLink>
+        </Menu.Item> 
+        <Menu.Item key="9">
+          <NavLink to="/sign-in" onClick={() => logout()}>
+            <span className="icon">{signin}</span>
+            <span className="label">Cerrar Sesión</span>
           </NavLink>
         </Menu.Item> 
       </Menu>

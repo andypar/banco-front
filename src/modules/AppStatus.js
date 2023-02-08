@@ -6,12 +6,12 @@ import localStorage from "../services/localStorage";
 function AppStatus() {
 
 	const [token, setToken] = useState({});
+	
 	useEffect(() => {
 		async function login() {
 			try {
 				const userLogged = localStorage.get();
 				if (!userLogged) {
-					// const response = await userService.createGlarriera2Token();
 					const response = await userService.login();
 					console.log(response)
 					if (response.token) {
@@ -30,7 +30,6 @@ function AppStatus() {
 		login();
 	}, []);
 
-	// return <div>{JSON.stringify(status)}</div>;
 	return (<div>{JSON.stringify(token)}</div>);
 }
 

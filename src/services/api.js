@@ -25,6 +25,9 @@ api.interceptors.request.use(
 	(config) => {
 		// Do something before request is sent
 		const data = localStorage.get();
+		console.log('data')
+		debugger
+		console.log(data)
 		if (data) {
 			// eslint-disable-next-line no-param-reassign
 			console.log(data.token)
