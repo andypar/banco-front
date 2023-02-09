@@ -306,7 +306,14 @@ function Sidenav({ color }) {
         </Menu.Item> */}
         <Menu.Item key="8">
           <NavLink to="/sign-up">
-            <span className="icon">{signup}</span>
+                        <span
+                        className="icon"
+                        style={{
+                          background: page === "signup" ? color : "",
+                        }}
+                      >
+                        {signup}
+                      </span>
             <span className="label">Registración</span>
           </NavLink>
         </Menu.Item> 

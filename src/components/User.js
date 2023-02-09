@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { MailOutlined, UserOutlined, PhoneOutlined } from "@ant-design/icons";
-import { Button, Modal, Form, Input, DatePicker, Radio, Alert } from "antd";
+import { Button, Modal, Form, Input, DatePicker, Space, Radio, Alert } from "antd";
 import userService from "../services/users";
 import "dayjs/locale/es";
 import dayjs from "dayjs";
@@ -318,6 +318,7 @@ function User({ data, usersList, setUsersList }) {
       <p>
         {name?.firstName} {name?.lastName}, {dni}, {username}
       </p>
+      <Space>
       <Button
         type="primary"
         onClick={() => {
@@ -353,6 +354,7 @@ function User({ data, usersList, setUsersList }) {
       ></UserModalModify>
 
       <Button onClick={() => eliminarUsuario()}>Borrar</Button>
+      </Space>
     </div>
   );
 }

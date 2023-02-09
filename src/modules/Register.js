@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "dayjs/locale/es";
 import User from "../components/User";
 import { MailOutlined, UserOutlined, PhoneOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Modal, message, DatePicker, Radio } from "antd";
+import { Button, Form, Input, Modal, message, DatePicker, Radio, Space } from "antd";
 import { LanguageContext } from "../context/LanguageContext";
 import { useContext } from "react";
 import userService from "../services/users";
@@ -346,7 +346,7 @@ const RegisterCompany = ({ open, onCreate, onCancel }) => {
         >
           <Form.Item
             name="firstName"
-            label="Nombre/s"
+            label="Razón Social"
             rules={[
               { type: "string" },
               {
@@ -366,44 +366,6 @@ const RegisterCompany = ({ open, onCreate, onCancel }) => {
           >
             <Input />
           </Form.Item>
-
-          {/* <Form.Item
-              name="lastName"
-              label="Apellido/s"
-              rules={[
-                { type: "string" },
-                {
-                  required: true,
-                  message: "Por favor ingrese el apellido!",
-                },
-                {
-                  whitespace: true,
-                  message: "El apellido no debe quedar en blanco",
-                },
-                {
-                  min: 3,
-                  max: 100,
-                  message: "El apellido debe tener al menos 3 caracteres",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item> */}
-
-          {/* <Form.Item
-              name="gender"
-              label="Género"
-              rules={[
-                { type: "gender" },
-                {
-                  required: true,
-                  message: "Please input the gender!",
-                },
-              ]}
-            >
-              <Radio.Group options={genderOptions} />
-            </Form.Item> */}
-
           <Form.Item
             name="dateBirth"
             label="Fecha de Creación"
@@ -455,37 +417,9 @@ const RegisterCompany = ({ open, onCreate, onCancel }) => {
               placeholder="Teléfono"
             />
           </Form.Item>
-
-          {/* <Form.Item
-              name="dni"
-              label="DNI"
-              rules={[
-                {
-                  pattern: /^[0-9]*$/,
-                  message:
-                    "El valor ingresado debe ser numérico, sin caracteres especiales!",
-                },
-                {
-                  whitespace: true,
-                  message: "El DNI no debe quedar en blanco",
-                },
-                {
-                  required: true,
-                  message: "Por favor ingrese el DNI!",
-                },
-                {
-                  min: 7,
-                  max: 9,
-                  message: "El DNI debe tener al menos 7 caracteres",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item> */}
-
           <Form.Item
             name="cuilCuit"
-            label="CUIL/CUIT"
+            label="CUIT"
             rules={[
               {
                 pattern: /^[0-9]*$/,
@@ -494,16 +428,16 @@ const RegisterCompany = ({ open, onCreate, onCancel }) => {
               },
               {
                 whitespace: true,
-                message: "El CUIL/CUIT no debe quedar en blanco",
+                message: "El CUIT no debe quedar en blanco",
               },
               {
                 required: true,
-                message: "Por favor ingrese el CUIL/CUIT!",
+                message: "Por favor ingrese el CUIT!",
               },
               {
                 min: 10,
                 max: 13,
-                message: "El CUIL/CUIT debe tener al menos 10 caracteres",
+                message: "El CUIT debe tener al menos 10 caracteres",
               },
             ]}
           >
@@ -591,20 +525,6 @@ const RegisterCompany = ({ open, onCreate, onCancel }) => {
               }
             />
           </Form.Item>
-
-          {/* <Form.Item
-              name="personType"
-              label="Tipo Persona"
-              rules={[
-                { type: "personType" },
-                {
-                  required: true,
-                  message: "Please input the personType!",
-                },
-              ]}
-            >
-              <Radio.Group options={personTypeOptions} />
-            </Form.Item> */}
         </Form>
       </Modal>
     </>
@@ -619,7 +539,7 @@ function Register() {
     message.error("Error: ", errorMessage);
   };
 
-  const onCreate = async (values) => {
+  const onCreateP = async (values) => {
     try {
       console.log("Received values of form: ", values);
 
@@ -644,19 +564,45 @@ function Register() {
     }
   };
 
+  const onCreateC = async (values) => {
+    try {
+      console.log("Received values of form: ", values);
+
+      const newUser = await userService.createUser({
+        name: { firstName: values.firstName, lastName: values.firstName },
+        gender: "Indeterminado".toLowerCase(),
+        dni: values.cuilCuit,
+        dateBirth: dayjs(values.dateBirth.toDate()).format("YYYY-MM-DD"),
+        email: values.email,
+        password: values.password,
+        username: values.username,
+        telephone: values.telephone,
+        personType: "Jurídica",
+        cuilCuit: values.cuilCuit,
+        roleType: "user",
+        isActive: true,
+      });
+      console.log("Response: ", newUser);
+      setOpenC(false);
+    } catch (err) {
+      error(err);
+    }
+  };
+
   return (
     <>
+    <Space>
       <Button
         type="primary"
         onClick={() => {
           setOpenP(true);
         }}
       >
-        Crear Usuario
+        Crear Persona Física
       </Button>
       <RegisterUser
         open={openP}
-        onCreate={onCreate}
+        onCreate={onCreateP}
         onCancel={() => {
           setOpenP(false);
         }}
@@ -668,15 +614,16 @@ function Register() {
           setOpenC(true);
         }}
       >
-        Crear Empresa
+        Crear Persona Jurídica
       </Button>
       <RegisterCompany
         open={openC}
-        onCreate={onCreate}
+        onCreate={onCreateC}
         onCancel={() => {
           setOpenC(false);
         }}
       />
+      </Space>
     </>
   );
 }
