@@ -353,7 +353,7 @@ function UserList() {
   return (
     <>
       <p>{language}</p>
-      <Button
+      {/* <Button
         type="primary"
         onClick={() => {
           setOpen(true);
@@ -367,7 +367,7 @@ function UserList() {
         onCancel={() => {
           setOpen(false);
         }}
-      />
+      /> */}
       {users.map((x) => (
         <User
           key={x._id}

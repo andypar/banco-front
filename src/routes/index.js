@@ -3,7 +3,7 @@ import UserList from "../modules/UserList";
 // import AppStatus from "../modules/AppStatus";
 import Main from "../layout/Main";
 import SignIn from "../modules/SignIn";
-
+import Register from "../modules/Register";
 
 function Router() {
   return (
@@ -14,6 +14,7 @@ function Router() {
       <Main>
         <Routes>
           <Route exact path="/user" element={<UserList />} />
+          <Route exact path="/sign-up" element={<Register />} />
         </Routes>
       </Main>
     </BrowserRouter>

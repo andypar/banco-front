@@ -82,7 +82,7 @@ function SignIn() {
       password: password,
     });
     console.log(response);
-    debugger
+
     if (response && "token" in response) {
       localStorage.set(response);
       window.location.href = "/";
@@ -123,6 +123,7 @@ function SignIn() {
               md={{ span: 12 }}
             >
               <Title className="mb-15">Iniciar Sesión</Title>
+              
               <Form
                 onFinish={handleSubmit}
                 onFinishFailed={onFinishFailed}
