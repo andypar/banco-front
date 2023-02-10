@@ -7,6 +7,8 @@ function capitalizeFirstLetter(string) {
   }
 
 userService.getUsers = () => api.get(`/user/`);
+userService.getAllCompanies = () => api.get(`/user/company`);
+userService.getAllPersons = () => api.get(`/user/users`);
 // userService.getUserById = (id) => api.get(`/user/${id}`);
 userService.updateUserById = (id, payload) => api.put(`/user/${id}`, { ...payload });
 userService.deleteUserById = (id) => api.delete(`/user/${id}`);

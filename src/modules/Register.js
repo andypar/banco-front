@@ -1,15 +1,27 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "dayjs/locale/es";
-import User from "../components/User";
 import { MailOutlined, UserOutlined, PhoneOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Modal, message, DatePicker, Radio, Space } from "antd";
-import { LanguageContext } from "../context/LanguageContext";
-import { useContext } from "react";
+import {
+  Button,
+  Form,
+  Input,
+  Modal,
+  message,
+  DatePicker,
+  Row,
+  Col,
+  Radio,
+  Card,
+} from "antd";
+import person from "../assets/images/people.svg";
+import company from "../assets/images/company.svg";
+
 import userService from "../services/users";
 import dayjs from "dayjs";
 import { EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
 const genderOptions = ["Femenino", "Masculino", "Indeterminado"];
-const personTypeOptions = ["Física", "Jurídica"];
+// const personTypeOptions = ["Física", "Jurídica"];
+
 
 const RegisterUser = ({ open, onCreate, onCancel }) => {
   const [form] = Form.useForm();
@@ -64,7 +76,7 @@ const RegisterUser = ({ open, onCreate, onCancel }) => {
               },
             ]}
           >
-            <Input />
+            <Input placeholder="Nombre/s" />
           </Form.Item>
 
           <Form.Item
@@ -87,7 +99,7 @@ const RegisterUser = ({ open, onCreate, onCancel }) => {
               },
             ]}
           >
-            <Input />
+            <Input placeholder="Apellido/s" />
           </Form.Item>
 
           <Form.Item
@@ -118,6 +130,7 @@ const RegisterUser = ({ open, onCreate, onCancel }) => {
           >
             <DatePicker
               format="DD/MM/YYYY"
+              placeholder="Fecha de Nacimiento"
               disabledDate={(d) => !d || d.isAfter(new Date())}
             />
           </Form.Item>
@@ -180,12 +193,12 @@ const RegisterUser = ({ open, onCreate, onCancel }) => {
               },
             ]}
           >
-            <Input />
+            <Input placeholder="DNI" />
           </Form.Item>
 
           <Form.Item
             name="cuilCuit"
-            label="CUIL/CUIT"
+            label="CUIL"
             rules={[
               {
                 pattern: /^[0-9]*$/,
@@ -194,20 +207,20 @@ const RegisterUser = ({ open, onCreate, onCancel }) => {
               },
               {
                 whitespace: true,
-                message: "El CUIL/CUIT no debe quedar en blanco",
+                message: "El CUIL no debe quedar en blanco",
               },
               {
                 required: true,
-                message: "Por favor ingrese el CUIL/CUIT!",
+                message: "Por favor ingrese el CUIL!",
               },
               {
                 min: 10,
                 max: 13,
-                message: "El CUIL/CUIT debe tener al menos 10 caracteres",
+                message: "El CUIL debe tener al menos 10 caracteres",
               },
             ]}
           >
-            <Input />
+            <Input placeholder="CUIL" />
           </Form.Item>
 
           <Form.Item
@@ -285,25 +298,11 @@ const RegisterUser = ({ open, onCreate, onCancel }) => {
             ]}
           >
             <Input.Password
-              placeholder="input password"
+              placeholder="Contraseña"
               iconRender={(visible) =>
                 visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
               }
             />
-          </Form.Item>
-
-          <Form.Item
-            name="personType"
-            label="Tipo Persona"
-            rules={[
-              { type: "personType" },
-              {
-                required: true,
-                message: "Please input the personType!",
-              },
-            ]}
-          >
-            <Radio.Group options={personTypeOptions} />
           </Form.Item>
         </Form>
       </Modal>
@@ -364,7 +363,7 @@ const RegisterCompany = ({ open, onCreate, onCancel }) => {
               },
             ]}
           >
-            <Input />
+            <Input placeholder="Razón Social" />
           </Form.Item>
           <Form.Item
             name="dateBirth"
@@ -380,6 +379,7 @@ const RegisterCompany = ({ open, onCreate, onCancel }) => {
           >
             <DatePicker
               format="DD/MM/YYYY"
+              placeholder="Fecha de Creación"
               disabledDate={(d) => !d || d.isAfter(new Date())}
             />
           </Form.Item>
@@ -441,7 +441,7 @@ const RegisterCompany = ({ open, onCreate, onCancel }) => {
               },
             ]}
           >
-            <Input />
+            <Input placeholder="CUIT" />
           </Form.Item>
 
           <Form.Item
@@ -519,7 +519,7 @@ const RegisterCompany = ({ open, onCreate, onCancel }) => {
             ]}
           >
             <Input.Password
-              placeholder="input password"
+              placeholder="Contraseña"
               iconRender={(visible) =>
                 visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
               }
@@ -552,7 +552,7 @@ function Register() {
         password: values.password,
         username: values.username,
         telephone: values.telephone,
-        personType: values.personType,
+        personType: "Física",
         cuilCuit: values.cuilCuit,
         roleType: "user",
         isActive: true,
@@ -591,39 +591,60 @@ function Register() {
 
   return (
     <>
-    <Space>
-      <Button
-        type="primary"
-        onClick={() => {
-          setOpenP(true);
-        }}
-      >
-        Crear Persona Física
-      </Button>
-      <RegisterUser
-        open={openP}
-        onCreate={onCreateP}
-        onCancel={() => {
-          setOpenP(false);
-        }}
-      />
+      <Row gutter={20}>
+        <Col span={7}>
+          <Card title="Personas Físicas" bordered={false} 
+           hoverable
+           style={{
+             width: 240,
+                 height:400,
+           }}
+           cover={<img alt="person" src={person}  />}>
+            <Button
+              type="primary"
+              onClick={() => {
+                setOpenP(true);
+              }}
+            >
+              Crear Persona Física
+            </Button>
+            <RegisterUser
+              open={openP}
+              onCreate={onCreateP}
+              onCancel={() => {
+                setOpenP(false);
+              }}
+            />
+          </Card>
+        </Col>
 
-      <Button
-        type="primary"
-        onClick={() => {
-          setOpenC(true);
-        }}
-      >
-        Crear Persona Jurídica
-      </Button>
-      <RegisterCompany
-        open={openC}
-        onCreate={onCreateC}
-        onCancel={() => {
-          setOpenC(false);
-        }}
-      />
-      </Space>
+        <Col span={7}>
+          <Card title="Personas Jurídicas" bordered={false}
+           hoverable
+           style={{
+             width: 240,
+             height:400,
+           }}
+          cover={<img alt="company" src={company}/>}
+          >
+            <Button
+              type="primary"
+              onClick={() => {
+                setOpenC(true);
+              }}
+            >
+              Crear Persona Jurídica
+            </Button>
+            <RegisterCompany
+              open={openC}
+              onCreate={onCreateC}
+              onCancel={() => {
+                setOpenC(false);
+              }}
+            />
+          </Card>
+        </Col>
+      </Row>
     </>
   );
 }

@@ -13,8 +13,8 @@ function Router() {
       </Routes>
       <Main>
         <Routes>
-          <Route exact path="/user" element={<UserList />} />
-          <Route exact path="/sign-up" element={<Register />} />
+          <Route exact path="/personas" element={<UserList />} />
+          <Route exact path="/registracion" element={<Register />} />
         </Routes>
       </Main>
     </BrowserRouter>
