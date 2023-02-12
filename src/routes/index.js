@@ -1,9 +1,9 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import UserList from "../modules/UserList";
-// import AppStatus from "../modules/AppStatus";
 import Main from "../layout/Main";
 import SignIn from "../modules/SignIn";
 import Register from "../modules/Register";
+import AvailableProducts from "../modules/AvailableProducts";
 
 function Router() {
   return (
@@ -15,6 +15,7 @@ function Router() {
         <Routes>
           <Route exact path="/personas" element={<UserList />} />
           <Route exact path="/registracion" element={<Register />} />
+          <Route exact path="/product/available/:id" element={<AvailableProducts />} />
         </Routes>
       </Main>
     </BrowserRouter>

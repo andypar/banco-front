@@ -1,18 +1,27 @@
 import { useState } from "react";
 import { MailOutlined, UserOutlined, PhoneOutlined } from "@ant-design/icons";
-import { Button, Modal, Form, Input, DatePicker, Space, Radio, Alert } from "antd";
+import {
+  Button,
+  Modal,
+  Form,
+  Input,
+  DatePicker,
+  Space,
+  Radio,
+  Alert,
+} from "antd";
 import userService from "../services/users";
 import "dayjs/locale/es";
 import dayjs from "dayjs";
 const genderOptions = ["Femenino", "Masculino", "Indeterminado"];
 // const personTypeOptions = ["Física", "Jurídica"];
 
-
 function User({ data, usersList, setUsersList }) {
   const { dni, name, username, _id } = data;
   const [open, setOpen] = useState(false);
   const [openModify, setOpenModify] = useState(false);
   const [userInfo, setUserInfo] = useState({});
+
 
   const loguearInfoCompleta = async () => {
     const userInfo = await userService.getUserById(_id);
@@ -58,7 +67,6 @@ function User({ data, usersList, setUsersList }) {
   };
 
   function UserModal({ open, userInfo, onCancel }) {
-
     return (
       <Modal
         open={open}
@@ -321,47 +329,64 @@ function User({ data, usersList, setUsersList }) {
     );
   }
 
+  function Productos() {
+    return (
+      <div>
+        <Button
+          onClick={() => {
+            window.location = "/product/available/" + _id;
+          }}
+        >
+          Productos
+        </Button>
+      </div>
+    );
+  }
+
   return (
     <div>
       <p>
         {name?.firstName} {name?.lastName}, {dni}, {username}
       </p>
       <Space>
-      <Button
-        type="primary"
-        onClick={() => {
-          loguearInfoCompleta();
-          setOpen(true);
-        }}
-      >
-        Ver Detalle
-      </Button>
-      <UserModal
-        open={open}
-        userInfo={userInfo}
-        onCancel={() => {
-          setOpen(false);
-        }}
-      ></UserModal>
+        <Button
+          type="primary"
+          onClick={() => {
+            loguearInfoCompleta();
+            setOpen(true);
+          }}
+        >
+          Ver Detalle
+        </Button>
+        <UserModal
+          open={open}
+          userInfo={userInfo}
+          onCancel={() => {
+            setOpen(false);
+          }}
+        ></UserModal>
 
-      <Button
-        onClick={() => {
-          loguearInfoCompleta();
-          setOpenModify(true);
-        }}
-      >
-        Modificar
-      </Button>
-      <UserModalModify
-        open={openModify}
-        modificarUsuario={modificarUsuario}
-        userInfo={userInfo}
-        onCancel={() => {
-          setOpenModify(false);
-        }}
-      ></UserModalModify>
+        <Button
+          onClick={() => {
+            loguearInfoCompleta();
+            setOpenModify(true);
+          }}
+        >
+          Modificar
+        </Button>
+        <UserModalModify
+          open={openModify}
+          modificarUsuario={modificarUsuario}
+          userInfo={userInfo}
+          onCancel={() => {
+            setOpenModify(false);
+          }}
+        ></UserModalModify>
 
-      <Button onClick={() => eliminarUsuario()}>Borrar</Button>
+        <Button onClick={() => eliminarUsuario()}>Borrar</Button>
+
+        <Productos></Productos>
+
       </Space>
     </div>
   );
