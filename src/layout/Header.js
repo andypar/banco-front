@@ -100,20 +100,9 @@ function Header({
         <Col span={24} md={6}>
           <Breadcrumb>
             <Breadcrumb.Item>
-              <NavLink to="/">Banco</NavLink>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item style={{ textTransform: "capitalize" }}>
-              {name.replace("/", "")}
+              <NavLink to="/">Home</NavLink>
             </Breadcrumb.Item>
           </Breadcrumb>
-          <div className="ant-page-header-heading">
-            <span
-              className="ant-page-header-heading-title"
-              style={{ textTransform: "capitalize" }}
-            >
-              {subName.replace("/", "")}
-            </span>
-          </div>
         </Col>
         <Col span={24} md={18} className="header-control">
           <Button type="link" onClick={showDrawer}>

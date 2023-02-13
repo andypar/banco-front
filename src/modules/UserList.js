@@ -3,7 +3,9 @@ import "dayjs/locale/es";
 import User from "../components/User";
 import Company from "../components/Company";
 import userService from "../services/users";
-import { Card, Col, Row } from "antd";
+import { Card, Col, Row, Typography } from "antd";
+
+const { Title } = Typography;
 
 function UserList() {
   const [users, setUsers] = useState([]);
@@ -60,6 +62,7 @@ function CompanyList() {
 function UsersList() {
   return (
     <>
+      <Title level={4}>Personas</Title>
       <Row gutter={20}>
         <Col span={10}>
           <Card title="Personas Físicas" bordered={false}>

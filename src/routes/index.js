@@ -3,7 +3,7 @@ import UserList from "../modules/UserList";
 import Main from "../layout/Main";
 import SignIn from "../modules/SignIn";
 import Register from "../modules/Register";
-import AvailableProducts from "../modules/AvailableProducts";
+import AvailableProducts from "../modules/UserProductList";
 
 function Router() {
   return (

@@ -16,6 +16,7 @@ import dayjs from "dayjs";
 const genderOptions = ["Femenino", "Masculino", "Indeterminado"];
 // const personTypeOptions = ["Física", "Jurídica"];
 
+
 function User({ data, usersList, setUsersList }) {
   const { dni, name, username, _id } = data;
   const [open, setOpen] = useState(false);

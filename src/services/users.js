@@ -17,7 +17,6 @@ userService.createUser = (payload) => api.post("/user/", { ...payload });
 // Modifico para que levante bien el genero y tipo de persona
 userService.getUserById = async function (id) { 
 	const userInfo= await api.get(`/user/${id}`)
-	console.log(userInfo)
 	userInfo.gender.description=capitalizeFirstLetter(userInfo?.gender?.description)
 	userInfo.personType.description=capitalizeFirstLetter(userInfo?.personType?.description)
 	return userInfo
@@ -26,5 +25,7 @@ userService.getUserById = async function (id) {
 userService.login = (credentials) => api.post("/login", credentials);
 
 userService.logout = () => api.post("/logout", {});
+
+userService.associateUserProductById = (userid, productid) => api.put(`/user/associate/${userid}/${productid}`);
 
 export default userService;
