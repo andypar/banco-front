@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import productService from "../services/products";
 import userService from "../services/users";
-import { Card, Row, Col, Typography} from "antd";
+import { Card, Row, Col, Typography, Button, Modal } from "antd";
 import ProductCC from "../components/ProductCC";
 import ProductCA from "../components/ProductCA";
+import Product from "../components/Product";
 
 const { Title} = Typography;
 
@@ -13,15 +14,17 @@ function AvailableProducts() {
   const { id } = useParams();
   const [products, setProducts] = useState([]);
   const [userInfo, setUserInfo] = useState({});
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    async function fetchProducts() {
+    async function fetchAvailableProducts() {
       const productInfo = await productService.getUserAvailableProducts(id);
       setProducts(productInfo);
       console.log("productInfo: ", productInfo);
     }
 
-    fetchProducts();
+    fetchAvailableProducts();
+
 
     async function fetchUserProducts() {
       const userInfo = await userService.getUserById(id);
@@ -34,10 +37,6 @@ function AvailableProducts() {
   }, [id]);
 
   
-  // useEffect(() => {
-
-  // }, [id]);
-
   // const cols = [];
   // const colCount = products.length;
 
@@ -97,6 +96,10 @@ function AvailableProducts() {
             title={userproducts.type?.description + " " + userproducts.currency?.description}
             style={{ width: 300 }}
           >
+            <Product
+            productId={userproducts._id}
+            >
+            </Product>
           </Card>
         ))}
       </Row>
