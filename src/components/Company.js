@@ -1,65 +1,53 @@
 import { useState } from "react";
 import { MailOutlined, UserOutlined, PhoneOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Modal,
-  Form,
-  Input,
-  DatePicker,
-  Space,
-  Radio,
-  Alert,
-} from "antd";
+import { Button, Modal, Form, Input, DatePicker, Space, Alert } from "antd";
 import userService from "../services/users";
 import "dayjs/locale/es";
 import dayjs from "dayjs";
-const genderOptions = ["Femenino", "Masculino", "Indeterminado"];
 // const personTypeOptions = ["Física", "Jurídica"];
 
-
-function User({ data, usersList, setUsersList }) {
+function Company({ data, companyList, setCompanyList }) {
   const { dni, name, username, _id } = data;
   const [open, setOpen] = useState(false);
-  const [openModify, setOpenModify] = useState(false);
-  const [userInfo, setUserInfo] = useState({});
+  const [openModify, setOpenCompanyModify] = useState(false);
+  const [companyInfo, setUserInfo] = useState({});
 
-
-  const loguearInfoCompleta = async () => {
-    const userInfo = await userService.getUserById(_id);
-    setUserInfo(userInfo);
-    console.log("userInfo: ", userInfo);
+  const loguearInfoCompania = async () => {
+    const companyInfo = await userService.getUserById(_id);
+    setUserInfo(companyInfo);
+    console.log("companyInfo: ", companyInfo);
   };
 
-  const modificarUsuario = async (values) => {
+  const modificarCompania = async (values) => {
     try {
       const response = await userService.updateUserById(_id, {
-        name: { firstName: values.firstName, lastName: values.lastName },
-        gender: values.gender,
+        name: { firstName: values.firstName, lastName: values.firstName },
+         gender: "Indeterminado",
         dni: values.dni,
         dateBirth: dayjs(values.dateBirth.toDate()).format("YYYY-MM-DD"),
         email: values.email,
         password: values.password,
         username: values.username,
         telephone: values.telephone,
-        personType: "Física",
+        personType: "Jurídica",
         cuilCuit: values.cuilCuit,
       });
       console.log("Response: ", response);
-      setOpenModify(false);
-      const usuarios = await userService.getAllPersons();
-      setUsersList(usuarios);
+      setOpenCompanyModify(false);
+      const companias = await userService.getAllCompanies();
+      setCompanyList(companias);
     } catch (err) {
       console.log("There was an error update user ", _id);
       console.log(err);
     }
   };
 
-  const eliminarUsuario = async () => {
+  const eliminarCompania = async () => {
     try {
       const response = await userService.deleteUserById(_id);
-      // setUsersList(usersList.filter((x) => x._id !== _id));
-      const usuarios = await userService.getAllPersons();
-      setUsersList(usuarios);
+      // setCompanyList(companyList.filter((x) => x._id !== _id));
+      const companias = await userService.getAllCompanies();
+      setCompanyList(companias);
       console.log("Response: ", response);
     } catch (err) {
       console.log("There was an error deleting user ", _id);
@@ -67,7 +55,7 @@ function User({ data, usersList, setUsersList }) {
     }
   };
 
-  function UserModal({ open, userInfo, onCancel }) {
+  function CompanyModal({ open, companyInfo, onCancel }) {
     return (
       <Modal
         open={open}
@@ -80,25 +68,22 @@ function User({ data, usersList, setUsersList }) {
       >
         <div>
           <p>
-            Nombre: {userInfo?.name?.firstName} {userInfo?.name?.lastName}
+            Razón Social: {companyInfo?.name?.firstName}
           </p>
-          <p>DNI: {userInfo.dni}</p>
           <p>
-            Fecha de Nacimiento:{" "}
-            {dayjs(userInfo.dateBirth).format("DD-MM-YYYY")}
+            Fecha de Creación: {dayjs(companyInfo.dateBirth).format("DD-MM-YYYY")}
           </p>
-          <p>Género: {userInfo?.gender?.description}</p>
-          <p>Usuario: {userInfo.username}</p>
-          <p>E-mail: {userInfo.email}</p>
-          <p>Teléfono: {userInfo.telephone}</p>
-          <p>Cuil/Cuit: {userInfo.cuilCuit}</p>
-          <p>Tipo de Persona: {userInfo?.personType?.description}</p>
+          <p>Usuario: {companyInfo.username}</p>
+          <p>E-mail: {companyInfo.email}</p>
+          <p>Teléfono: {companyInfo.telephone}</p>
+          <p>Cuit: {companyInfo.cuilCuit}</p>
+          <p>Tipo de Persona: {companyInfo?.personType?.description}</p>
         </div>
       </Modal>
     );
   }
 
-  function UserModalModify({ open, userInfo, modificarUsuario, onCancel }) {
+  function CompanyModalModify({ open, companyInfo, modificarCompania, onCancel }) {
     const [form] = Form.useForm();
 
     return (
@@ -112,7 +97,7 @@ function User({ data, usersList, setUsersList }) {
           form
             .validateFields()
             .then((values) => {
-              modificarUsuario(values);
+              modificarCompania(values);
             })
             .catch((info) => {
               <Alert
@@ -131,15 +116,15 @@ function User({ data, usersList, setUsersList }) {
           name="form-modify"
           initialValues={{
             remember: true,
-            dateBirth: dayjs(userInfo.dateBirth),
-            username: userInfo.username,
-            firstName: userInfo?.name?.firstName,
-            lastName: userInfo?.name?.lastName,
-            gender: userInfo?.gender?.description,
-            email: userInfo.email,
-            telephone: userInfo.telephone,
-            cuilCuit: userInfo.cuilCuit,
-            personType: userInfo?.personType?.description,
+            dateBirth: dayjs(companyInfo.dateBirth),
+            username: companyInfo.username,
+            firstName: companyInfo?.name?.firstName,
+            lastName: companyInfo?.name?.lastName,
+            gender: companyInfo?.gender?.description,
+            email: companyInfo.email,
+            telephone: companyInfo.telephone,
+            cuilCuit: companyInfo.cuilCuit,
+            personType: companyInfo?.personType?.description,
           }}
         >
           <Form.Item
@@ -164,42 +149,6 @@ function User({ data, usersList, setUsersList }) {
             hasFeedback
           >
             <Input />
-          </Form.Item>
-          <Form.Item
-            name="lastName"
-            label="Apellido/s"
-            rules={[
-              { type: "string" },
-              {
-                required: true,
-                message: "Por favor ingrese el apellido!",
-              },
-              {
-                whitespace: true,
-                message: "El apellido no debe quedar en blanco",
-              },
-              {
-                min: 3,
-                max: 100,
-                message: "El apellido debe tener al menos 3 caracteres",
-              },
-            ]}
-            hasFeedback
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="gender"
-            label="Género"
-            rules={[
-              { type: "string" },
-              {
-                required: true,
-                message: "Por favor ingrese el género!",
-              },
-            ]}
-          >
-            <Radio.Group options={genderOptions} />
           </Form.Item>
 
           <Form.Item
@@ -311,86 +260,55 @@ function User({ data, usersList, setUsersList }) {
               placeholder="Usuario"
             />
           </Form.Item>
-
-          {/* <Form.Item
-            name="personType"
-            label="Tipo Persona"
-            rules={[
-              { type: "string" },
-              {
-                required: true,
-                message: "Por favor ingrese el tipo de persona!",
-              },
-            ]}
-          >
-            <Radio.Group options={personTypeOptions} />
-          </Form.Item> */}
         </Form>
       </Modal>
-    );
-  }
-
-  function Productos() {
-    return (
-      <div>
-        <Button
-          onClick={() => {
-            window.location = "/product/available/" + _id;
-          }}
-        >
-          Productos
-        </Button>
-      </div>
     );
   }
 
   return (
     <div>
       <p>
-        {name?.firstName} {name?.lastName}, {dni}, {username}
+        {name?.firstName}, {dni}, {username}
       </p>
       <Space>
         <Button
           type="primary"
           onClick={() => {
-            loguearInfoCompleta();
+            loguearInfoCompania();
             setOpen(true);
           }}
         >
           Ver Detalle
         </Button>
-        <UserModal
+        <CompanyModal
           open={open}
-          userInfo={userInfo}
+          companyInfo={companyInfo}
           onCancel={() => {
             setOpen(false);
           }}
-        ></UserModal>
+        ></CompanyModal>
 
         <Button
           onClick={() => {
-            loguearInfoCompleta();
-            setOpenModify(true);
+            loguearInfoCompania();
+            setOpenCompanyModify(true);
           }}
         >
           Modificar
         </Button>
-        <UserModalModify
+        <CompanyModalModify
           open={openModify}
-          modificarUsuario={modificarUsuario}
-          userInfo={userInfo}
+          modificarCompania={modificarCompania}
+          companyInfo={companyInfo}
           onCancel={() => {
-            setOpenModify(false);
+            setOpenCompanyModify(false);
           }}
-        ></UserModalModify>
+        ></CompanyModalModify>
 
-        <Button onClick={() => eliminarUsuario()}>Borrar</Button>
-
-        <Productos></Productos>
-
+        <Button onClick={() => eliminarCompania()}>Borrar</Button>
       </Space>
     </div>
   );
 }
 
-export default User;
+export default Company;
