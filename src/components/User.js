@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MailOutlined, UserOutlined, PhoneOutlined } from "@ant-design/icons";
+import { MailOutlined, UserOutlined, PhoneOutlined,  EditOutlined, DeleteOutlined, ProfileOutlined, CreditCardOutlined} from "@ant-design/icons";
 import {
   Button,
   Modal,
@@ -9,6 +9,8 @@ import {
   Space,
   Radio,
   Alert,
+  Popconfirm,
+  Tooltip,
 } from "antd";
 import userService from "../services/users";
 import "dayjs/locale/es";
@@ -16,13 +18,11 @@ import dayjs from "dayjs";
 const genderOptions = ["Femenino", "Masculino", "Indeterminado"];
 // const personTypeOptions = ["Física", "Jurídica"];
 
-
 function User({ data, usersList, setUsersList }) {
   const { dni, name, username, _id } = data;
   const [open, setOpen] = useState(false);
   const [openModify, setOpenModify] = useState(false);
   const [userInfo, setUserInfo] = useState({});
-
 
   const loguearInfoCompleta = async () => {
     const userInfo = await userService.getUserById(_id);
@@ -330,16 +330,44 @@ function User({ data, usersList, setUsersList }) {
     );
   }
 
+  function UserDelete() {
+    const text = "Segur@ que quieres borrar el usuario?";
+    const confirm = () => eliminarUsuario();
+
+    return (
+      <>
+        <Popconfirm
+          title={text}
+          onConfirm={confirm}
+          okText="Yes"
+          cancelText="No"
+          okButtonProps={{ size: "medium" }}
+          cancelButtonProps={{ size: "medium" }}
+        >
+          <Tooltip title="Borrar" color={"blue"} key={"blue"}>
+            <Button shape="round" icon={<DeleteOutlined />}>
+              {/* Borrar */}
+            </Button>
+          </Tooltip>
+        </Popconfirm>
+      </>
+    );
+  }
+
   function Productos() {
     return (
       <div>
-        <Button
-          onClick={() => {
-            window.location = "/product/available/" + _id;
-          }}
-        >
-          Productos
-        </Button>
+        <Tooltip title="Productos" color={"blue"} key={"blue"}>
+          <Button
+            onClick={() => {
+              window.location = "/product/available/" + _id;
+            }}
+            shape="round"
+            icon={<CreditCardOutlined />}
+          >
+            {/* Movimientos */}
+          </Button>
+        </Tooltip>
       </div>
     );
   }
@@ -350,15 +378,19 @@ function User({ data, usersList, setUsersList }) {
         {name?.firstName} {name?.lastName}, {dni}, {username}
       </p>
       <Space>
-        <Button
-          type="primary"
-          onClick={() => {
-            loguearInfoCompleta();
-            setOpen(true);
-          }}
-        >
-          Ver Detalle
-        </Button>
+        <Tooltip title="Ver Detalle" color={"blue"} key={"blue"}>
+          <Button
+            type="primary"
+            onClick={() => {
+              loguearInfoCompleta();
+              setOpen(true);
+            }}
+            shape="round"
+            icon={<ProfileOutlined />}
+          >
+            {/* Ver Detalle */}
+          </Button>
+        </Tooltip>
         <UserModal
           open={open}
           userInfo={userInfo}
@@ -366,15 +398,18 @@ function User({ data, usersList, setUsersList }) {
             setOpen(false);
           }}
         ></UserModal>
-
-        <Button
-          onClick={() => {
-            loguearInfoCompleta();
-            setOpenModify(true);
-          }}
-        >
-          Modificar
-        </Button>
+        <Tooltip title="Editar" color={"blue"} key={"blue"}>
+          <Button
+            shape="round"
+            icon={<EditOutlined />}
+            onClick={() => {
+              loguearInfoCompleta();
+              setOpenModify(true);
+            }}
+          >
+            {/* Editar */}
+          </Button>
+        </Tooltip>
         <UserModalModify
           open={openModify}
           modificarUsuario={modificarUsuario}
@@ -384,10 +419,10 @@ function User({ data, usersList, setUsersList }) {
           }}
         ></UserModalModify>
 
-        <Button onClick={() => eliminarUsuario()}>Borrar</Button>
+        <UserDelete></UserDelete>
+        {/* <Button onClick={() => eliminarUsuario()}>Borrar</Button> */}
 
         <Productos></Productos>
-
       </Space>
     </div>
   );

@@ -2,19 +2,17 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import productService from "../services/products";
 import userService from "../services/users";
-import { Card, Row, Col, Typography, Button, Modal } from "antd";
+import { Card, Row, Col, Typography, List } from "antd";
 import ProductCC from "../components/ProductCC";
 import ProductCA from "../components/ProductCA";
 import Product from "../components/Product";
 
-const { Title} = Typography;
+const { Title } = Typography;
 
 function AvailableProducts() {
-
   const { id } = useParams();
   const [products, setProducts] = useState([]);
   const [userInfo, setUserInfo] = useState({});
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     async function fetchAvailableProducts() {
@@ -25,7 +23,6 @@ function AvailableProducts() {
 
     fetchAvailableProducts();
 
-
     async function fetchUserProducts() {
       const userInfo = await userService.getUserById(id);
       setUserInfo(userInfo);
@@ -33,10 +30,8 @@ function AvailableProducts() {
     }
 
     fetchUserProducts();
-
   }, [id]);
 
-  
   // const cols = [];
   // const colCount = products.length;
 
@@ -85,7 +80,7 @@ function AvailableProducts() {
           </Card>
         ))}
       </Row>
-      
+
       <Title level={4}>Productos Actuales</Title>
 
       <Row gutter={10}>
@@ -93,13 +88,26 @@ function AvailableProducts() {
         {userInfo?.products?.map((userproducts, i) => (
           <Card
             key={i}
-            title={userproducts.type?.description + " " + userproducts.currency?.description}
+            title={
+              userproducts.type?.description +
+              " " +
+              userproducts.currency?.description
+            }
             style={{ width: 300 }}
           >
+            {/* <Text type="secondary">{userproducts.accountNumber}</Text> */}
+            <List>
+              <List.Item>
             <Product
-            productId={userproducts._id}
-            >
-            </Product>
+              productId={userproducts._id}
+              productType={userproducts.type}
+              currencyType={userproducts.currency}
+              userId={id}
+              setProducts={setProducts}
+              setUserInfo={setUserInfo}
+            ></Product>
+            </List.Item>
+            </List>
           </Card>
         ))}
       </Row>

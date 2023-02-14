@@ -1,6 +1,24 @@
 import { useState } from "react";
-import { MailOutlined, UserOutlined, PhoneOutlined } from "@ant-design/icons";
-import { Button, Modal, Form, Input, DatePicker, Space, Alert } from "antd";
+import {
+  MailOutlined,
+  UserOutlined,
+  PhoneOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  ProfileOutlined,
+  CreditCardOutlined,
+} from "@ant-design/icons";
+import {
+  Button,
+  Modal,
+  Form,
+  Input,
+  DatePicker,
+  Space,
+  Alert,
+  Tooltip,
+  Popconfirm,
+} from "antd";
 import userService from "../services/users";
 import "dayjs/locale/es";
 import dayjs from "dayjs";
@@ -22,7 +40,7 @@ function Company({ data, companyList, setCompanyList }) {
     try {
       const response = await userService.updateUserById(_id, {
         name: { firstName: values.firstName, lastName: values.firstName },
-         gender: "Indeterminado",
+        gender: "Indeterminado",
         dni: values.dni,
         dateBirth: dayjs(values.dateBirth.toDate()).format("YYYY-MM-DD"),
         email: values.email,
@@ -67,11 +85,10 @@ function Company({ data, companyList, setCompanyList }) {
         footer={null}
       >
         <div>
+          <p>Razón Social: {companyInfo?.name?.firstName}</p>
           <p>
-            Razón Social: {companyInfo?.name?.firstName}
-          </p>
-          <p>
-            Fecha de Creación: {dayjs(companyInfo.dateBirth).format("DD-MM-YYYY")}
+            Fecha de Creación:{" "}
+            {dayjs(companyInfo.dateBirth).format("DD-MM-YYYY")}
           </p>
           <p>Usuario: {companyInfo.username}</p>
           <p>E-mail: {companyInfo.email}</p>
@@ -83,7 +100,12 @@ function Company({ data, companyList, setCompanyList }) {
     );
   }
 
-  function CompanyModalModify({ open, companyInfo, modificarCompania, onCancel }) {
+  function CompanyModalModify({
+    open,
+    companyInfo,
+    modificarCompania,
+    onCancel,
+  }) {
     const [form] = Form.useForm();
 
     return (
@@ -265,21 +287,67 @@ function Company({ data, companyList, setCompanyList }) {
     );
   }
 
+  function CompanyDelete() {
+    const text = "Segur@ que quieres borrar la compañía?";
+    const confirm = () => eliminarCompania();
+
+    return (
+      <>
+        <Popconfirm
+          title={text}
+          onConfirm={confirm}
+          okText="Yes"
+          cancelText="No"
+          okButtonProps={{ size: "medium" }}
+          cancelButtonProps={{ size: "medium" }}
+        >
+          <Tooltip title="Borrar" color={"blue"} key={"blue"}>
+            <Button shape="round" icon={<DeleteOutlined />}>
+              {/* Borrar */}
+            </Button>
+          </Tooltip>
+        </Popconfirm>
+      </>
+    );
+  }
+
+  function Productos() {
+    return (
+      <div>
+        <Tooltip title="Productos" color={"blue"} key={"blue"}>
+          <Button
+            onClick={() => {
+              window.location = "/product/available/" + _id;
+            }}
+            shape="round"
+            icon={<CreditCardOutlined />}
+          >
+            {/* Movimientos */}
+          </Button>
+        </Tooltip>
+      </div>
+    );
+  }
+
   return (
     <div>
       <p>
         {name?.firstName}, {dni}, {username}
       </p>
       <Space>
-        <Button
-          type="primary"
-          onClick={() => {
-            loguearInfoCompania();
-            setOpen(true);
-          }}
-        >
-          Ver Detalle
-        </Button>
+        <Tooltip title="Ver Detalle" color={"blue"} key={"blue"}>
+          <Button
+            type="primary"
+            onClick={() => {
+              loguearInfoCompania();
+              setOpen(true);
+            }}
+            shape="round"
+            icon={<ProfileOutlined />}
+          >
+            {/* Ver Detalle */}
+          </Button>
+        </Tooltip>
         <CompanyModal
           open={open}
           companyInfo={companyInfo}
@@ -288,14 +356,18 @@ function Company({ data, companyList, setCompanyList }) {
           }}
         ></CompanyModal>
 
-        <Button
-          onClick={() => {
-            loguearInfoCompania();
-            setOpenCompanyModify(true);
-          }}
-        >
-          Modificar
-        </Button>
+        <Tooltip title="Editar" color={"blue"} key={"blue"}>
+          <Button
+            shape="round"
+            icon={<EditOutlined />}
+            onClick={() => {
+              loguearInfoCompania();
+              setOpenCompanyModify(true);
+            }}
+          >
+            {/* Editar */}
+          </Button>
+        </Tooltip>
         <CompanyModalModify
           open={openModify}
           modificarCompania={modificarCompania}
@@ -305,7 +377,10 @@ function Company({ data, companyList, setCompanyList }) {
           }}
         ></CompanyModalModify>
 
-        <Button onClick={() => eliminarCompania()}>Borrar</Button>
+        <CompanyDelete></CompanyDelete>
+        {/* <Button onClick={() => eliminarCompania()}>Borrar</Button> */}
+
+        <Productos></Productos>
       </Space>
     </div>
   );

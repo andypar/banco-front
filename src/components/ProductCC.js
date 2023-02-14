@@ -70,7 +70,7 @@ const CreateCC = ({ open, onCreate, onCancel }) => {
               {
                 whitespace: true,
                 message:
-                  "El límite de extracción diari0 no debe quedar en blanco",
+                  "El límite de extracción diario no debe quedar en blanco",
               },
               {
                 min: 4,

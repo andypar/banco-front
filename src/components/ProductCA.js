@@ -5,7 +5,6 @@ import { Button, Form, Input, Modal, message } from "antd";
 import productService from "../services/products";
 import userService from "../services/users";
 
-
 const CreateCA = ({ open, onCreate, onCancel }) => {
   const [form] = Form.useForm();
 
@@ -45,7 +44,7 @@ const CreateCA = ({ open, onCreate, onCancel }) => {
               {
                 whitespace: true,
                 message:
-                  "El límite de extracción diari0 no debe quedar en blanco",
+                  "El límite de extracción diario no debe quedar en blanco",
               },
               {
                 min: 4,
@@ -63,7 +62,13 @@ const CreateCA = ({ open, onCreate, onCancel }) => {
   );
 };
 
-function NewCA({ productType, currencyType, userId, setProducts, setUserInfo }) {
+function NewCA({
+  productType,
+  currencyType,
+  userId,
+  setProducts,
+  setUserInfo,
+}) {
   const [openCA, setopenCA] = useState(false);
 
   const error = (errorMessage) => {
@@ -96,7 +101,7 @@ function NewCA({ productType, currencyType, userId, setProducts, setUserInfo }) 
 
       setopenCA(false);
     } catch (err) {
-      console.log(err)
+      console.log(err);
       error(err);
     }
   };

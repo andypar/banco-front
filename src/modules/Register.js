@@ -13,15 +13,15 @@ import {
   Radio,
   Card,
 } from "antd";
-import person from "../assets/images/people.svg";
-import company from "../assets/images/company.svg";
-
+// import person from "../assets/images/people.svg";
+// import company from "../assets/images/company.svg";
+import person from "../assets/images/bg-profile.jpg";
+import company from "../assets/images/bg-signup.jpg";
 import userService from "../services/users";
 import dayjs from "dayjs";
 import { EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
 const genderOptions = ["Femenino", "Masculino", "Indeterminado"];
 // const personTypeOptions = ["Física", "Jurídica"];
-
 
 const RegisterUser = ({ open, onCreate, onCancel }) => {
   const [form] = Form.useForm();
@@ -593,13 +593,16 @@ function Register() {
     <>
       <Row gutter={20}>
         <Col span={7}>
-          <Card title="Personas Físicas" bordered={false} 
-           hoverable
-           style={{
-             width: 240,
-                 height:400,
-           }}
-           cover={<img alt="person" src={person}  />}>
+          <Card
+            title="Personas Físicas"
+            bordered={false}
+            hoverable
+            style={{
+              width: 240,
+              height: 300,
+            }}
+            cover={<img alt="person" src={person} />}
+          >
             <Button
               type="primary"
               onClick={() => {
@@ -619,13 +622,15 @@ function Register() {
         </Col>
 
         <Col span={7}>
-          <Card title="Personas Jurídicas" bordered={false}
-           hoverable
-           style={{
-             width: 240,
-             height:400,
-           }}
-          cover={<img alt="company" src={company}/>}
+          <Card
+            title="Personas Jurídicas"
+            bordered={false}
+            hoverable
+            style={{
+              width: 240,
+              height: 300,
+            }}
+            cover={<img alt="company" src={company} />}
           >
             <Button
               type="primary"
