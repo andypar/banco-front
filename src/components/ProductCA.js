@@ -86,6 +86,10 @@ function NewCA({
         currency: currencyType,
       });
       console.log("Response CA: ", newProduct);
+      
+      setTimeout(() => {
+        console.log("Delayed for 1 second.");
+      }, "1000")
 
       const associate = await userService.associateUserProductById(
         userId,

@@ -106,6 +106,10 @@ function NewCC({productType, currencyType, userId, setProducts, setUserInfo}) {
         currency: currencyType,
       });
       console.log("Response CC: ", newProduct);
+      
+      setTimeout(() => {
+        console.log("Delayed for 1 second.");
+      }, "1000")
 
       const associate = await userService.associateUserProductById(
         userId,
