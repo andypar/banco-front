@@ -257,7 +257,7 @@ function Product({
           okButtonProps={{ size: "medium" }}
           cancelButtonProps={{ size: "medium" }}
         >
-          <Tooltip title="Borrar" color={"blue"} key={"blue"}>
+          <Tooltip title="Borrar" color={"blue"} key={"blue1"}>
             <Button shape="round" icon={<DeleteOutlined />}>
               {/* Borrar */}
             </Button>
@@ -270,7 +270,7 @@ function Product({
   function Movimientos() {
     return (
       <div>
-        <Tooltip title="Transacciones" color={"blue"} key={"blue"}>
+        <Tooltip title="Transacciones" color={"blue"} key={"blue2"}>
           <Button
             onClick={() => {
               window.location = "/movement/" + productId;
@@ -288,7 +288,7 @@ function Product({
   return (
     <div>
       <Space>
-        <Tooltip title="Ver Detalle" color={"blue"} key={"blue"}>
+        <Tooltip title="Ver Detalle" color={"blue"} key={"blue3"}>
           <Button
             type="primary"
             onClick={() => {
@@ -308,7 +308,7 @@ function Product({
             setOpen(false);
           }}
         ></ProductModal>
-        <Tooltip title="Editar" color={"blue"} key={"blue"}>
+        <Tooltip title="Editar" color={"blue"} key={"blue4"}>
           <Button
             shape="round"
             icon={<EditOutlined />}

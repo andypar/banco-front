@@ -7,7 +7,7 @@ import ProductCC from "../components/ProductCC";
 import ProductCA from "../components/ProductCA";
 import Product from "../components/Product";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 function AvailableProducts() {
   const { id } = useParams();
@@ -93,20 +93,42 @@ function AvailableProducts() {
               " " +
               userproducts.currency?.description
             }
-            style={{ width: 300 }}
+            style={{
+              width: 300,
+              height: 300,
+            }}
           >
-            {/* <Text type="secondary">{userproducts.accountNumber}</Text> */}
+            <p>
+              Nro. Cuenta: &nbsp;
+              <Text type="secondary">{userproducts.accountNumber}</Text>
+            </p>
+
+            <p>
+              CBU: &nbsp;
+              <Text type="secondary">{userproducts.cbu}</Text>
+            </p>
+
+            <p>
+              Alias: &nbsp;
+              <Text type="secondary">{userproducts.alias}</Text>
+            </p>
+
+            <p>
+              Saldo: &nbsp;
+              <Text type="secondary">{userproducts.balanceAmount}</Text>
+            </p>
+
             <List>
               <List.Item>
-            <Product
-              productId={userproducts._id}
-              productType={userproducts.type}
-              currencyType={userproducts.currency}
-              userId={id}
-              setProducts={setProducts}
-              setUserInfo={setUserInfo}
-            ></Product>
-            </List.Item>
+                <Product
+                  productId={userproducts._id}
+                  productType={userproducts.type}
+                  currencyType={userproducts.currency}
+                  userId={id}
+                  setProducts={setProducts}
+                  setUserInfo={setUserInfo}
+                ></Product>
+              </List.Item>
             </List>
           </Card>
         ))}

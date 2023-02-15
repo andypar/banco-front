@@ -4,6 +4,8 @@ import Main from "../layout/Main";
 import SignIn from "../modules/SignIn";
 import Register from "../modules/Register";
 import AvailableProducts from "../modules/UserProductList";
+import Movements from "../modules/Movements";
+
 
 function Router() {
   return (
@@ -16,6 +18,7 @@ function Router() {
           <Route exact path="/personas" element={<UserList />} />
           <Route exact path="/registracion" element={<Register />} />
           <Route exact path="/product/available/:id" element={<AvailableProducts />} />
+          <Route exact path="/movement/:id" element={<Movements />} />
         </Routes>
       </Main>
     </BrowserRouter>
