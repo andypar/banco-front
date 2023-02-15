@@ -102,8 +102,8 @@ function NewExtraction({ productId, setProducts }) {
       console.log("Response Extraction: ", newExtraction);
 
       const productInfo = await productService.getProductById(productId);
+      console.log("Extraction ProductInfo: ", productInfo);
       setProducts(productInfo);
-
       setopenEXT(false);
     } catch (err) {
       console.log(err);

@@ -13,7 +13,7 @@ import {
   EditOutlined,
   DeleteOutlined,
   ProfileOutlined,
-  CreditCardOutlined,
+  DollarOutlined,
 } from "@ant-design/icons";
 import productService from "../services/products";
 import userService from "../services/users";
@@ -276,7 +276,7 @@ function Product({
               window.location = "/movement/" + productId;
             }}
             shape="round"
-            icon={<CreditCardOutlined />}
+            icon={<DollarOutlined />}
           >
             {/* Movimientos */}
           </Button>
