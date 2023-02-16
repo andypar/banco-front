@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import productService from "../services/products";
 import userService from "../services/users";
-import { Card, Row, Col, Typography, List } from "antd";
+import { Card, Row, Col, Typography, Button } from "antd";
 import ProductCC from "../components/ProductCC";
 import ProductCA from "../components/ProductCA";
 import Product from "../components/Product";
@@ -32,6 +32,12 @@ function AvailableProducts() {
     fetchUserProducts();
   }, [id]);
 
+  function Back() {
+    const navigate = useNavigate();
+
+    return <Button onClick={() => navigate(-1)}>Volver</Button>;
+  }
+
   // const cols = [];
   // const colCount = products.length;
 
@@ -50,9 +56,9 @@ function AvailableProducts() {
   return (
     <>
       <Title level={4}>Productos Disponibles</Title>
-      <Row gutter={10}>
-        <Col span={24}></Col>
+      <Row gutter={0}>
         {products.map((product, i) => (
+          <Col span={8} className="gutter-row">
           <Card
             key={i}
             title={product.type + " " + product.currency}
@@ -78,14 +84,17 @@ function AvailableProducts() {
               )}
             </div>
           </Card>
+          <br></br>
+          </Col>
         ))}
+        
       </Row>
 
       <Title level={4}>Productos Actuales</Title>
 
-      <Row gutter={10}>
-        <Col span={24}></Col>
+      <Row gutter={0}>
         {userInfo?.products?.map((userproducts, i) => (
+          <Col span={8} className="gutter-row">
           <Card
             key={i}
             title={
@@ -118,8 +127,7 @@ function AvailableProducts() {
               <Text type="secondary">{userproducts.balanceAmount}</Text>
             </p>
 
-            <List>
-              <List.Item>
+
                 <Product
                   productId={userproducts._id}
                   productType={userproducts.type}
@@ -128,11 +136,15 @@ function AvailableProducts() {
                   setProducts={setProducts}
                   setUserInfo={setUserInfo}
                 ></Product>
-              </List.Item>
-            </List>
+
           </Card>
+          <br></br>
+          </Col>
         ))}
       </Row>
+      <p>
+      <Back></Back>
+      </p>
     </>
   );
 }

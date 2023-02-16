@@ -118,11 +118,12 @@ function NewDeposit({ productId, setProducts }) {
     <>
       <Button
         type="primary"
+        style={{ background: "#7303fc" }}
         onClick={() => {
           setopenDEP(true);
         }}
       >
-        Crear Depósito
+        Depositar
       </Button>
       <CreateDeposit
         open={openDEP}

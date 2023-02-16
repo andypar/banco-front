@@ -14,10 +14,11 @@ import {
   Form,
   Input,
   DatePicker,
-  Space,
+  Row,
   Alert,
   Tooltip,
   Popconfirm,
+  Col,
 } from "antd";
 import userService from "../services/users";
 import "dayjs/locale/es";
@@ -303,7 +304,7 @@ function Company({ data, companyList, setCompanyList }) {
         >
           <Tooltip title="Borrar" color={"blue"} key={"blue"}>
             <Button shape="round" icon={<DeleteOutlined />}>
-              {/* Borrar */}
+              Borrar
             </Button>
           </Tooltip>
         </Popconfirm>
@@ -322,7 +323,7 @@ function Company({ data, companyList, setCompanyList }) {
             shape="round"
             icon={<CreditCardOutlined />}
           >
-            {/* Movimientos */}
+            Movimientos
           </Button>
         </Tooltip>
       </div>
@@ -334,7 +335,8 @@ function Company({ data, companyList, setCompanyList }) {
       <p>
         {name?.firstName}, {dni}, {username}
       </p>
-      <Space>
+      <Row gutter={[10,10]}> 
+        <Col>
         <Tooltip title="Ver Detalle" color={"blue"} key={"blue"}>
           <Button
             type="primary"
@@ -345,7 +347,7 @@ function Company({ data, companyList, setCompanyList }) {
             shape="round"
             icon={<ProfileOutlined />}
           >
-            {/* Ver Detalle */}
+            Ver Detalle
           </Button>
         </Tooltip>
         <CompanyModal
@@ -355,7 +357,9 @@ function Company({ data, companyList, setCompanyList }) {
             setOpen(false);
           }}
         ></CompanyModal>
+        </Col>
 
+        <Col>
         <Tooltip title="Editar" color={"blue"} key={"blue"}>
           <Button
             shape="round"
@@ -365,7 +369,7 @@ function Company({ data, companyList, setCompanyList }) {
               setOpenCompanyModify(true);
             }}
           >
-            {/* Editar */}
+            Editar
           </Button>
         </Tooltip>
         <CompanyModalModify
@@ -376,12 +380,17 @@ function Company({ data, companyList, setCompanyList }) {
             setOpenCompanyModify(false);
           }}
         ></CompanyModalModify>
+        </Col>
 
+        <Col>
         <CompanyDelete></CompanyDelete>
-        {/* <Button onClick={() => eliminarCompania()}>Borrar</Button> */}
+        </Col>
 
+        {/* <Button onClick={() => eliminarCompania()}>Borrar</Button> */}
+        <Col>
         <Productos></Productos>
-      </Space>
+        </Col>
+      </Row>
     </div>
   );
 }

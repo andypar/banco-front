@@ -115,11 +115,12 @@ function NewExtraction({ productId, setProducts }) {
     <>
       <Button
         type="primary"
+        style={{ background: "#7303fc"}}
         onClick={() => {
           setopenEXT(true);
         }}
       >
-        Crear Extraccción
+        Extraer
       </Button>
       <CreateExtraction
         open={openEXT}

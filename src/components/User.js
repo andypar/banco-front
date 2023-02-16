@@ -6,11 +6,12 @@ import {
   Form,
   Input,
   DatePicker,
-  Space,
   Radio,
   Alert,
   Popconfirm,
   Tooltip,
+  Row,
+  Col,
 } from "antd";
 import userService from "../services/users";
 import "dayjs/locale/es";
@@ -346,7 +347,7 @@ function User({ data, usersList, setUsersList }) {
         >
           <Tooltip title="Borrar" color={"blue"} key={"blue"}>
             <Button shape="round" icon={<DeleteOutlined />}>
-              {/* Borrar */}
+              Borrar
             </Button>
           </Tooltip>
         </Popconfirm>
@@ -365,7 +366,7 @@ function User({ data, usersList, setUsersList }) {
             shape="round"
             icon={<CreditCardOutlined />}
           >
-            {/* Movimientos */}
+            Movimientos
           </Button>
         </Tooltip>
       </div>
@@ -377,7 +378,8 @@ function User({ data, usersList, setUsersList }) {
       <p>
         {name?.firstName} {name?.lastName}, {dni}, {username}
       </p>
-      <Space>
+      <Row gutter={[10,10]}> 
+        <Col>
         <Tooltip title="Ver Detalle" color={"blue"} key={"blue"}>
           <Button
             type="primary"
@@ -388,7 +390,7 @@ function User({ data, usersList, setUsersList }) {
             shape="round"
             icon={<ProfileOutlined />}
           >
-            {/* Ver Detalle */}
+            Ver Detalle
           </Button>
         </Tooltip>
         <UserModal
@@ -398,6 +400,8 @@ function User({ data, usersList, setUsersList }) {
             setOpen(false);
           }}
         ></UserModal>
+        </Col>
+        <Col>
         <Tooltip title="Editar" color={"blue"} key={"blue"}>
           <Button
             shape="round"
@@ -407,7 +411,7 @@ function User({ data, usersList, setUsersList }) {
               setOpenModify(true);
             }}
           >
-            {/* Editar */}
+            Editar 
           </Button>
         </Tooltip>
         <UserModalModify
@@ -418,12 +422,14 @@ function User({ data, usersList, setUsersList }) {
             setOpenModify(false);
           }}
         ></UserModalModify>
-
-        <UserDelete></UserDelete>
+        </Col>
+        <Col><UserDelete></UserDelete></Col>
+        
         {/* <Button onClick={() => eliminarUsuario()}>Borrar</Button> */}
-
+        <Col>
         <Productos></Productos>
-      </Space>
+        </Col>
+      </Row>
     </div>
   );
 }
