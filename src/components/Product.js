@@ -14,6 +14,7 @@ import {
   DeleteOutlined,
   ProfileOutlined,
   DollarOutlined,
+  MailOutlined,
 } from "@ant-design/icons";
 import productService from "../services/products";
 import userService from "../services/users";
@@ -285,6 +286,24 @@ function Product({
     );
   }
 
+  function Resumen() {
+    return (
+      <div>
+        <Tooltip title="Resumen" color={"blue"} key={"blue2"}>
+          <Button
+            onClick={() => {
+              window.location = "/extract/" + productId;
+            }}
+            shape="round"
+            icon={<MailOutlined />}
+          >
+            {/* Resumen */}
+          </Button>
+        </Tooltip>
+      </div>
+    );
+  }
+
   return (
     <div>
       <Space>
@@ -332,6 +351,9 @@ function Product({
         <ProductDelete></ProductDelete>
 
         <Movimientos></Movimientos>
+
+        <Resumen></Resumen>
+
       </Space>
     </div>
   );

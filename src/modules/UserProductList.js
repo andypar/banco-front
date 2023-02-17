@@ -59,91 +59,88 @@ function AvailableProducts() {
       <Row gutter={0}>
         {products.map((product, i) => (
           <Col span={8} className="gutter-row">
-          <Card
-            key={i}
-            title={product.type + " " + product.currency}
-            style={{ width: 300 }}
-          >
-            <div>
-              {product.type === "caja-ahorro" ? (
-                <ProductCA
-                  productType={product.type}
-                  currencyType={product.currency}
-                  userId={id}
-                  setProducts={setProducts}
-                  setUserInfo={setUserInfo}
-                ></ProductCA>
-              ) : (
-                <ProductCC
-                  productType={product.type}
-                  currencyType={product.currency}
-                  userId={id}
-                  setProducts={setProducts}
-                  setUserInfo={setUserInfo}
-                ></ProductCC>
-              )}
-            </div>
-          </Card>
-          <br></br>
+            <Card
+              key={i}
+              title={product.type + " " + product.currency.toUpperCase()}
+              style={{ width: 300 }}
+            >
+              <div>
+                {product.type === "caja-ahorro" ? (
+                  <ProductCA
+                    productType={product.type}
+                    currencyType={product.currency}
+                    userId={id}
+                    setProducts={setProducts}
+                    setUserInfo={setUserInfo}
+                  ></ProductCA>
+                ) : (
+                  <ProductCC
+                    productType={product.type}
+                    currencyType={product.currency}
+                    userId={id}
+                    setProducts={setProducts}
+                    setUserInfo={setUserInfo}
+                  ></ProductCC>
+                )}
+              </div>
+            </Card>
+            <br></br>
           </Col>
         ))}
-        
       </Row>
 
       <Title level={4}>Productos Actuales</Title>
 
       <Row gutter={0}>
         {userInfo?.products?.map((userproducts, i) => (
-          <Col span={8} className="gutter-row">
-          <Card
-            key={i}
-            title={
-              userproducts.type?.description +
-              " " +
-              userproducts.currency?.description
-            }
-            style={{
-              width: 300,
-              height: 300,
-            }}
-          >
-            <p>
-              Nro. Cuenta: &nbsp;
-              <Text type="secondary">{userproducts.accountNumber}</Text>
-            </p>
+          <Col span={9} className="gutter-row">
+            <Card
+              key={i}
+              title={
+                userproducts.type?.description +
+                " " +
+                userproducts.currency?.description.toUpperCase()
+              }
+              // style={{
+              //   width: 400,
+              //   height: 400,
+              // }}
+            >
+              <p>
+                Nro. Cuenta: &nbsp;
+                <Text type="secondary">{userproducts.accountNumber}</Text>
+              </p>
 
-            <p>
-              CBU: &nbsp;
-              <Text type="secondary">{userproducts.cbu}</Text>
-            </p>
+              <p>
+                CBU: &nbsp;
+                <Text type="secondary">{userproducts.cbu}</Text>
+              </p>
 
-            <p>
-              Alias: &nbsp;
-              <Text type="secondary">{userproducts.alias}</Text>
-            </p>
+              <p>
+                Alias: &nbsp;
+                <Text type="secondary">{userproducts.alias}</Text>
+              </p>
 
-            <p>
-              Saldo: &nbsp;
-              <Text type="secondary">{userproducts.balanceAmount}</Text>
-            </p>
+              <p>
+                Saldo: &nbsp;
+                <Text type="secondary">{userproducts.balanceAmount}</Text>
+              </p>
 
-
-                <Product
-                  productId={userproducts._id}
-                  productType={userproducts.type}
-                  currencyType={userproducts.currency}
-                  userId={id}
-                  setProducts={setProducts}
-                  setUserInfo={setUserInfo}
-                ></Product>
-
-          </Card>
-          <br></br>
+              <Product
+                productId={userproducts._id}
+                productType={userproducts.type}
+                currencyType={userproducts.currency}
+                userId={id}
+                setProducts={setProducts}
+                setUserInfo={setUserInfo}
+              ></Product>
+            </Card>
+            <br></br>
           </Col>
         ))}
       </Row>
       <p>
-      <Back></Back>
+        <Back></Back>
       </p>
     </>
   );

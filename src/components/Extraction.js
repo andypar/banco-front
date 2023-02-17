@@ -46,7 +46,7 @@ const CreateExtraction = ({ open, onCreate, onCancel }) => {
                 message: "El monto a extraer no debe quedar en blanco",
               },
               {
-                min: 1,
+                min: 2,
                 max: 6,
                 message: "El monto a extraer debe ser entre $1.000 y $100.000",
               },
@@ -115,7 +115,7 @@ function NewExtraction({ productId, setProducts }) {
     <>
       <Button
         type="primary"
-        style={{ background: "#7303fc"}}
+        style={{ background: "#7303fc" }}
         onClick={() => {
           setopenEXT(true);
         }}

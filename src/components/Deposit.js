@@ -46,10 +46,10 @@ const CreateDeposit = ({ open, onCreate, onCancel }) => {
                 message: "El monto a depositar no debe quedar en blanco",
               },
               {
-                min: 1,
+                min: 2,
                 max: 6,
                 message:
-                  "El monto a depositar debe ser entre $1.000 y $100.000",
+                  "El monto a depositar debe ser entre $10 y $100.000",
               },
             ]}
           >
@@ -103,10 +103,8 @@ function NewDeposit({ productId, setProducts }) {
       console.log("Response Deposit: ", newDeposit);
 
       const productInfo = await productService.getProductById(productId);
-      setProducts(productInfo);
-
       console.log(productInfo);
-
+      setProducts(productInfo);
       setopenDEP(false);
     } catch (err) {
       console.log(err);

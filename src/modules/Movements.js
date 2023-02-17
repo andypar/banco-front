@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import CountUp from "react-countup";
 import { useParams, useNavigate } from "react-router-dom";
 import "dayjs/locale/es";
 import dayjs from "dayjs";
 import productService from "../services/products";
+import movementService from "../services/movements";
 import {
   Card,
   Row,
@@ -12,8 +14,10 @@ import {
   Statistic,
   Button,
   Table,
+  Popconfirm,
+  Tooltip,
 } from "antd";
-import { DollarOutlined } from "@ant-design/icons";
+import { DollarOutlined, DeleteOutlined } from "@ant-design/icons";
 import Extraction from "../components/Extraction";
 import Deposit from "../components/Deposit";
 
@@ -23,6 +27,7 @@ function Movements() {
   const { id } = useParams();
   const [productInfo, setProducts] = useState([]);
   const [data, setData] = useState([]);
+  const formatter = (value) => <CountUp end={value} separator="," />;
 
   const columns = [
     {
@@ -71,6 +76,14 @@ function Movements() {
         };
       },
     },
+    {
+      title: "Eliminar",
+      key: "key",
+      dataIndex: "key",
+      render: (text, record) => (
+        <MovementDelete productId={id} movementId={record._id}></MovementDelete>
+      ),
+    },
   ];
 
   useEffect(() => {
@@ -78,20 +91,62 @@ function Movements() {
       const productInfo = await productService.getProductById(id);
       setProducts(productInfo);
       console.log("productInfo: ", productInfo);
-
-      setData(
-        productInfo?.movements?.map((movements, i) => ({
-          descriptionMovement: movements.descriptionMovement,
-          description: movements.type?.description,
-          createdAt: dayjs(movements.createdAt).format("DD-MM-YYYY"),
-          balance: movements.balance,
-          totalBalance: movements.totalBalance,
-          _id: movements._id,
-        }))
-      );
     }
     fetchProduct();
   }, [id]);
+
+  useEffect(() => {
+    setData(
+      productInfo?.movements?.map((movements, i) => ({
+        descriptionMovement: movements.descriptionMovement,
+        description: movements.type?.description,
+        createdAt: dayjs(movements.createdAt).format("DD-MM-YYYY"),
+        balance: movements.balance,
+        totalBalance: movements.totalBalance,
+        _id: movements._id,
+      }))
+    );
+  }, [productInfo]);
+
+  function MovementDelete({ movementId, productId }) {
+    const text = "Segur@ que quieres borrar el producto?";
+    const confirm = () => eliminarMovimiento();
+
+    const eliminarMovimiento = async () => {
+      try {
+        const response = await movementService.deleteMovementById(movementId);
+        console.log("Response: ", response);
+
+        const productInfo = await productService.getProductById(productId);
+        setProducts(productInfo);
+      } catch (err) {
+        console.log("There was an error deleting product ", movementId);
+        console.log(err);
+      }
+    };
+
+    return (
+      <>
+        <Popconfirm
+          title={text}
+          onConfirm={confirm}
+          okText="Si"
+          cancelText="No"
+          okButtonProps={{ size: "medium", ghost: true }}
+          cancelButtonProps={{ size: "medium" }}
+        >
+          <Tooltip title="Borrar" color={"purple"} key={"purple1"}>
+            <Button
+              shape="round"
+              icon={<DeleteOutlined />}
+              type="primary"
+              style={{ background: "#7303fc" }}
+            ></Button>
+          </Tooltip>
+        </Popconfirm>
+      </>
+    );
+  }
 
   function Back() {
     const navigate = useNavigate();
@@ -105,8 +160,13 @@ function Movements() {
 
   return (
     <>
-      <Title level={4}>Cuenta</Title>
-      <Row gutter={16}>
+      <Title level={4}>
+        {productInfo.type?.description +
+          " (" +
+          productInfo.currency?.description.toUpperCase() +
+          ") "}
+      </Title>
+      <Row>
         <Col>
           <p>
             Nro. Cuenta: &nbsp;
@@ -122,12 +182,48 @@ function Movements() {
             <Text type="secondary">{productInfo.alias}</Text>
           </p>
         </Col>
+      </Row>
+
+      <Row gutter={16}>
         <Col span={6}>
           <Card bordered={false}>
             <Statistic
               title="Saldo"
               value={productInfo.balanceAmount}
               precision={0}
+              formatter={formatter}
+              valueStyle={{
+                color: "#450feb",
+              }}
+              prefix={<DollarOutlined />}
+            />
+          </Card>
+        </Col>
+        {productInfo.type?.description === "cuenta-corriente" ? (
+          <Col span={6}>
+            <Card bordered={false}>
+              <Statistic
+                title="Monto Sobregiro"
+                value={productInfo.overdraftAmount}
+                precision={0}
+                formatter={formatter}
+                valueStyle={{
+                  color: "#450feb",
+                }}
+                prefix={<DollarOutlined />}
+              />
+            </Card>
+          </Col>
+        ) : (
+          ""
+        )}
+        <Col span={6}>
+          <Card bordered={false}>
+            <Statistic
+              title="Límite Extraccción diario"
+              value={productInfo.extractionLimit}
+              precision={0}
+              formatter={formatter}
               valueStyle={{
                 color: "#450feb",
               }}
@@ -146,24 +242,29 @@ function Movements() {
         <Descriptions.Item label="Alias">{productInfo.alias}</Descriptions.Item>
       </Descriptions> */}
 
-         <Title level={4}>Transacciones</Title>
-          <Space wrap>
-            <Extraction productId={id} setProducts={setProducts}></Extraction>
-            <Deposit productId={id} setProducts={setProducts}></Deposit>
-          </Space>
-        <br></br>
-        <br></br>
+      <Title level={4}>Transacciones</Title>
+      <Space wrap>
+        <Extraction productId={id} setProducts={setProducts}></Extraction>
+        <Deposit productId={id} setProducts={setProducts}></Deposit>
+      </Space>
+      <br></br>
+      <br></br>
 
       <Title level={4}>Detalle Movimientos</Title>
       <Row>
         <Col />
         <Col>
           <Table
-          locale={{triggerAsc:"Fecha Ascendente", triggerDesc:"Fecha Descendente", cancelSort:"Cancelar"}}
+            setProducts={setProducts}
+            locale={{
+              triggerAsc: "Fecha Ascendente",
+              triggerDesc: "Fecha Descendente",
+              cancelSort: "Cancelar",
+            }}
             dataSource={data}
             columns={columns}
+            pagination={{ pageSize: 5 }}
             rowKey="_id"
-            setProducts={setProducts}
             //  rowClassName={(record) => (record.description === "extracción" ? "red" : "green")}
           />
         </Col>
