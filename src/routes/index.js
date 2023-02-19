@@ -19,7 +19,7 @@ function Router() {
           <Route exact path="/registracion" element={<Register />} />
           <Route exact path="/product/available/:id" element={<AvailableProducts />} />
           <Route exact path="/movement/:id" element={<Movements />} />
-          <Route exact path="/extract/:id" element={<Extract />} />
+          <Route exact path="/extract/:userid/:id" element={<Extract />} />
         </Routes>
       </Main>
     </BrowserRouter>

@@ -123,7 +123,7 @@ function AvailableProducts() {
 
               <p>
                 Saldo: &nbsp;
-                <Text type="secondary">{userproducts.balanceAmount}</Text>
+                <Text type="secondary">${userproducts.balanceAmount}</Text>
               </p>
 
               <Product

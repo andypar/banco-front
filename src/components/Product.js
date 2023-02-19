@@ -104,13 +104,13 @@ function Product({
             <p>Nro. Cuenta: {productInfo.accountNumber}</p>
             <p>CBU: {productInfo.cbu}</p>
             <p>Alias: {productInfo.alias}</p>
-            <p>Saldo: {productInfo.balanceAmount}</p>
+            <p>Saldo: ${productInfo.balanceAmount}</p>
             {productInfo?.type?.description === "caja-ahorro" ? (
               <p></p>
             ) : (
-              <p>Monto Sobregiro: {productInfo.overdraftAmount} </p>
+              <p>Monto Sobregiro: ${productInfo.overdraftAmount} </p>
             )}
-            <p>Límite Extracción Diaria: {productInfo.extractionLimit}</p>
+            <p>Límite Extracción Diaria: ${productInfo.extractionLimit}</p>
           </div>
         </div>
       </Modal>
@@ -292,7 +292,7 @@ function Product({
         <Tooltip title="Resumen" color={"blue"} key={"blue2"}>
           <Button
             onClick={() => {
-              window.location = "/extract/" + productId;
+              window.location = "/extract/" + userId + "/" + productId;
             }}
             shape="round"
             icon={<MailOutlined />}
@@ -353,7 +353,6 @@ function Product({
         <Movimientos></Movimientos>
 
         <Resumen></Resumen>
-
       </Space>
     </div>
   );
