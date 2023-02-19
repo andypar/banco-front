@@ -16,7 +16,7 @@ userService.createUser = (payload) => api.post("/user/", { ...payload });
 
 // Modifico para que levante bien el genero y tipo de persona
 userService.getUserById = async function (id) { 
-	const userInfo= await api.get(`/user/${id}`)
+	const userInfo= await api.get(`/user/detail/${id}`)
 	userInfo.gender.description=capitalizeFirstLetter(userInfo?.gender?.description)
 	userInfo.personType.description=capitalizeFirstLetter(userInfo?.personType?.description)
 	return userInfo

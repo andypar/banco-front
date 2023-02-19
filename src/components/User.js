@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { MailOutlined, UserOutlined, PhoneOutlined,  EditOutlined, DeleteOutlined, ProfileOutlined, CreditCardOutlined} from "@ant-design/icons";
+import {
+  MailOutlined,
+  UserOutlined,
+  PhoneOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  ProfileOutlined,
+  CreditCardOutlined,
+} from "@ant-design/icons";
 import {
   Button,
   Modal,
@@ -9,7 +17,6 @@ import {
   Radio,
   Alert,
   Popconfirm,
-  Tooltip,
   Row,
   Col,
 } from "antd";
@@ -345,11 +352,9 @@ function User({ data, usersList, setUsersList }) {
           okButtonProps={{ size: "medium" }}
           cancelButtonProps={{ size: "medium" }}
         >
-          <Tooltip title="Borrar" color={"blue"} key={"blue"}>
-            <Button shape="round" icon={<DeleteOutlined />}>
-              Borrar
-            </Button>
-          </Tooltip>
+          <Button shape="round" icon={<DeleteOutlined />}>
+            Borrar
+          </Button>
         </Popconfirm>
       </>
     );
@@ -358,17 +363,15 @@ function User({ data, usersList, setUsersList }) {
   function Productos() {
     return (
       <div>
-        <Tooltip title="Productos" color={"blue"} key={"blue"}>
-          <Button
-            onClick={() => {
-              window.location = "/product/available/" + _id;
-            }}
-            shape="round"
-            icon={<CreditCardOutlined />}
-          >
-            Movimientos
-          </Button>
-        </Tooltip>
+        <Button
+          onClick={() => {
+            window.location = "/product/available/" + _id;
+          }}
+          shape="round"
+          icon={<CreditCardOutlined />}
+        >
+          Movimientos
+        </Button>
       </div>
     );
   }
@@ -378,9 +381,8 @@ function User({ data, usersList, setUsersList }) {
       <p>
         {name?.firstName} {name?.lastName}, {dni}, {username}
       </p>
-      <Row gutter={[10,10]}> 
+      <Row gutter={[10, 10]}>
         <Col>
-        <Tooltip title="Ver Detalle" color={"blue"} key={"blue"}>
           <Button
             type="primary"
             onClick={() => {
@@ -392,17 +394,15 @@ function User({ data, usersList, setUsersList }) {
           >
             Ver Detalle
           </Button>
-        </Tooltip>
-        <UserModal
-          open={open}
-          userInfo={userInfo}
-          onCancel={() => {
-            setOpen(false);
-          }}
-        ></UserModal>
+          <UserModal
+            open={open}
+            userInfo={userInfo}
+            onCancel={() => {
+              setOpen(false);
+            }}
+          ></UserModal>
         </Col>
         <Col>
-        <Tooltip title="Editar" color={"blue"} key={"blue"}>
           <Button
             shape="round"
             icon={<EditOutlined />}
@@ -411,23 +411,24 @@ function User({ data, usersList, setUsersList }) {
               setOpenModify(true);
             }}
           >
-            Editar 
+            Editar
           </Button>
-        </Tooltip>
-        <UserModalModify
-          open={openModify}
-          modificarUsuario={modificarUsuario}
-          userInfo={userInfo}
-          onCancel={() => {
-            setOpenModify(false);
-          }}
-        ></UserModalModify>
+          <UserModalModify
+            open={openModify}
+            modificarUsuario={modificarUsuario}
+            userInfo={userInfo}
+            onCancel={() => {
+              setOpenModify(false);
+            }}
+          ></UserModalModify>
         </Col>
-        <Col><UserDelete></UserDelete></Col>
-        
+        <Col>
+          <UserDelete></UserDelete>
+        </Col>
+
         {/* <Button onClick={() => eliminarUsuario()}>Borrar</Button> */}
         <Col>
-        <Productos></Productos>
+          <Productos></Productos>
         </Col>
       </Row>
     </div>

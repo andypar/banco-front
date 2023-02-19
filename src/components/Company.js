@@ -16,7 +16,6 @@ import {
   DatePicker,
   Row,
   Alert,
-  Tooltip,
   Popconfirm,
   Col,
 } from "antd";
@@ -302,11 +301,9 @@ function Company({ data, companyList, setCompanyList }) {
           okButtonProps={{ size: "medium" }}
           cancelButtonProps={{ size: "medium" }}
         >
-          <Tooltip title="Borrar" color={"blue"} key={"blue"}>
-            <Button shape="round" icon={<DeleteOutlined />}>
-              Borrar
-            </Button>
-          </Tooltip>
+          <Button shape="round" icon={<DeleteOutlined />}>
+            Borrar
+          </Button>
         </Popconfirm>
       </>
     );
@@ -315,17 +312,15 @@ function Company({ data, companyList, setCompanyList }) {
   function Productos() {
     return (
       <div>
-        <Tooltip title="Productos" color={"blue"} key={"blue"}>
-          <Button
-            onClick={() => {
-              window.location = "/product/available/" + _id;
-            }}
-            shape="round"
-            icon={<CreditCardOutlined />}
-          >
-            Movimientos
-          </Button>
-        </Tooltip>
+        <Button
+          onClick={() => {
+            window.location = "/product/available/" + _id;
+          }}
+          shape="round"
+          icon={<CreditCardOutlined />}
+        >
+          Movimientos
+        </Button>
       </div>
     );
   }
@@ -335,9 +330,8 @@ function Company({ data, companyList, setCompanyList }) {
       <p>
         {name?.firstName}, {dni}, {username}
       </p>
-      <Row gutter={[10,10]}> 
+      <Row gutter={[10, 10]}>
         <Col>
-        <Tooltip title="Ver Detalle" color={"blue"} key={"blue"}>
           <Button
             type="primary"
             onClick={() => {
@@ -349,18 +343,16 @@ function Company({ data, companyList, setCompanyList }) {
           >
             Ver Detalle
           </Button>
-        </Tooltip>
-        <CompanyModal
-          open={open}
-          companyInfo={companyInfo}
-          onCancel={() => {
-            setOpen(false);
-          }}
-        ></CompanyModal>
+          <CompanyModal
+            open={open}
+            companyInfo={companyInfo}
+            onCancel={() => {
+              setOpen(false);
+            }}
+          ></CompanyModal>
         </Col>
 
         <Col>
-        <Tooltip title="Editar" color={"blue"} key={"blue"}>
           <Button
             shape="round"
             icon={<EditOutlined />}
@@ -371,24 +363,23 @@ function Company({ data, companyList, setCompanyList }) {
           >
             Editar
           </Button>
-        </Tooltip>
-        <CompanyModalModify
-          open={openModify}
-          modificarCompania={modificarCompania}
-          companyInfo={companyInfo}
-          onCancel={() => {
-            setOpenCompanyModify(false);
-          }}
-        ></CompanyModalModify>
+          <CompanyModalModify
+            open={openModify}
+            modificarCompania={modificarCompania}
+            companyInfo={companyInfo}
+            onCancel={() => {
+              setOpenCompanyModify(false);
+            }}
+          ></CompanyModalModify>
         </Col>
 
         <Col>
-        <CompanyDelete></CompanyDelete>
+          <CompanyDelete></CompanyDelete>
         </Col>
 
         {/* <Button onClick={() => eliminarCompania()}>Borrar</Button> */}
         <Col>
-        <Productos></Productos>
+          <Productos></Productos>
         </Col>
       </Row>
     </div>
