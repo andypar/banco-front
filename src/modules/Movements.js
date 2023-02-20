@@ -166,7 +166,7 @@ function Movements() {
           productInfo.currency?.description.toUpperCase() +
           ") "}
       </Title>
-      <Row>
+
         <Col>
           <p>
             Nro. Cuenta: &nbsp;
@@ -182,7 +182,7 @@ function Movements() {
             <Text type="secondary">{productInfo.alias}</Text>
           </p>
         </Col>
-      </Row>
+
 
       <Row gutter={16}>
         <Col span={6}>
@@ -234,13 +234,6 @@ function Movements() {
       </Row>
 
       <br></br>
-      {/* <Descriptions title="Datos Cuenta">
-        <Descriptions.Item label="Nro. Cuenta">
-          {productInfo.accountNumber}
-        </Descriptions.Item>
-        <Descriptions.Item label="CBU">{productInfo.cbu}</Descriptions.Item>
-        <Descriptions.Item label="Alias">{productInfo.alias}</Descriptions.Item>
-      </Descriptions> */}
 
       <Title level={4}>Transacciones</Title>
       <Space wrap>
@@ -251,9 +244,9 @@ function Movements() {
       <br></br>
 
       <Title level={4}>Detalle Movimientos</Title>
-      <Row>
+      <Row gutter={4}>
         <Col />
-        <Col>
+        <Col span={20}>
           <Table
             setProducts={setProducts}
             locale={{

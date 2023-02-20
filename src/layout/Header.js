@@ -7,15 +7,10 @@ import {
   Col,
   Breadcrumb,
   Button,
-  Input,
   Drawer,
   Typography,
   Switch,
 } from "antd";
-
-import {
-  SearchOutlined,
-} from "@ant-design/icons";
 
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";

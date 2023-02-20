@@ -55,10 +55,39 @@ function AvailableProducts() {
 
   return (
     <>
+      <Title level={4}>
+        {userInfo?.name?.firstName + ", " + userInfo?.name?.lastName}
+      </Title>
+
+      <Col>
+        <p>
+          Email: &nbsp;
+          <Text type="secondary">{userInfo.email}</Text>
+        </p>
+        <p>
+          Teléfono: &nbsp;
+          <Text type="secondary">{userInfo.telephone}</Text>
+        </p>
+
+        <p>
+          Cuil/Cuit: &nbsp;
+          <Text type="secondary">{userInfo.cuilCuit}</Text>
+        </p>
+      </Col>
+
       <Title level={4}>Productos Disponibles</Title>
+
+      {products.length === 0 ? (
+        <p>
+          <Text type="danger">No hay nuevos productos disponibles</Text>
+        </p>
+      ) : (
+        ""
+      )}
+
       <Row gutter={0}>
         {products.map((product, i) => (
-          <Col span={8} className="gutter-row">
+          <Col span={8} key={i} className="gutter-row">
             <Card
               key={i}
               title={product.type + " " + product.currency.toUpperCase()}
@@ -90,10 +119,17 @@ function AvailableProducts() {
       </Row>
 
       <Title level={4}>Productos Actuales</Title>
+      {userInfo?.products?.length === 0 ? (
+        <p>
+          <Text type="danger">El usuario no posee productos</Text>
+        </p>
+      ) : (
+        ""
+      )}
 
       <Row gutter={0}>
         {userInfo?.products?.map((userproducts, i) => (
-          <Col span={9} className="gutter-row">
+          <Col span={9} key={i} className="gutter-row2">
             <Card
               key={i}
               title={
