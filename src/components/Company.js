@@ -24,7 +24,7 @@ import "dayjs/locale/es";
 import dayjs from "dayjs";
 // const personTypeOptions = ["Física", "Jurídica"];
 
-function Company({ data, companyList, setCompanyList }) {
+function Company({ data, setCompanyList }) {
   const { dni, name, username, _id } = data;
   const [open, setOpen] = useState(false);
   const [openModify, setOpenCompanyModify] = useState(false);

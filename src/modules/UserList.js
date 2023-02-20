@@ -1,13 +1,23 @@
 import { useState, useEffect } from "react";
 import "dayjs/locale/es";
 import User from "../components/User";
-import Company from "../components/Company";
+import RegisterUser from "../components/RegisterUser";
 import userService from "../services/users";
 import { Card, Col, Row, Typography } from "antd";
 
 const { Title } = Typography;
 
-function UserList() {
+function UserList({ users, setUsers }) {
+  return (
+    <>
+      {users.map((x) => (
+        <User key={x._id} data={x} setUsersList={setUsers}></User>
+      ))}
+    </>
+  );
+}
+
+function Users() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -21,57 +31,19 @@ function UserList() {
 
   return (
     <>
-      {users.map((x) => (
-        <User
-          key={x._id}
-          data={x}
-          usersList={users}
-          setUsersList={setUsers}
-        ></User>
-      ))}
-    </>
-  );
-}
-
-function CompanyList() {
-  const [companies, setCompanies] = useState([]);
-
-  useEffect(() => {
-    async function fetchCompanies() {
-      const response = await userService.getAllCompanies();
-      setCompanies(response);
-    }
-
-    fetchCompanies();
-  }, []);
-
-  return (
-    <>
-      {companies.map((x) => (
-        <Company
-          key={x._id}
-          data={x}
-          companyList={companies}
-          setCompanyList={setCompanies}
-        ></Company>
-      ))}
-    </>
-  );
-}
-
-function UsersList() {
-  return (
-    <>
-      <Title level={4}>Personas</Title>
+      <Title level={4}>Personas Físicas</Title>
       <Row gutter={20}>
         <Col span={10}>
-          <Card title="Personas Físicas" bordered={false}>
-            <UserList></UserList>
+          <Card title="Registrar" bordered={false}>
+            <RegisterUser setUsers={setUsers}></RegisterUser>
           </Card>
         </Col>
         <Col span={10}>
-          <Card title="Personas Jurídicas" bordered={false}>
-            <CompanyList></CompanyList>
+          <Card title="Buscar" bordered={false}>
+            <UserList 
+            users={users} 
+            setUsers={setUsers}
+            ></UserList>
           </Card>
         </Col>
       </Row>
@@ -79,4 +51,4 @@ function UsersList() {
   );
 }
 
-export default UsersList;
+export default Users;

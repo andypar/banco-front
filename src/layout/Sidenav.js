@@ -31,7 +31,7 @@ function Sidenav({ color }) {
     </svg>,
   ];
 
-  const personas = [
+  const personasfisicas = [
     <svg
       width="20"
       height="20"
@@ -53,7 +53,7 @@ function Sidenav({ color }) {
     </svg>,
   ];
 
-  const transacciones = [
+  const personasjuridicas = [
     <svg
       width="20"
       height="20"
@@ -165,29 +165,29 @@ function Sidenav({ color }) {
           </NavLink>
         </Menu.Item>
         <Menu.Item key="2">
-          <NavLink to="/personas">
+          <NavLink to="/personasfisicas">
             <span
               className="icon"
               style={{
-                background: page === "personas" ? color : "",
+                background: page === "personasfisicas" ? color : "",
               }}
             >
-              {personas}
+              {personasfisicas}
             </span>
-            <span className="label">Personas</span>
+            <span className="label">Personas Físicas</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="3">
-          <NavLink to="/transacciones">
+          <NavLink to="/personasjuridicas">
             <span
               className="icon"
               style={{
-                background: page === "transacciones" ? color : "",
+                background: page === "personasjuridicas" ? color : "",
               }}
             >
-              {transacciones}
+              {personasjuridicas}
             </span>
-            <span className="label">Transacciones</span>
+            <span className="label">Personas Jurídicas</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item className="menu-item-header" key="5">
