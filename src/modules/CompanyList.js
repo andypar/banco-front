@@ -3,13 +3,35 @@ import "dayjs/locale/es";
 import Company from "../components/Company";
 import RegisterCompany from "../components/RegisterCompany";
 import userService from "../services/users";
-import { Card, Col, Row, Typography } from "antd";
+import { Card, Col, Row, Typography, Input } from "antd";
 
+const { Search } = Input;
 const { Title } = Typography;
+
+function SearchFeature({ setCompanies }) {
+  
+  const searchHandler = async (value) => {
+    const response = await userService.getAllCompanies();
+    console.log(response);
+    setCompanies(response.filter((x) => x.dni.includes(value)));
+
+  };
+
+  return (
+    <div>
+      <Search
+        placeholder="Ingrese CUIT"
+        onSearch={searchHandler}
+        style={{ width: 200 }}
+      />
+    </div>
+  );
+}
 
 function CompanyList({ companies, setCompanies }) {
   return (
     <>
+     <SearchFeature setCompanies={setCompanies}></SearchFeature>
       {companies.map((x) => (
         <Company key={x._id} data={x} setCompanyList={setCompanies}></Company>
       ))}

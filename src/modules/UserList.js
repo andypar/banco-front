@@ -3,13 +3,36 @@ import "dayjs/locale/es";
 import User from "../components/User";
 import RegisterUser from "../components/RegisterUser";
 import userService from "../services/users";
-import { Card, Col, Row, Typography } from "antd";
+import { Card, Col, Row, Typography, Input } from "antd";
 
+const { Search } = Input;
 const { Title } = Typography;
+
+function SearchFeature({ setUsers }) {
+  
+  const searchHandler = async (value) => {
+    const response = await userService.getAllPersons();
+    console.log(response);
+    setUsers(response.filter((x) => x.dni.includes(value)));
+
+  };
+
+  return (
+    <div>
+      <Search
+        placeholder="Ingrese DNI"
+        onSearch={searchHandler}
+        style={{ width: 200 }}
+      />
+    </div>
+  );
+}
 
 function UserList({ users, setUsers }) {
   return (
     <>
+      <SearchFeature setUsers={setUsers}></SearchFeature>
+      <br></br>
       {users.map((x) => (
         <User key={x._id} data={x} setUsersList={setUsers}></User>
       ))}
@@ -40,10 +63,7 @@ function Users() {
         </Col>
         <Col span={10}>
           <Card title="Buscar" bordered={false}>
-            <UserList 
-            users={users} 
-            setUsers={setUsers}
-            ></UserList>
+            <UserList users={users} setUsers={setUsers}></UserList>
           </Card>
         </Col>
       </Row>

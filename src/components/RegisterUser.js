@@ -13,8 +13,8 @@ import {
   Radio,
   Card,
 } from "antd";
-// import person from "../assets/images/people.svg";
-import person from "../assets/images/bg-profile.jpg";
+import person from "../assets/images/people.svg";
+// import person from "../assets/images/bg-profile.jpg";
 import userService from "../services/users";
 import dayjs from "dayjs";
 import { EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
@@ -353,8 +353,8 @@ function Register({setUsers}) {
             bordered={false}
             hoverable
             style={{
-              width: 240,
-              height: 300,
+              width: 200,
+              height: 400,
             }}
             cover={<img alt="person" src={person} />}
           >

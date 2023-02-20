@@ -12,8 +12,8 @@ import {
   Col,
   Card,
 } from "antd";
-// import company from "../assets/images/company.svg";
-import company from "../assets/images/bg-signup.jpg";
+import company from "../assets/images/company.svg";
+// import company from "../assets/images/bg-signup.jpg";
 import userService from "../services/users";
 import dayjs from "dayjs";
 import { EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
@@ -288,8 +288,8 @@ function Register({setCompanies}) {
             bordered={false}
             hoverable
             style={{
-              width: 240,
-              height: 300,
+              width: 200,
+              height: 400,
             }}
             cover={<img alt="company" src={company} />}
           >
