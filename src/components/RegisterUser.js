@@ -6,12 +6,12 @@ import {
   Form,
   Input,
   Modal,
-  message,
   DatePicker,
   Row,
   Col,
   Radio,
   Card,
+  Alert,
 } from "antd";
 import person from "../assets/images/people.svg";
 // import person from "../assets/images/bg-profile.jpg";
@@ -21,7 +21,7 @@ import { EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
 const genderOptions = ["Femenino", "Masculino", "Indeterminado"];
 // const personTypeOptions = ["Física", "Jurídica"];
 
-const RegisterUser = ({ open, onCreate, onCancel }) => {
+const RegisterUser = ({ open, onCreate, onCancel, msg }) => {
   const [form] = Form.useForm();
 
   return (
@@ -54,6 +54,7 @@ const RegisterUser = ({ open, onCreate, onCancel }) => {
             personType: "Física",
           }}
         >
+          {msg ? <Alert type="error" message={msg} banner /> : null}
           <Form.Item
             name="firstName"
             label="Nombre/s"
@@ -308,12 +309,13 @@ const RegisterUser = ({ open, onCreate, onCancel }) => {
   );
 };
 
-function Register({setUsers}) {
+function Register({ setUsers }) {
   const [openP, setOpenP] = useState(false);
+  const [msg, setMsg] = useState();
 
-  const error = (errorMessage) => {
-    message.error("Error: ", errorMessage);
-  };
+  // const error = (errorMessage) => {
+  //   message.error("Error: ", errorMessage);
+  // };
 
   const onCreateP = async (values) => {
     try {
@@ -340,7 +342,8 @@ function Register({setUsers}) {
 
       setOpenP(false);
     } catch (err) {
-      error(err);
+      console.log(err);
+      setMsg(err.response.data);
     }
   };
 
@@ -361,12 +364,14 @@ function Register({setUsers}) {
             <Button
               type="primary"
               onClick={() => {
+                setMsg("");
                 setOpenP(true);
               }}
             >
               Crear Persona Física
             </Button>
             <RegisterUser
+              msg={msg}
               open={openP}
               onCreate={onCreateP}
               onCancel={() => {

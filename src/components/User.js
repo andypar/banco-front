@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   MailOutlined,
-  UserOutlined,
   PhoneOutlined,
   EditOutlined,
   DeleteOutlined,
@@ -31,6 +30,7 @@ function User({ data, setUsersList }) {
   const [open, setOpen] = useState(false);
   const [openModify, setOpenModify] = useState(false);
   const [userInfo, setUserInfo] = useState({});
+  const [msg, setMsg] = useState();
 
   const loguearInfoCompleta = async () => {
     const userInfo = await userService.getUserById(_id);
@@ -58,7 +58,7 @@ function User({ data, setUsersList }) {
       setUsersList(usuarios);
     } catch (err) {
       console.log("There was an error update user ", _id);
-      console.log(err);
+      setMsg(err.response.data);
     }
   };
 
@@ -106,7 +106,13 @@ function User({ data, setUsersList }) {
     );
   }
 
-  function UserModalModify({ open, userInfo, modificarUsuario, onCancel }) {
+  function UserModalModify({
+    open,
+    userInfo,
+    modificarUsuario,
+    onCancel,
+    msg,
+  }) {
     const [form] = Form.useForm();
 
     return (
@@ -123,12 +129,6 @@ function User({ data, setUsersList }) {
               modificarUsuario(values);
             })
             .catch((info) => {
-              <Alert
-                type="error"
-                message="Ha ocurrido un error"
-                description={info}
-                closable
-              ></Alert>;
               console.log("Validate Failed:", info);
             });
         }}
@@ -150,6 +150,7 @@ function User({ data, setUsersList }) {
             personType: userInfo?.personType?.description,
           }}
         >
+          {msg ? <Alert type="error" message={msg} banner /> : null}
           <Form.Item
             name="firstName"
             label="Nombre/s"
@@ -293,33 +294,6 @@ function User({ data, setUsersList }) {
             />
           </Form.Item>
 
-          <Form.Item
-            name="username"
-            label="Usuario"
-            rules={[
-              { type: "string" },
-              {
-                required: true,
-                message: "Please input the username!",
-              },
-              {
-                min: 5,
-                max: 50,
-                message: "El usuario debe tener al menos 5 caracteres",
-              },
-            ]}
-          >
-            <Input
-              prefix={
-                <UserOutlined
-                  type="username"
-                  style={{ color: "rgba(0,0,0,.25)" }}
-                />
-              }
-              placeholder="Usuario"
-            />
-          </Form.Item>
-
           {/* <Form.Item
             name="personType"
             label="Tipo Persona"
@@ -370,7 +344,7 @@ function User({ data, setUsersList }) {
           shape="round"
           icon={<CreditCardOutlined />}
         >
-          Movimientos
+          Productos
         </Button>
       </div>
     );
@@ -408,12 +382,14 @@ function User({ data, setUsersList }) {
             icon={<EditOutlined />}
             onClick={() => {
               loguearInfoCompleta();
+              setMsg("");
               setOpenModify(true);
             }}
           >
             Editar
           </Button>
           <UserModalModify
+            msg={msg}
             open={openModify}
             modificarUsuario={modificarUsuario}
             userInfo={userInfo}

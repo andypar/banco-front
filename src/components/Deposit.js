@@ -1,11 +1,11 @@
 import { useState } from "react";
 import "dayjs/locale/es";
-import { Button, Form, Input, Modal, message } from "antd";
+import { Button, Form, Input, Modal, Alert } from "antd";
 
 import movementService from "../services/movements";
 import productService from "../services/products";
 
-const CreateDeposit = ({ open, onCreate, onCancel }) => {
+const CreateDeposit = ({ open, onCreate, onCancel, msg }) => {
   const [form] = Form.useForm();
 
   return (
@@ -29,6 +29,7 @@ const CreateDeposit = ({ open, onCreate, onCancel }) => {
         }}
       >
         <Form form={form} layout="vertical" name="form-create">
+          {msg ? <Alert type="error" message={msg} banner /> : null}
           <Form.Item
             name="balance"
             label="Monto a Depositar"
@@ -48,8 +49,7 @@ const CreateDeposit = ({ open, onCreate, onCancel }) => {
               {
                 min: 2,
                 max: 6,
-                message:
-                  "El monto a depositar debe ser entre $10 y $100.000",
+                message: "El monto a depositar debe ser entre $10 y $100.000",
               },
             ]}
           >
@@ -83,10 +83,11 @@ const CreateDeposit = ({ open, onCreate, onCancel }) => {
 
 function NewDeposit({ productId, setProducts }) {
   const [openDEP, setopenDEP] = useState(false);
+  const [msg, setMsg] = useState();
 
-  const error = (errorMessage) => {
-    message.error("Error: ", errorMessage);
-  };
+  // const error = (errorMessage) => {
+  //   message.error("Error: ", errorMessage);
+  // };
 
   const onCreateDeposit = async (values) => {
     try {
@@ -108,7 +109,7 @@ function NewDeposit({ productId, setProducts }) {
       setopenDEP(false);
     } catch (err) {
       console.log(err);
-      error(err);
+      setMsg(err.response.data);
     }
   };
 
@@ -118,12 +119,14 @@ function NewDeposit({ productId, setProducts }) {
         type="primary"
         style={{ background: "#7303fc" }}
         onClick={() => {
+          setMsg("");
           setopenDEP(true);
         }}
       >
         Depositar
       </Button>
       <CreateDeposit
+        msg={msg}
         open={openDEP}
         onCreate={onCreateDeposit}
         onCancel={() => {

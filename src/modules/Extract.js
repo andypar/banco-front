@@ -108,8 +108,7 @@ function Extract() {
                   {productInfo?.type?.description === "caja-ahorro" ? (
                     ""
                   ) : (
-                    <Descriptions.Item label="Monto Sobregiro"
-                    >
+                    <Descriptions.Item label="Monto Sobregiro">
                       ${productInfo.overdraftAmount}
                     </Descriptions.Item>
                   )}
@@ -131,9 +130,19 @@ function Extract() {
             <Col span={20}>
               <Card bordered={false}>
                 <Descriptions>
-                  <Descriptions.Item label="Nombre">
-                    {userInfo?.name?.firstName} {userInfo?.name?.lastName}
-                  </Descriptions.Item>
+                  
+                  {userInfo?.personType?.description === "Física" ? (
+                    <Descriptions.Item label="Nombre">
+                      {userInfo?.name?.firstName +
+                        ", " +
+                        userInfo?.name?.lastName}
+                    </Descriptions.Item>
+                  ) : (
+                    <Descriptions.Item label="Razón Social">
+                      {userInfo?.name?.firstName}
+                    </Descriptions.Item>
+                  )}
+
                   <Descriptions.Item label="E-mail">
                     {userInfo.email}
                   </Descriptions.Item>

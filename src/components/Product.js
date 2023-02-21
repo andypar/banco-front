@@ -167,16 +167,16 @@ function Product({
               { type: "string" },
               {
                 required: true,
-                message: "Por favor ingrese el primer nombre!",
+                message: "Por favor ingrese el alias!",
               },
               {
                 whitespace: true,
-                message: "El primer nombre no debe quedar en blanco",
+                message: "El alias no debe quedar en blanco",
               },
               {
                 min: 5,
-                max: 100,
-                message: "El primer nombre debe tener al menos 3 caracteres",
+                max: 25,
+                message: "El alias debe tener al menos 5 caracteres y máximo 25",
               },
             ]}
             hasFeedback

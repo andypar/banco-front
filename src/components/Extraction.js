@@ -1,11 +1,11 @@
 import { useState } from "react";
 import "dayjs/locale/es";
-import { Button, Form, Input, Modal, message } from "antd";
+import { Button, Form, Input, Modal, Alert } from "antd";
 
 import movementService from "../services/movements";
 import productService from "../services/products";
 
-const CreateExtraction = ({ open, onCreate, onCancel }) => {
+const CreateExtraction = ({ open, onCreate, onCancel, msg }) => {
   const [form] = Form.useForm();
 
   return (
@@ -29,6 +29,7 @@ const CreateExtraction = ({ open, onCreate, onCancel }) => {
         }}
       >
         <Form form={form} layout="vertical" name="form-create">
+          {msg ? <Alert type="error" message={msg} banner /> : null}
           <Form.Item
             name="balance"
             label="Monto a Extraer"
@@ -48,7 +49,7 @@ const CreateExtraction = ({ open, onCreate, onCancel }) => {
               {
                 min: 2,
                 max: 6,
-                message: "El monto a extraer debe ser entre $1.000 y $100.000",
+                message: "El monto a extraer debe ser entre $10 y $100.000",
               },
             ]}
           >
@@ -82,10 +83,11 @@ const CreateExtraction = ({ open, onCreate, onCancel }) => {
 
 function NewExtraction({ productId, setProducts }) {
   const [openEXT, setopenEXT] = useState(false);
+  const [msg, setMsg] = useState();
 
-  const error = (errorMessage) => {
-    message.error("Error: ", errorMessage);
-  };
+  // const error = (errorMessage) => {
+  //   message.error("Error: ", errorMessage);
+  // };
 
   const onCreateExtraction = async (values) => {
     try {
@@ -107,7 +109,7 @@ function NewExtraction({ productId, setProducts }) {
       setopenEXT(false);
     } catch (err) {
       console.log(err);
-      error(err);
+      setMsg(err.response.data);
     }
   };
 
@@ -117,12 +119,14 @@ function NewExtraction({ productId, setProducts }) {
         type="primary"
         style={{ background: "#7303fc" }}
         onClick={() => {
+          setMsg("");
           setopenEXT(true);
         }}
       >
         Extraer
       </Button>
       <CreateExtraction
+        msg={msg}
         open={openEXT}
         onCreate={onCreateExtraction}
         onCancel={() => {

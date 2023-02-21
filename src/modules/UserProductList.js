@@ -55,9 +55,13 @@ function AvailableProducts() {
 
   return (
     <>
-      <Title level={4}>
-        {userInfo?.name?.firstName + ", " + userInfo?.name?.lastName}
-      </Title>
+      {userInfo?.personType?.description === "Física" ? (
+        <Title level={4}>
+          {userInfo?.name?.firstName + ", " + userInfo?.name?.lastName}
+        </Title>
+      ) : (
+        <Title level={4}>{userInfo?.name?.firstName}</Title>
+      )}
 
       <Col>
         <p>

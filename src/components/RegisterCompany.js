@@ -6,11 +6,11 @@ import {
   Form,
   Input,
   Modal,
-  message,
   DatePicker,
   Row,
   Col,
   Card,
+  Alert,
 } from "antd";
 import company from "../assets/images/company.svg";
 // import company from "../assets/images/bg-signup.jpg";
@@ -18,8 +18,7 @@ import userService from "../services/users";
 import dayjs from "dayjs";
 import { EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
 
-
-const RegisterCompany = ({ open, onCreate, onCancel }) => {
+const RegisterCompany = ({ open, onCreate, onCancel, msg }) => {
   const [form] = Form.useForm();
 
   return (
@@ -52,6 +51,7 @@ const RegisterCompany = ({ open, onCreate, onCancel }) => {
             personType: "Física",
           }}
         >
+          {msg ? <Alert type="error" message={msg} banner /> : null}
           <Form.Item
             name="firstName"
             label="Razón Social"
@@ -240,12 +240,13 @@ const RegisterCompany = ({ open, onCreate, onCancel }) => {
   );
 };
 
-function Register({setCompanies}) {
+function Register({ setCompanies }) {
   const [openC, setOpenC] = useState(false);
+  const [msg, setMsg] = useState();
 
-  const error = (errorMessage) => {
-    message.error("Error: ", errorMessage);
-  };
+  // const error = (errorMessage) => {
+  //   message.error("Error: ", errorMessage);
+  // };
 
   const onCreateC = async (values) => {
     try {
@@ -254,14 +255,14 @@ function Register({setCompanies}) {
       const newUser = await userService.createUser({
         name: { firstName: values.firstName, lastName: values.firstName },
         gender: "Indeterminado".toLowerCase(),
-        dni: values.cuilCuit,
+        cuilCuit: values.cuilCuit,
         dateBirth: dayjs(values.dateBirth.toDate()).format("YYYY-MM-DD"),
         email: values.email,
         password: values.password,
         username: values.username,
         telephone: values.telephone,
         personType: "Jurídica",
-        cuilCuit: values.cuilCuit,
+        dni: values.cuilCuit,
         roleType: "user",
         isActive: true,
       });
@@ -269,14 +270,12 @@ function Register({setCompanies}) {
 
       const companias = await userService.getAllCompanies();
       setCompanies(companias);
-      
+
       setOpenC(false);
-
     } catch (err) {
-      console.log(err)
-      error(err);
+      console.log(err);
+      setMsg(err.response.data);
     }
-
   };
 
   return (
@@ -296,12 +295,14 @@ function Register({setCompanies}) {
             <Button
               type="primary"
               onClick={() => {
+                setMsg("");
                 setOpenC(true);
               }}
             >
               Crear Persona Jurídica
             </Button>
             <RegisterCompany
+              msg={msg}
               open={openC}
               onCreate={onCreateC}
               onCancel={() => {

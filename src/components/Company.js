@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   MailOutlined,
-  UserOutlined,
   PhoneOutlined,
   EditOutlined,
   DeleteOutlined,
@@ -29,6 +28,7 @@ function Company({ data, setCompanyList }) {
   const [open, setOpen] = useState(false);
   const [openModify, setOpenCompanyModify] = useState(false);
   const [companyInfo, setUserInfo] = useState({});
+  const [msg, setMsg] = useState();
 
   const loguearInfoCompania = async () => {
     const companyInfo = await userService.getUserById(_id);
@@ -56,7 +56,7 @@ function Company({ data, setCompanyList }) {
       setCompanyList(companias);
     } catch (err) {
       console.log("There was an error update user ", _id);
-      console.log(err);
+      setMsg(err.response.data);
     }
   };
 
@@ -105,6 +105,7 @@ function Company({ data, setCompanyList }) {
     companyInfo,
     modificarCompania,
     onCancel,
+    msg,
   }) {
     const [form] = Form.useForm();
 
@@ -132,6 +133,7 @@ function Company({ data, setCompanyList }) {
             });
         }}
       >
+        {msg ? <Alert type="error" message={msg} banner /> : null}
         <Form
           form={form}
           layout="vertical"
@@ -256,32 +258,6 @@ function Company({ data, setCompanyList }) {
             />
           </Form.Item>
 
-          <Form.Item
-            name="username"
-            label="Usuario"
-            rules={[
-              { type: "string" },
-              {
-                required: true,
-                message: "Please input the username!",
-              },
-              {
-                min: 5,
-                max: 50,
-                message: "El usuario debe tener al menos 5 caracteres",
-              },
-            ]}
-          >
-            <Input
-              prefix={
-                <UserOutlined
-                  type="username"
-                  style={{ color: "rgba(0,0,0,.25)" }}
-                />
-              }
-              placeholder="Usuario"
-            />
-          </Form.Item>
         </Form>
       </Modal>
     );
@@ -319,7 +295,7 @@ function Company({ data, setCompanyList }) {
           shape="round"
           icon={<CreditCardOutlined />}
         >
-          Movimientos
+          Productos
         </Button>
       </div>
     );
@@ -358,12 +334,14 @@ function Company({ data, setCompanyList }) {
             icon={<EditOutlined />}
             onClick={() => {
               loguearInfoCompania();
+              setMsg("");
               setOpenCompanyModify(true);
             }}
           >
             Editar
           </Button>
           <CompanyModalModify
+            msg={msg}
             open={openModify}
             modificarCompania={modificarCompania}
             companyInfo={companyInfo}
