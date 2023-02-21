@@ -9,18 +9,17 @@ import {
   Typography,
   Form,
   Input,
-  Switch,
   Alert,
 } from "antd";
 import { EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
+import signinbg from "../assets/images/bank-sign-in.svg";
 
-function onChange(checked) {
-  console.log(`switch to ${checked}`);
-}
 const { Title } = Typography;
 const { Header, Content } = Layout;
 
-
+// function onChange(checked) {
+//   console.log(`switch to ${checked}`);
+// }
 
 async function login(credentials) {
   try {
@@ -56,7 +55,7 @@ function SignIn() {
 
     if (response && "token" in response) {
       localStorage.set(response);
-      window.location.href = "/";
+      window.location.href = "/home";
     } else {
       console.log("Failed", response, "error");
       setError("Error! Usuario o Contraseña Inválidos");
@@ -126,10 +125,10 @@ function SignIn() {
                   />
                 </Form.Item>
 
-                <Form.Item className="aligin-center" valuePropName="checked">
+                {/* <Form.Item className="aligin-center" valuePropName="checked">
                   <Switch name="remember" defaultChecked onChange={onChange} />
                   Recordarme
-                </Form.Item>
+                </Form.Item> */}
 
                 <Form.Item>
                   <Button
@@ -142,6 +141,15 @@ function SignIn() {
                 </Form.Item>
               </Form>
             </Col>
+            <Col
+                className="sign-img"
+                style={{ padding: 0 }}
+                xs={{ span: 24 }}
+                lg={{ span: 12 }}
+                md={{ span: 12 }}
+              >
+                <img src={signinbg} alt="" />
+              </Col>
           </Row>
         </Content>
       </Layout>

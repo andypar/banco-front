@@ -1,4 +1,5 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
+import Home from "../modules/Home";
 import UserList from "../modules/UserList";
 import CompanyList from "../modules/CompanyList";
 import Main from "../layout/Main";
@@ -24,6 +25,18 @@ function Router() {
         </Routes> */}
 
         <Routes>
+          <Route exact path="/" element={<PrivateRoute />}>
+            <Route exact path="/" element={<Home />} />
+          </Route>
+        </Routes>
+
+        <Routes>
+          <Route exact path="/home" element={<PrivateRoute />}>
+            <Route exact path="/home" element={<Home />} />
+          </Route>
+        </Routes>
+
+        <Routes>
           <Route exact path="/extract/:userid/:id" element={<PrivateRoute />}>
             <Route exact path="/extract/:userid/:id" element={<Extract />} />
           </Route>
@@ -37,7 +50,11 @@ function Router() {
 
         <Routes>
           <Route exact path="/product/available/:id" element={<PrivateRoute />}>
-            <Route exact path="/product/available/:id" element={<AvailableProducts />} />
+            <Route
+              exact
+              path="/product/available/:id"
+              element={<AvailableProducts />}
+            />
           </Route>
         </Routes>
 

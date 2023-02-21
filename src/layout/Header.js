@@ -95,7 +95,7 @@ function Header({
         <Col span={24} md={6}>
           <Breadcrumb>
             <Breadcrumb.Item>
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/home">Home</NavLink>
             </Breadcrumb.Item>
           </Breadcrumb>
         </Col>
