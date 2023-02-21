@@ -81,7 +81,7 @@ const CreateExtraction = ({ open, onCreate, onCancel, msg }) => {
   );
 };
 
-function NewExtraction({ productId, setProducts }) {
+function NewExtraction({ productId, setProducts, setProductAmount }) {
   const [openEXT, setopenEXT] = useState(false);
   const [msg, setMsg] = useState();
 
@@ -106,6 +106,11 @@ function NewExtraction({ productId, setProducts }) {
       const productInfo = await productService.getProductById(productId);
       console.log("Extraction ProductInfo: ", productInfo);
       setProducts(productInfo);
+
+      const productAmount = await movementService.getProductAmountsToday(productId);
+      console.log(productAmount);
+      setProductAmount(productAmount);
+
       setopenEXT(false);
     } catch (err) {
       console.log(err);

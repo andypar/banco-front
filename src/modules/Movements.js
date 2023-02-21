@@ -27,6 +27,7 @@ function Movements() {
   const { id } = useParams();
   const [productInfo, setProducts] = useState([]);
   const [data, setData] = useState([]);
+  const [productAmount, setProductAmount] = useState([]);
   const formatter = (value) => <CountUp end={value} separator="," />;
 
   const columns = [
@@ -108,6 +109,53 @@ function Movements() {
     );
   }, [productInfo]);
 
+  useEffect(() => {
+    async function fetchTodayAmounts() {
+      const productAmount = await movementService.getProductAmountsToday(id);
+      setProductAmount(productAmount);
+      console.log("productAmount: ", productAmount);
+    }
+    fetchTodayAmounts();
+  }, [id]);
+
+  function TodayAmounts() {
+    return (
+      <>
+        <Row gutter={16}>
+          <Col span={6}>
+            <Card bordered={false}>
+              <Statistic
+                title="Total Depositado Hoy"
+                value={productAmount[0]?.count}
+                precision={0}
+                formatter={formatter}
+                valueStyle={{
+                  color: "#3f8600",
+                }}
+                prefix={<DollarOutlined />}
+              />
+            </Card>
+          </Col>
+
+          <Col span={6}>
+            <Card bordered={false}>
+              <Statistic
+                title="Total Extraído Hoy"
+                value={productAmount[1]?.count}
+                precision={0}
+                formatter={formatter}
+                valueStyle={{
+                  color: "#cf1322",
+                }}
+                prefix={<DollarOutlined />}
+              />
+            </Card>
+          </Col>
+        </Row>
+      </>
+    );
+  }
+
   function MovementDelete({ movementId, productId }) {
     const text = "Segur@ que quieres borrar el producto?";
     const confirm = () => eliminarMovimiento();
@@ -119,6 +167,10 @@ function Movements() {
 
         const productInfo = await productService.getProductById(productId);
         setProducts(productInfo);
+
+        const productAmount = await movementService.getProductAmountsToday(productId);
+        setProductAmount(productAmount);
+        
       } catch (err) {
         console.log("There was an error deleting product ", movementId);
         console.log(err);
@@ -167,22 +219,21 @@ function Movements() {
           ") "}
       </Title>
 
-        <Col>
-          <p>
-            Nro. Cuenta: &nbsp;
-            <Text type="secondary">{productInfo.accountNumber}</Text>
-          </p>
-          <p>
-            CBU: &nbsp;
-            <Text type="secondary">{productInfo.cbu}</Text>
-          </p>
+      <Col>
+        <p>
+          Nro. Cuenta: &nbsp;
+          <Text type="secondary">{productInfo.accountNumber}</Text>
+        </p>
+        <p>
+          CBU: &nbsp;
+          <Text type="secondary">{productInfo.cbu}</Text>
+        </p>
 
-          <p>
-            Alias: &nbsp;
-            <Text type="secondary">{productInfo.alias}</Text>
-          </p>
-        </Col>
-
+        <p>
+          Alias: &nbsp;
+          <Text type="secondary">{productInfo.alias}</Text>
+        </p>
+      </Col>
 
       <Row gutter={16}>
         <Col span={6}>
@@ -234,11 +285,22 @@ function Movements() {
       </Row>
 
       <br></br>
+      <TodayAmounts></TodayAmounts>
+
+      <br></br>
 
       <Title level={4}>Transacciones</Title>
       <Space wrap>
-        <Extraction productId={id} setProducts={setProducts}></Extraction>
-        <Deposit productId={id} setProducts={setProducts}></Deposit>
+        <Extraction
+          productId={id}
+          setProducts={setProducts}
+          setProductAmount={setProductAmount}
+        ></Extraction>
+        <Deposit
+          productId={id}
+          setProducts={setProducts}
+          setProductAmount={setProductAmount}
+        ></Deposit>
       </Space>
       <br></br>
       <br></br>

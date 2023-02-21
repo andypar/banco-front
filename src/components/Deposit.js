@@ -81,7 +81,7 @@ const CreateDeposit = ({ open, onCreate, onCancel, msg }) => {
   );
 };
 
-function NewDeposit({ productId, setProducts }) {
+function NewDeposit({ productId, setProducts, setProductAmount }) {
   const [openDEP, setopenDEP] = useState(false);
   const [msg, setMsg] = useState();
 
@@ -106,6 +106,11 @@ function NewDeposit({ productId, setProducts }) {
       const productInfo = await productService.getProductById(productId);
       console.log(productInfo);
       setProducts(productInfo);
+
+      const productAmount = await movementService.getProductAmountsToday(productId);
+      console.log(productAmount);
+      setProductAmount(productAmount);
+
       setopenDEP(false);
     } catch (err) {
       console.log(err);
