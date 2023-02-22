@@ -352,12 +352,10 @@ function Register({ setUsers }) {
       <Row gutter={20}>
         <Col span={7}>
           <Card
-            title="Personas Físicas"
             bordered={false}
-            hoverable
             style={{
               width: 200,
-              height: 400,
+              height: 300,
             }}
             cover={<img alt="person" src={person} />}
           >

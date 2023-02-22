@@ -23,6 +23,8 @@ function SearchFeature({ setUsers }) {
         placeholder="Ingrese DNI"
         onSearch={searchHandler}
         style={{ width: 200 }}
+        allowClear
+        enterButton
       />
     </div>
   );
@@ -57,12 +59,12 @@ function Users() {
       <Title level={4}>Personas Físicas</Title>
       <Row gutter={20}>
         <Col span={10}>
-          <Card title="Registrar" bordered={false}>
+          <Card title="Registrar" bordered={false} hoverable>
             <RegisterUser setUsers={setUsers}></RegisterUser>
           </Card>
         </Col>
         <Col span={10}>
-          <Card title="Buscar" bordered={false}>
+          <Card title="Buscar" bordered={false} hoverable>
             <UserList users={users} setUsers={setUsers}></UserList>
           </Card>
         </Col>

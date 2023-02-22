@@ -311,13 +311,13 @@ function Extract() {
             <Card bordered={false}>
               <Statistic
                 title={
-                  movements._id === "000000000000000000000000"
+                  movements._id === "000000000000000000000000" //deposito
                     ? "Total Depositado"
                     : "Total Extraído"
                 }
                 value={movements.count}
                 valueStyle={
-                  movements._id === "000000000000000000000000"
+                  movements._id === "000000000000000000000000" //deposito
                     ? { color: "#3f8600" }
                     : { color: "#cf1322" }
                 }

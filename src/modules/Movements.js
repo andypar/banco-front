@@ -122,35 +122,30 @@ function Movements() {
     return (
       <>
         <Row gutter={16}>
-          <Col span={6}>
-            <Card bordered={false}>
-              <Statistic
-                title="Total Depositado Hoy"
-                value={productAmount[0]?.count}
-                precision={0}
-                formatter={formatter}
-                valueStyle={{
-                  color: "#3f8600",
-                }}
-                prefix={<DollarOutlined />}
-              />
-            </Card>
-          </Col>
+            {productAmount?.map((movements, i) => (
+              <Col span={6}>
+              <Card bordered={false} >
+                <Statistic
+                  title={
+                    movements._id === "000000000000000000000000" //deposito
+                      ? "Total Depositado Hoy"
+                      : "Total Extraído Hoy"
+                  }
+                  value={movements.count}
+                  valueStyle={
+                    movements._id === "000000000000000000000000" //deposito
+                      ? { color: "#3f8600" }
+                      : { color: "#cf1322" }
+                  }
+                  style={{ width: 300 }}
+                  precision={0}
+                  formatter={formatter}
+                  prefix={<DollarOutlined />}
+                />
+              </Card>
+              </Col>
+            ))}
 
-          <Col span={6}>
-            <Card bordered={false}>
-              <Statistic
-                title="Total Extraído Hoy"
-                value={productAmount[1]?.count}
-                precision={0}
-                formatter={formatter}
-                valueStyle={{
-                  color: "#cf1322",
-                }}
-                prefix={<DollarOutlined />}
-              />
-            </Card>
-          </Col>
         </Row>
       </>
     );
@@ -168,9 +163,10 @@ function Movements() {
         const productInfo = await productService.getProductById(productId);
         setProducts(productInfo);
 
-        const productAmount = await movementService.getProductAmountsToday(productId);
+        const productAmount = await movementService.getProductAmountsToday(
+          productId
+        );
         setProductAmount(productAmount);
-        
       } catch (err) {
         console.log("There was an error deleting product ", movementId);
         console.log(err);

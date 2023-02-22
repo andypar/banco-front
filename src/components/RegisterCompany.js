@@ -283,12 +283,10 @@ function Register({ setCompanies }) {
       <Row gutter={20}>
         <Col span={7}>
           <Card
-            title="Personas Jurídicas"
             bordered={false}
-            hoverable
             style={{
               width: 200,
-              height: 400,
+              height: 300,
             }}
             cover={<img alt="company" src={company} />}
           >

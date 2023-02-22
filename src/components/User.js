@@ -353,7 +353,7 @@ function User({ data, setUsersList }) {
   return (
     <div>
       <p>
-        {name?.firstName} {name?.lastName}, {dni}, {username}
+        {name?.firstName} {name?.lastName}, {dni}
       </p>
       <Row gutter={[10, 10]}>
         <Col>

@@ -23,6 +23,8 @@ function SearchFeature({ setCompanies }) {
         placeholder="Ingrese CUIT"
         onSearch={searchHandler}
         style={{ width: 200 }}
+        allowClear
+        enterButton
       />
     </div>
   );
@@ -56,12 +58,12 @@ function Companies() {
       <Title level={4}>Personas Jurídicas</Title>
       <Row gutter={20}>
         <Col span={10}>
-          <Card title="Registrar" bordered={false}>
+          <Card title="Registrar" bordered={false} hoverable>
             <RegisterCompany setCompanies={setCompanies}></RegisterCompany>
           </Card>
         </Col>
         <Col span={10}>
-          <Card title="Buscar" bordered={false}>
+          <Card title="Buscar" bordered={false} hoverable>
             <CompanyList
               companies={companies}
               setCompanies={setCompanies}

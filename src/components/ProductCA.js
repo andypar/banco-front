@@ -117,6 +117,7 @@ function NewCA({
         onClick={() => {
           setopenCA(true);
         }}
+        style={{ background: "#07ad1a" }}
       >
         Crear Producto
       </Button>

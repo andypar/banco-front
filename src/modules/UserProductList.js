@@ -96,6 +96,7 @@ function AvailableProducts() {
               key={i}
               title={product.type + " " + product.currency.toUpperCase()}
               style={{ width: 300 }}
+              hoverable
             >
               <div>
                 {product.type === "caja-ahorro" ? (
@@ -135,6 +136,7 @@ function AvailableProducts() {
         {userInfo?.products?.map((userproducts, i) => (
           <Col span={9} key={i} className="gutter-row2">
             <Card
+              hoverable
               key={i}
               title={
                 userproducts.type?.description +

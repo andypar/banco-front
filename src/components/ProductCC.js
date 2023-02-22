@@ -136,6 +136,7 @@ function NewCC({productType, currencyType, userId, setProducts, setUserInfo}) {
         onClick={() => {
           setopenCC(true);
         }}
+        style={{ background: "#07ad1a" }}
       >
         Crear Producto
       </Button>

@@ -71,7 +71,6 @@ function Sidenav({ color }) {
     </svg>,
   ];
 
-
   const signin = [
     <svg
       width="20"
@@ -90,7 +89,6 @@ function Sidenav({ color }) {
     </svg>,
   ];
 
-  
   async function logout() {
     try {
       const userLogged = localStorage.get("user");

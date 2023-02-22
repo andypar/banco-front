@@ -304,7 +304,7 @@ function Company({ data, setCompanyList }) {
   return (
     <div>
       <p>
-        {name?.firstName}, {dni}, {username}
+        {name?.firstName}, {dni}
       </p>
       <Row gutter={[10, 10]}>
         <Col>
