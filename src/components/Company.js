@@ -24,7 +24,7 @@ import dayjs from "dayjs";
 // const personTypeOptions = ["Física", "Jurídica"];
 
 function Company({ data, setCompanyList }) {
-  const { dni, name, username, _id } = data;
+  const { cuilCuit, name, _id } = data;
   const [open, setOpen] = useState(false);
   const [openModify, setOpenCompanyModify] = useState(false);
   const [companyInfo, setUserInfo] = useState({});
@@ -304,7 +304,7 @@ function Company({ data, setCompanyList }) {
   return (
     <div>
       <p>
-        {name?.firstName}, {dni}
+        {name?.firstName}, {cuilCuit}
       </p>
       <Row gutter={[10, 10]}>
         <Col>
