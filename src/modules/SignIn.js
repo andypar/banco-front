@@ -28,7 +28,7 @@ async function login(credentials) {
       const response = await userService.login(credentials);
       console.log(response);
       if (response.token) {
-        const payload = { token: response.token, user: response.user };
+        const payload = { token: response.token, user: response.user, role: response.role };
         return payload;
       }
     } else {
@@ -51,20 +51,24 @@ function SignIn() {
       username: username,
       password: password,
     });
-    console.log(response);
+    console.log("response",response);
 
     if (response && "token" in response) {
-      localStorage.set(response);
-      window.location.href = "/home";
+      // localStorage.set(response);
+
+      if(response.user.role === "admin"){
+        localStorage.set(response);
+        window.location.href = "/home";
+      } else {
+        setError("Error! Usuario no autorizado")
+      }
+
     } else {
       console.log("Failed", response, "error");
       setError("Error! Usuario o Contraseña Inválidos");
     }
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
 
   return (
     <>
@@ -86,7 +90,6 @@ function SignIn() {
               
               <Form
                 onFinish={handleSubmit}
-                onFinishFailed={onFinishFailed}
                 layout="vertical"
                 className="row-col"
               >

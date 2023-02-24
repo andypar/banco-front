@@ -81,7 +81,7 @@ function User({ data, setUsersList }) {
         open={open}
         okText="Ok"
         onOk={onCancel}
-        title="Detalle del usuario"
+        title="Detalle Persona Física"
         cancelText="Cancelar"
         onCancel={onCancel}
         footer={null}
@@ -118,7 +118,7 @@ function User({ data, setUsersList }) {
     return (
       <Modal
         open={open}
-        title="Modificar Usuario"
+        title="Modificar Persona Física"
         okText="Modificar"
         cancelText="Cancelar"
         onCancel={onCancel}

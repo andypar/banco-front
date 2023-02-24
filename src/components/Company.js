@@ -79,7 +79,7 @@ function Company({ data, setCompanyList }) {
         open={open}
         okText="Ok"
         onOk={onCancel}
-        title="Detalle del usuario"
+        title="Detalle Persona Jurídica"
         cancelText="Cancelar"
         onCancel={onCancel}
         footer={null}
@@ -112,7 +112,7 @@ function Company({ data, setCompanyList }) {
     return (
       <Modal
         open={open}
-        title="Modificar Usuario"
+        title="Modificar Persona Jurídica"
         okText="Modificar"
         cancelText="Cancelar"
         onCancel={onCancel}
@@ -177,7 +177,7 @@ function Company({ data, setCompanyList }) {
 
           <Form.Item
             name="dateBirth"
-            label="Fecha de Nacimiento"
+            label="Fecha de Creación"
             rules={[
               { type: "date" },
               {
