@@ -258,7 +258,7 @@ function Product({
           okButtonProps={{ size: "medium" }}
           cancelButtonProps={{ size: "medium" }}
         >
-          <Tooltip title="Borrar" color={"blue"} key={"blue1"}>
+         <Tooltip title="Borrar" color={"blue"} key={"blue1"}>
             <Button shape="round" icon={<DeleteOutlined />}>
               {/* Borrar */}
             </Button>

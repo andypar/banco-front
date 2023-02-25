@@ -7,7 +7,7 @@ const isAuthenticated = () => {
   // Check if the user is authenticated
   // Return true if authenticated, false otherwise
   const logged = localStorage.get();
-  console.log(logged)
+  // console.log(logged)
 
   if (!logged) {
     return false;

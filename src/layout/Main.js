@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Layout, Drawer, Affix } from "antd";
 import Sidenav from "./Sidenav";
 import Header from "./Header";
+import SignIn from "../modules/SignIn";
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
@@ -32,7 +33,7 @@ function Main({ children }) {
   
 // Para que no se me extienda el login hasta Main
   if(pathname === 'sign-in'){
-    return (<></>)
+    return (<><SignIn/></>)
   }
 
   return (

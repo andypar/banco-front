@@ -8,13 +8,15 @@ import AvailableProducts from "../modules/UserProductList";
 import Movements from "../modules/Movements";
 import Extract from "../modules/Extract";
 import PrivateRoute from "./PrivateRoute";
+import { NoMatch } from "../modules/NoMatch";
 
 function Router() {
   return (
     <BrowserRouter>
-      <Routes>
+      {/* <Routes>
         <Route path="/sign-in" exact element={<SignIn />} />
-      </Routes>
+      </Routes> */}
+
       <Main>
         {/* <Routes>
           <Route exact path="/personasfisicas" element={<UserList />} /> 
@@ -25,49 +27,39 @@ function Router() {
         </Routes> */}
 
         <Routes>
+
+        <Route path="/sign-in" exact element={<SignIn />} />
+          
           <Route exact path="/" element={<PrivateRoute />}>
             <Route exact path="/" element={<Home />} />
           </Route>
-        </Routes>
 
-        <Routes>
           <Route exact path="/home" element={<PrivateRoute />}>
             <Route exact path="/home" element={<Home />} />
           </Route>
-        </Routes>
 
-        <Routes>
           <Route exact path="/extract/:userid/:id" element={<PrivateRoute />}>
             <Route exact path="/extract/:userid/:id" element={<Extract />} />
           </Route>
-        </Routes>
 
-        <Routes>
           <Route exact path="/movement/:id" element={<PrivateRoute />}>
             <Route exact path="/movement/:id" element={<Movements />} />
           </Route>
-        </Routes>
 
-        <Routes>
           <Route exact path="/product/available/:id" element={<PrivateRoute />}>
-            <Route
-              exact
-              path="/product/available/:id"
-              element={<AvailableProducts />}
-            />
+            <Route exact path="/product/available/:id" element={<AvailableProducts />}/>
           </Route>
-        </Routes>
 
-        <Routes>
           <Route exact path="/personasfisicas" element={<PrivateRoute />}>
             <Route exact path="/personasfisicas" element={<UserList />} />
           </Route>
-        </Routes>
 
-        <Routes>
           <Route exact path="/personasjuridicas" element={<PrivateRoute />}>
             <Route exact path="/personasjuridicas" element={<CompanyList />} />
           </Route>
+
+          <Route path="*" element={<NoMatch></NoMatch>}></Route>
+
         </Routes>
       </Main>
     </BrowserRouter>

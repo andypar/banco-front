@@ -7,7 +7,7 @@ import localStorage from "./localStorage";
 function errorMessage(err) {
 	if (err.response && err.response.status === 401) {
 		localStorage.delete();
-		<Navigate to="/" replace={true} />;
+		<Navigate to="/sign-in" replace={true} />;
 	}
 	return err;
 }

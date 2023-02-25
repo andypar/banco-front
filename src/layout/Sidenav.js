@@ -1,8 +1,9 @@
-import { Menu } from "antd";
+import { Menu, Switch } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 import logo from "../assets/images/logo.svg";
 import userService from "../services/users";
 import localStorage from "../services/localStorage";
+import { useState } from "react";
 
 function Sidenav({ color }) {
   const { pathname } = useLocation();
@@ -104,64 +105,93 @@ function Sidenav({ color }) {
     }
   }
 
+  const [theme, setTheme] = useState("light");
+
+  const changeTheme = (value) => {
+    setTheme(value ? "dark" : "light");
+  };
+
+  const items = [
+    {
+      label: (
+        <NavLink to="/home">
+          <span
+            className="icon"
+            style={{
+              background: page === "home" ? color : "",
+            }}
+          >
+            {home}
+          </span>
+          <span className="label">Home</span>
+        </NavLink>
+      ),
+      key: "1",
+    },
+    {
+      label: (
+        <NavLink to="/personasfisicas">
+          <span
+            className="icon"
+            style={{
+              background: page === "personasfisicas" ? color : "",
+            }}
+          >
+            {personasfisicas}
+          </span>
+          <span className="label">Personas Físicas</span>
+        </NavLink>
+      ),
+      key: "2",
+    },
+    {
+      label: (
+        <NavLink to="/personasjuridicas">
+          <span
+            className="icon"
+            style={{
+              background: page === "personasjuridicas" ? color : "",
+            }}
+          >
+            {personasjuridicas}
+          </span>
+          <span className="label">Personas Jurídicas</span>
+        </NavLink>
+      ),
+      key: 3,
+    },
+    {
+      label: (<span className="menu-item-header">CUENTA</span>),
+      key: "5",
+    },
+
+    {
+      label: (
+        <NavLink to="/sign-in" onClick={() => logout()}>
+          <span className="icon">{signin}</span>
+          <span className="label">Cerrar Sesión</span>
+        </NavLink>
+      ),
+      key: "9",
+    },
+  ];
+
   return (
     <>
       <div className="brand">
         <img src={logo} alt="" />
         <span>Banco</span>
       </div>
-      <hr />
-      <Menu theme="light" mode="inline">
-        <Menu.Item key="1">
-          <NavLink to="/home">
-            <span
-              className="icon"
-              style={{
-                background: page === "home" ? color : "",
-              }}
-            >
-              {home}
-            </span>
-            <span className="label">Home</span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="2">
-          <NavLink to="/personasfisicas">
-            <span
-              className="icon"
-              style={{
-                background: page === "personasfisicas" ? color : "",
-              }}
-            >
-              {personasfisicas}
-            </span>
-            <span className="label">Personas Físicas</span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="3">
-          <NavLink to="/personasjuridicas">
-            <span
-              className="icon"
-              style={{
-                background: page === "personasjuridicas" ? color : "",
-              }}
-            >
-              {personasjuridicas}
-            </span>
-            <span className="label">Personas Jurídicas</span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item className="menu-item-header" key="5">
-          Cuenta
-        </Menu.Item>
 
-        <Menu.Item key="9">
-          <NavLink to="/sign-in" onClick={() => logout()}>
-            <span className="icon">{signin}</span>
-            <span className="label">Cerrar Sesión</span>
-          </NavLink>
-        </Menu.Item>
-      </Menu>
+      <Switch
+        checked={theme === "dark"}
+        onChange={changeTheme}
+        checkedChildren="Oscuro"
+        unCheckedChildren="Claro"
+      />
+      <hr />
+
+      <Menu theme={theme} mode="inline" items={items}></Menu>
     </>
   );
 }
