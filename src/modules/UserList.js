@@ -4,6 +4,7 @@ import User from "../components/User";
 import RegisterUser from "../components/RegisterUser";
 import userService from "../services/users";
 import { Card, Col, Row, Typography, Input } from "antd";
+import AllowedTo from "../components/AllowedTo";
 
 const { Search } = Input;
 const { Title } = Typography;
@@ -56,13 +57,16 @@ function Users() {
 
   return (
     <>
+
       <Title level={4}>Personas Físicas</Title>
       <Row gutter={20}>
+      <AllowedTo>
         <Col span={10}>
           <Card title="Registrar" bordered={false} hoverable>
             <RegisterUser setUsers={setUsers}></RegisterUser>
           </Card>
         </Col>
+        </AllowedTo>
         <Col span={10}>
           <Card title="Buscar" bordered={false} hoverable>
             <UserList users={users} setUsers={setUsers}></UserList>

@@ -8,6 +8,8 @@ import {
   Alert,
   Popconfirm,
   Tooltip,
+  Row,
+  Col,
 } from "antd";
 import {
   EditOutlined,
@@ -30,6 +32,7 @@ function Product({
   const [open, setOpen] = useState(false);
   const [openModify, setOpenModify] = useState(false);
   const [productInfo, setProductInfo] = useState({});
+  const [msg, setMsg] = useState();
 
   const loguearInfoCompleta = async () => {
     const productInfo = await productService.getProductById(productId);
@@ -51,7 +54,7 @@ function Product({
         setOpenModify(false);
       } catch (err) {
         console.log("There was an error update product ", productId);
-        console.log(err);
+        setMsg(err.response.data);
       }
     } else {
       try {
@@ -149,6 +152,7 @@ function Product({
             });
         }}
       >
+        {msg ? <Alert type="error" message={msg} banner /> : null}
         <Form
           form={form}
           layout="vertical"
@@ -176,7 +180,8 @@ function Product({
               {
                 min: 5,
                 max: 25,
-                message: "El alias debe tener al menos 5 caracteres y máximo 25",
+                message:
+                  "El alias debe tener al menos 5 caracteres y máximo 25",
               },
             ]}
             hasFeedback
@@ -258,7 +263,7 @@ function Product({
           okButtonProps={{ size: "medium" }}
           cancelButtonProps={{ size: "medium" }}
         >
-         <Tooltip title="Borrar" color={"blue"} key={"blue1"}>
+          <Tooltip title="Borrar" color={"blue"} key={"blue1"}>
             <Button shape="round" icon={<DeleteOutlined />}>
               {/* Borrar */}
             </Button>
@@ -271,7 +276,7 @@ function Product({
   function Movimientos() {
     return (
       <div>
-        <Tooltip title="Transacciones" color={"blue"} key={"blue2"}>
+        {/* <Tooltip title="Transacciones" color={"blue"} key={"blue2"}> */}
           <Button
             onClick={() => {
               window.location = "/movement/" + productId;
@@ -279,9 +284,9 @@ function Product({
             shape="round"
             icon={<DollarOutlined />}
           >
-            {/* Movimientos */}
+            Transacciones
           </Button>
-        </Tooltip>
+        {/* </Tooltip> */}
       </div>
     );
   }
@@ -289,7 +294,7 @@ function Product({
   function Resumen() {
     return (
       <div>
-        <Tooltip title="Resumen" color={"blue"} key={"blue2"}>
+        {/* <Tooltip title="Resumen" color={"blue"} key={"blue2"}> */}
           <Button
             onClick={() => {
               window.location = "/extract/" + userId + "/" + productId;
@@ -297,9 +302,9 @@ function Product({
             shape="round"
             icon={<MailOutlined />}
           >
-            {/* Resumen */}
+            Resumen
           </Button>
-        </Tooltip>
+        {/* </Tooltip> */}
       </div>
     );
   }
@@ -307,52 +312,66 @@ function Product({
   return (
     <div>
       <Space>
-        <Tooltip title="Ver Detalle" color={"blue"} key={"blue3"}>
-          <Button
-            type="primary"
-            onClick={() => {
-              loguearInfoCompleta();
-              setOpen(true);
-            }}
-            shape="round"
-            icon={<ProfileOutlined />}
-          >
-            {/* Ver Detalle */}
-          </Button>
-        </Tooltip>
-        <ProductModal
-          open={open}
-          productInfo={productInfo}
-          onCancel={() => {
-            setOpen(false);
-          }}
-        ></ProductModal>
-        <Tooltip title="Editar" color={"blue"} key={"blue4"}>
-          <Button
-            shape="round"
-            icon={<EditOutlined />}
-            onClick={() => {
-              loguearInfoCompleta();
-              setOpenModify(true);
-            }}
-          >
-            {/* Editar */}
-          </Button>
-        </Tooltip>
-        <ProductModalModify
-          open={openModify}
-          modificarProducto={modificarProducto}
-          productInfo={productInfo}
-          onCancel={() => {
-            setOpenModify(false);
-          }}
-        ></ProductModalModify>
+        <Row gutter={[10, 10]}>
+          <Col>
+            <Tooltip title="Ver Detalle" color={"blue"} key={"blue3"}>
+              <Button
+                type="primary"
+                onClick={() => {
+                  loguearInfoCompleta();
+                  setOpen(true);
+                }}
+                shape="round"
+                icon={<ProfileOutlined />}
+              >
+                {/* Ver Detalle */}
+              </Button>
+            </Tooltip>
+          </Col>
+          <Col>
+            <ProductModal
+              open={open}
+              productInfo={productInfo}
+              onCancel={() => {
+                setOpen(false);
+              }}
+            ></ProductModal>
+          </Col>
+          <Col>
+            <Tooltip title="Editar" color={"blue"} key={"blue4"}>
+              <Button
+                shape="round"
+                icon={<EditOutlined />}
+                onClick={() => {
+                  loguearInfoCompleta();
+                  setOpenModify(true);
+                }}
+              >
+                {/* Editar */}
+              </Button>
+            </Tooltip>
+          </Col>
+          <Col>
+            <ProductModalModify
+              open={openModify}
+              modificarProducto={modificarProducto}
+              productInfo={productInfo}
+              onCancel={() => {
+                setOpenModify(false);
+              }}
+            ></ProductModalModify>
+          </Col>
 
-        <ProductDelete></ProductDelete>
-
-        <Movimientos></Movimientos>
-
-        <Resumen></Resumen>
+          <Col>
+            <ProductDelete></ProductDelete>
+          </Col>
+          <Col>
+            <Movimientos></Movimientos>
+          </Col>
+          <Col>
+            <Resumen></Resumen>
+          </Col> 
+        </Row>
       </Space>
     </div>
   );

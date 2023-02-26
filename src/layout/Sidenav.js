@@ -1,13 +1,16 @@
-import { Menu, Switch } from "antd";
+import { Menu } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 import logo from "../assets/images/logo.svg";
 import userService from "../services/users";
 import localStorage from "../services/localStorage";
-import { useState } from "react";
+import { UserContext } from "../context/UserContext";
+import { useContext } from "react";
 
 function Sidenav({ color }) {
   const { pathname } = useLocation();
   const page = pathname.replace("/", "");
+  const { role } = useContext(UserContext);
+
 
   const home = [
     <svg
@@ -105,11 +108,11 @@ function Sidenav({ color }) {
     }
   }
 
-  const [theme, setTheme] = useState("light");
+  // const [theme, setTheme] = useState("light");
 
-  const changeTheme = (value) => {
-    setTheme(value ? "dark" : "light");
-  };
+  // const changeTheme = (value) => {
+  //   setTheme(value ? "dark" : "light");
+  // };
 
   const items = [
     {
@@ -181,17 +184,19 @@ function Sidenav({ color }) {
       <div className="brand">
         <img src={logo} alt="" />
         <span>Banco</span>
+        <br></br>
+        <p>Rol:&nbsp; {role}</p>
       </div>
 
-      <Switch
+      {/* <Switch
         checked={theme === "dark"}
         onChange={changeTheme}
         checkedChildren="Oscuro"
         unCheckedChildren="Claro"
-      />
+      /> */}
       <hr />
 
-      <Menu theme={theme} mode="inline" items={items}></Menu>
+      <Menu theme="light" mode="inline" items={items}></Menu>
     </>
   );
 }

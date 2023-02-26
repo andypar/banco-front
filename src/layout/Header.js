@@ -1,7 +1,6 @@
 import { useEffect } from "react";
-import { Row, Col, Breadcrumb, Button } from "antd";
+import { Row, Col, Button } from "antd";
 import { NavLink } from "react-router-dom";
-
 
 const toggler = [
   <svg
@@ -15,21 +14,14 @@ const toggler = [
   </svg>,
 ];
 
-function Header({
-  onPress,
-}) {
-
+function Header({ onPress }) {
   useEffect(() => window.scrollTo(0, 0));
 
   return (
     <>
       <Row gutter={[24, 0]}>
         <Col span={24} md={6}>
-          <Breadcrumb>
-            <Breadcrumb.Item>
-              <NavLink to="/home">Home</NavLink>
-            </Breadcrumb.Item>
-          </Breadcrumb>
+          <NavLink to="/home"></NavLink >
         </Col>
         <Col span={24} md={18} className="header-control">
           <Button

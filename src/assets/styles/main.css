@@ -59,11 +59,12 @@ body {
   border: none;
 }
 
-/* theme
+/*theme
 ant-menu ant-menu-root ant-menu-inline ant-menu-light css-dev-only-do-not-override-1n7nwfa
+*/
 .layout-dashboard .ant-menu {
   background: transparent;
-}*/
+}
 
 .layout-dashboard
   .ant-layout-sider.sider-primary

@@ -13,10 +13,10 @@ import {
   Alert,
 } from "antd";
 import company from "../assets/images/company.svg";
-// import company from "../assets/images/bg-signup.jpg";
 import userService from "../services/users";
 import dayjs from "dayjs";
 import { EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
+
 
 const RegisterCompany = ({ open, onCreate, onCancel, msg }) => {
   const [form] = Form.useForm();

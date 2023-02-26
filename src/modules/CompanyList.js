@@ -4,6 +4,8 @@ import Company from "../components/Company";
 import RegisterCompany from "../components/RegisterCompany";
 import userService from "../services/users";
 import { Card, Col, Row, Typography, Input } from "antd";
+import AllowedTo from "../components/AllowedTo";
+
 
 const { Search } = Input;
 const { Title } = Typography;
@@ -13,7 +15,7 @@ function SearchFeature({ setCompanies }) {
   const searchHandler = async (value) => {
     const response = await userService.getAllCompanies();
     console.log(response);
-    setCompanies(response.filter((x) => x.dni.includes(value)));
+    setCompanies(response.filter((x) => x.cuilCuit.includes(value)));
 
   };
 
@@ -57,11 +59,13 @@ function Companies() {
     <>
       <Title level={4}>Personas Jurídicas</Title>
       <Row gutter={20}>
+        <AllowedTo>
         <Col span={10}>
           <Card title="Registrar" bordered={false} hoverable>
             <RegisterCompany setCompanies={setCompanies}></RegisterCompany>
           </Card>
         </Col>
+        </AllowedTo>
         <Col span={10}>
           <Card title="Buscar" bordered={false} hoverable>
             <CompanyList

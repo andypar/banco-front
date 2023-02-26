@@ -22,6 +22,7 @@ import {
 import userService from "../services/users";
 import "dayjs/locale/es";
 import dayjs from "dayjs";
+import AllowedTo from "./AllowedTo";
 const genderOptions = ["Femenino", "Masculino", "Indeterminado"];
 // const personTypeOptions = ["Física", "Jurídica"];
 
@@ -318,18 +319,20 @@ function User({ data, setUsersList }) {
 
     return (
       <>
-        <Popconfirm
-          title={text}
-          onConfirm={confirm}
-          okText="Yes"
-          cancelText="No"
-          okButtonProps={{ size: "medium" }}
-          cancelButtonProps={{ size: "medium" }}
-        >
-          <Button shape="round" icon={<DeleteOutlined />}>
-            Borrar
-          </Button>
-        </Popconfirm>
+        <AllowedTo>
+          <Popconfirm
+            title={text}
+            onConfirm={confirm}
+            okText="Yes"
+            cancelText="No"
+            okButtonProps={{ size: "medium" }}
+            cancelButtonProps={{ size: "medium" }}
+          >
+            <Button shape="round" icon={<DeleteOutlined />}>
+              Borrar
+            </Button>
+          </Popconfirm>
+        </AllowedTo>
       </>
     );
   }

@@ -54,9 +54,11 @@ function SignIn() {
     console.log("response",response);
 
     if (response && "token" in response) {
+      
       // localStorage.set(response);
+      // window.location.href = "/home";
 
-      if(response.user.role === "admin"){
+      if(response.user.role === "admin" || response.user.role === "employee"){
         localStorage.set(response);
         window.location.href = "/home";
       } else {

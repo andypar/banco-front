@@ -14,12 +14,12 @@ import {
   Alert,
 } from "antd";
 import person from "../assets/images/people.svg";
-// import person from "../assets/images/bg-profile.jpg";
 import userService from "../services/users";
 import dayjs from "dayjs";
 import { EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
 const genderOptions = ["Femenino", "Masculino", "Indeterminado"];
 // const personTypeOptions = ["Física", "Jurídica"];
+
 
 const RegisterUser = ({ open, onCreate, onCancel, msg }) => {
   const [form] = Form.useForm();

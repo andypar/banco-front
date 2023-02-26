@@ -21,6 +21,7 @@ import {
 import userService from "../services/users";
 import "dayjs/locale/es";
 import dayjs from "dayjs";
+import AllowedTo from "./AllowedTo";
 // const personTypeOptions = ["Física", "Jurídica"];
 
 function Company({ data, setCompanyList }) {
@@ -257,7 +258,6 @@ function Company({ data, setCompanyList }) {
               placeholder="Email"
             />
           </Form.Item>
-
         </Form>
       </Modal>
     );
@@ -269,18 +269,20 @@ function Company({ data, setCompanyList }) {
 
     return (
       <>
-        <Popconfirm
-          title={text}
-          onConfirm={confirm}
-          okText="Yes"
-          cancelText="No"
-          okButtonProps={{ size: "medium" }}
-          cancelButtonProps={{ size: "medium" }}
-        >
-          <Button shape="round" icon={<DeleteOutlined />}>
-            Borrar
-          </Button>
-        </Popconfirm>
+        <AllowedTo>
+          <Popconfirm
+            title={text}
+            onConfirm={confirm}
+            okText="Yes"
+            cancelText="No"
+            okButtonProps={{ size: "medium" }}
+            cancelButtonProps={{ size: "medium" }}
+          >
+            <Button shape="round" icon={<DeleteOutlined />}>
+              Borrar
+            </Button>
+          </Popconfirm>
+        </AllowedTo>
       </>
     );
   }
