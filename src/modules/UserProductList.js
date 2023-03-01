@@ -6,6 +6,7 @@ import { Card, Row, Col, Typography, Button } from "antd";
 import ProductCC from "../components/ProductCC";
 import ProductCA from "../components/ProductCA";
 import Product from "../components/Product";
+import AllowedTo from "../components/AllowedTo";
 
 const { Title, Text } = Typography;
 
@@ -79,49 +80,51 @@ function AvailableProducts() {
         </p>
       </Col>
 
-      <Title level={4}>Productos Disponibles</Title>
+      <AllowedTo>
+        <Title level={4}>Productos Disponibles</Title>
 
-      {products.length === 0 ? (
-        <p>
-          <Text type="danger">No hay nuevos productos disponibles</Text>
-        </p>
-      ) : (
-        ""
-      )}
+        {products.length === 0 ? (
+          <p>
+            <Text type="danger">No hay nuevos productos disponibles</Text>
+          </p>
+        ) : (
+          ""
+        )}
 
-      <Row gutter={0}>
-        {products.map((product, i) => (
-          <Col span={8} key={i} className="gutter-row">
-            <Card
-              key={i}
-              title={product.type + " " + product.currency.toUpperCase()}
-              style={{ width: 300 }}
-              hoverable
-            >
-              <div>
-                {product.type === "caja-ahorro" ? (
-                  <ProductCA
-                    productType={product.type}
-                    currencyType={product.currency}
-                    userId={id}
-                    setProducts={setProducts}
-                    setUserInfo={setUserInfo}
-                  ></ProductCA>
-                ) : (
-                  <ProductCC
-                    productType={product.type}
-                    currencyType={product.currency}
-                    userId={id}
-                    setProducts={setProducts}
-                    setUserInfo={setUserInfo}
-                  ></ProductCC>
-                )}
-              </div>
-            </Card>
-            <br></br>
-          </Col>
-        ))}
-      </Row>
+        <Row gutter={20}>
+          {products.map((product, i) => (
+            <Col span={8} key={i} className="gutter-row">
+              <Card
+                key={i}
+                title={product.type + " " + product.currency.toUpperCase()}
+                style={{ width: 300 }}
+                hoverable
+              >
+                <div>
+                  {product.type === "caja-ahorro" ? (
+                    <ProductCA
+                      productType={product.type}
+                      currencyType={product.currency}
+                      userId={id}
+                      setProducts={setProducts}
+                      setUserInfo={setUserInfo}
+                    ></ProductCA>
+                  ) : (
+                    <ProductCC
+                      productType={product.type}
+                      currencyType={product.currency}
+                      userId={id}
+                      setProducts={setProducts}
+                      setUserInfo={setUserInfo}
+                    ></ProductCC>
+                  )}
+                </div>
+              </Card>
+              <br></br>
+            </Col>
+          ))}
+        </Row>
+      </AllowedTo>
 
       <Title level={4}>Productos Actuales</Title>
       {userInfo?.products?.length === 0 ? (
@@ -132,7 +135,7 @@ function AvailableProducts() {
         ""
       )}
 
-      <Row gutter={0}>
+      <Row gutter={20}>
         {userInfo?.products?.map((userproducts, i) => (
           <Col span={9} key={i} className="gutter-row2">
             <Card

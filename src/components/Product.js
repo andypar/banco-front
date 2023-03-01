@@ -20,6 +20,7 @@ import {
 } from "@ant-design/icons";
 import productService from "../services/products";
 import userService from "../services/users";
+import AllowedTo from "./AllowedTo"
 
 function Product({
   productId,
@@ -255,6 +256,7 @@ function Product({
 
     return (
       <>
+      <AllowedTo>
         <Popconfirm
           title={text}
           onConfirm={confirm}
@@ -269,6 +271,7 @@ function Product({
             </Button>
           </Tooltip>
         </Popconfirm>
+        </AllowedTo>
       </>
     );
   }
@@ -365,12 +368,15 @@ function Product({
           <Col>
             <ProductDelete></ProductDelete>
           </Col>
+          <br></br>
+          <Row>
           <Col>
             <Movimientos></Movimientos>
           </Col>
           <Col>
             <Resumen></Resumen>
           </Col> 
+        </Row>
         </Row>
       </Space>
     </div>

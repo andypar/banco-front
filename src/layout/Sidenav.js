@@ -11,7 +11,6 @@ function Sidenav({ color }) {
   const page = pathname.replace("/", "");
   const { role } = useContext(UserContext);
 
-
   const home = [
     <svg
       width="20"
@@ -164,7 +163,7 @@ function Sidenav({ color }) {
       key: 3,
     },
     {
-      label: (<span className="menu-item-header">CUENTA</span>),
+      label: <span className="menu-item-header">CUENTA</span>,
       key: "5",
     },
 

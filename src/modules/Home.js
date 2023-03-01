@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import userService from "../services/users";
 import { Col, Row, Statistic, Card, Typography } from "antd";
 import {
@@ -38,17 +39,19 @@ function Home() {
       <Title level={4}>Home</Title>
       <Row gutter={16}>
         <Col span={5}>
-          <Card title="Personas Físicas" bordered={false}>
-            <Col span={12}>
-              <Statistic
-                value={users.length}
-                prefix={<UserOutlined />}
-                valueStyle={{
-                  color: "#250be6",
-                }}
-              />
-            </Col>
-          </Card>
+          <NavLink to="/personasfisicas">
+            <Card title="Personas Físicas" bordered={false}>
+              <Col span={12}>
+                <Statistic
+                  value={users.length}
+                  prefix={<UserOutlined />}
+                  valueStyle={{
+                    color: "#250be6",
+                  }}
+                />
+              </Col>
+            </Card>
+          </NavLink>
         </Col>
         <Col span={5}>
           <Card title="Productos" bordered={false}>
@@ -101,17 +104,19 @@ function Home() {
 
       <Row gutter={16}>
         <Col span={5}>
-          <Card title="Personas Jurídicas" bordered={false}>
-            <Col span={12}>
-              <Statistic
-                value={companies.length}
-                prefix={<ShopOutlined />}
-                valueStyle={{
-                  color: "#960be6",
-                }}
-              />
-            </Col>
-          </Card>
+          <NavLink to="/personasjuridicas">
+            <Card title="Personas Jurídicas" bordered={false}>
+              <Col span={12}>
+                <Statistic
+                  value={companies.length}
+                  prefix={<ShopOutlined />}
+                  valueStyle={{
+                    color: "#960be6",
+                  }}
+                />
+              </Col>
+            </Card>
+          </NavLink>
         </Col>
         <Col span={5}>
           <Card title="Productos" bordered={false}>
@@ -123,8 +128,8 @@ function Home() {
                 )}
                 prefix={<CreditCardOutlined />}
                 valueStyle={{
-                    color: "#960be6",
-                  }}
+                  color: "#960be6",
+                }}
               />
             </Col>
           </Card>
@@ -141,8 +146,8 @@ function Home() {
                 )}
                 prefix={<NumberOutlined />}
                 valueStyle={{
-                    color: "#960be6",
-                  }}
+                  color: "#960be6",
+                }}
               />
             </Col>
           </Card>
