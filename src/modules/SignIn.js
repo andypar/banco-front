@@ -1,16 +1,7 @@
 import userService from "../services/users";
 import localStorage from "../services/localStorage";
 import React, { useState } from "react";
-import {
-  Layout,
-  Button,
-  Row,
-  Col,
-  Typography,
-  Form,
-  Input,
-  Alert,
-} from "antd";
+import { Layout, Button, Row, Col, Typography, Form, Input, Alert } from "antd";
 import { EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
 import signinbg from "../assets/images/bank-sign-in.svg";
 
@@ -28,7 +19,11 @@ async function login(credentials) {
       const response = await userService.login(credentials);
       console.log(response);
       if (response.token) {
-        const payload = { token: response.token, user: response.user, role: response.role };
+        const payload = {
+          token: response.token,
+          user: response.user,
+          role: response.role,
+        };
         return payload;
       }
     } else {
@@ -51,26 +46,29 @@ function SignIn() {
       username: username,
       password: password,
     });
-    console.log("response",response);
+    console.log("response", response);
 
     if (response && "token" in response) {
-      
       // localStorage.set(response);
       // window.location.href = "/home";
+      // const userid = "000000000000000000000005";
 
-      if(response.user.role === "admin" || response.user.role === "employee"){
+      if (response.user.role === "admin" || response.user.role === "employee") {
         localStorage.set(response);
         window.location.href = "/home";
-      } else {
-        setError("Error! Usuario no autorizado")
       }
-
+      // if (response.user.role === "user") {
+      //   localStorage.set(response);
+      //   window.location.href = "/product/available/" + userid;
+      // } 
+      else {
+        setError("Error! Usuario no autorizado");
+      }
     } else {
       console.log("Failed", response, "error");
       setError("Error! Usuario o Contraseña Inválidos");
     }
   };
-
 
   return (
     <>
@@ -89,7 +87,7 @@ function SignIn() {
               md={{ span: 12 }}
             >
               <Title className="mb-15">Iniciar Sesión</Title>
-              
+
               <Form
                 onFinish={handleSubmit}
                 layout="vertical"
@@ -147,14 +145,14 @@ function SignIn() {
               </Form>
             </Col>
             <Col
-                className="sign-img"
-                style={{ padding: 0 }}
-                xs={{ span: 24 }}
-                lg={{ span: 12 }}
-                md={{ span: 12 }}
-              >
-                <img src={signinbg} alt="" />
-              </Col>
+              className="sign-img"
+              style={{ padding: 0 }}
+              xs={{ span: 24 }}
+              lg={{ span: 12 }}
+              md={{ span: 12 }}
+            >
+              <img src={signinbg} alt="" />
+            </Col>
           </Row>
         </Content>
       </Layout>

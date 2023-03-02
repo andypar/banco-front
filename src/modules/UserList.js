@@ -3,7 +3,7 @@ import "dayjs/locale/es";
 import User from "../components/User";
 import RegisterUser from "../components/RegisterUser";
 import userService from "../services/users";
-import { Card, Col, Row, Typography, Input } from "antd";
+import { Card, Col, Row, Typography, Input, Pagination } from "antd";
 import AllowedTo from "../components/AllowedTo";
 
 const { Search } = Input;
@@ -30,27 +30,42 @@ function SearchFeature({ setUsers }) {
 }
 
 function UserList({ users, setUsers }) {
-  // const [current, setCurrent] = useState(3);
-  // const onChange = (page) => {
-  //   console.log(page);
-  //   setCurrent(page);
-  // };
 
+  const [currentPageElements, setCurrentPageElements] = useState([]);
+  const offset= 0
+  const elementsPerPage = 2 
+  const totalElementsCount = users.length
+  // const pagesCount = Math.ceil(totalElementsCount / elementsPerPage)
+  // const currentPageElements = allElements.slice(offset, offset + elementsPerPage);
+
+  console.log(currentPageElements)
+
+  const [current, setCurrent] = useState(1);
+  const onChange = (page) => {
+    console.log(page);
+    setCurrent(page);
+    const o = (page-1) * elementsPerPage;
+    setCurrentPageElements(users.slice(o, o + elementsPerPage))
+  };
+
+  useEffect(() => {
+    setCurrentPageElements(users.slice(offset, offset + elementsPerPage));
+  }, [users]);
+  
   return (
     <>
       <SearchFeature setUsers={setUsers}></SearchFeature>
       <br></br>
-
-      {users.map((x) => (
+      {currentPageElements?.map((x) => (
         <User key={x._id} data={x} setUsersList={setUsers}></User>
       ))}
-      {/* <br></br>
+      <br></br>
       <Pagination
         current={current}
         onChange={onChange}
         defaultPageSize={2}
-        total={users.length}
-      ></Pagination> */}
+        total={totalElementsCount}
+      ></Pagination>
     </>
   );
 }
