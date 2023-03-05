@@ -1,13 +1,17 @@
-# Banco Front
+# **Banco Front**
 
-1) Instalar paquetes
+### 1) Instalar paquetes:
 
-npm i
+`npm i`
 
-2) Generar nuevo archivo .env
+### 2) Generar nuevo archivo .env con las siguientes variables de ambiente:
 
-ENV = "DEV"
+	REACT_APP_ENV = "DEV"
+	REACT_APP_API_TIMEOUT = 15000
+	REACT_APP_BASE_URL = "http://localhost:3000/"
+	REACT_APP_TOKEN_KEY = "__FirstApp__"
+	REACT_APP_DURATION = 86400000
 
-3) Ejecutar programa
+### 5) Ejecutar programa
 
-npm run dev
+    npm run dev
