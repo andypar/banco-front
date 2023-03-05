@@ -29,20 +29,16 @@ function SearchFeature({ setUsers }) {
   );
 }
 
+
 function UserList({ users, setUsers }) {
 
   const [currentPageElements, setCurrentPageElements] = useState([]);
-  const offset= 0
-  const elementsPerPage = 2 
-  const totalElementsCount = users.length
-  // const pagesCount = Math.ceil(totalElementsCount / elementsPerPage)
-  // const currentPageElements = allElements.slice(offset, offset + elementsPerPage);
-
-  console.log(currentPageElements)
-
   const [current, setCurrent] = useState(1);
+  const offset= 0
+  const elementsPerPage = 3 
+  const totalElementsCount = users.length
+
   const onChange = (page) => {
-    console.log(page);
     setCurrent(page);
     const o = (page-1) * elementsPerPage;
     setCurrentPageElements(users.slice(o, o + elementsPerPage))
@@ -63,7 +59,7 @@ function UserList({ users, setUsers }) {
       <Pagination
         current={current}
         onChange={onChange}
-        defaultPageSize={2}
+        defaultPageSize={3}
         total={totalElementsCount}
       ></Pagination>
     </>
@@ -72,11 +68,6 @@ function UserList({ users, setUsers }) {
 
 function Users() {
   const [users, setUsers] = useState([]);
-  // const [current, setCurrent] = useState(3);
-  // const onChange = (page) => {
-  //   console.log(page);
-  //   setCurrent(page);
-  // };
 
   useEffect(() => {
     async function fetchPersons() {
@@ -100,9 +91,7 @@ function Users() {
         </AllowedTo>
         <Col span={10}>
           <Card title="Buscar" bordered={false} hoverable>
-            {/* <Pagination current={current} onChange={onChange}> */}
             <UserList users={users} setUsers={setUsers}></UserList>
-            {/* </Pagination> */}
           </Card>
         </Col>
       </Row>

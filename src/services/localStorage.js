@@ -1,12 +1,12 @@
 import lscache from "lscache";
 
 // enable warnings
-if (process.env.NODE_ENV !== "production") {
+if (process.env.REACT_APP_ENV !== "production") {
 	lscache.enableWarnings(true);
 }
 
-const tokenKey = "__FirstApp__";
-const duration = 86400000; // 24hs in milliseconds
+const tokenKey = process.env.REACT_APP_TOKEN_KEY;
+const duration = process.env.REACT_APP_DURATION; // 24hs in milliseconds
 const localStorage = {};
 
 // Set token

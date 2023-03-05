@@ -1,6 +1,5 @@
 import axios from "axios";
 import React from "react";
-import { apiBaseUrl, apiTimeout } from "../constants";
 import { Navigate } from "react-router-dom";
 import localStorage from "./localStorage";
 
@@ -12,9 +11,10 @@ function errorMessage(err) {
 	return err;
 }
 
+
 const api = axios.create({
-	baseURL: apiBaseUrl,
-	timeout: apiTimeout,
+	baseURL: process.env.REACT_APP_BASE_URL,
+	timeout: process.env.REACT_APP_API_TIMEOUT,
 	headers: {
 		Accept: "application/json",
 		"Content-Type": "application/json",

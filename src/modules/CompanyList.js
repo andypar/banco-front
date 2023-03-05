@@ -3,7 +3,7 @@ import "dayjs/locale/es";
 import Company from "../components/Company";
 import RegisterCompany from "../components/RegisterCompany";
 import userService from "../services/users";
-import { Card, Col, Row, Typography, Input } from "antd";
+import { Card, Col, Row, Typography, Input, Pagination } from "antd";
 import AllowedTo from "../components/AllowedTo";
 
 
@@ -33,12 +33,36 @@ function SearchFeature({ setCompanies }) {
 }
 
 function CompanyList({ companies, setCompanies }) {
+
+  const [currentPageElements, setCurrentPageElements] = useState([]);
+  const [current, setCurrent] = useState(1);
+  const offset= 0
+  const elementsPerPage = 3 
+  const totalElementsCount = companies.length
+
+  const onChange = (page) => {
+    setCurrent(page);
+    const o = (page-1) * elementsPerPage;
+    setCurrentPageElements(companies.slice(o, o + elementsPerPage))
+  };
+
+  useEffect(() => {
+    setCurrentPageElements(companies.slice(offset, offset + elementsPerPage));
+  }, [companies]);
+
   return (
     <>
      <SearchFeature setCompanies={setCompanies}></SearchFeature>
-      {companies.map((x) => (
+      {currentPageElements.map((x) => (
         <Company key={x._id} data={x} setCompanyList={setCompanies}></Company>
       ))}
+            <br></br>
+      <Pagination
+        current={current}
+        onChange={onChange}
+        defaultPageSize={3}
+        total={totalElementsCount}
+      ></Pagination>
     </>
   );
 }
