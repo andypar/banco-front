@@ -13,7 +13,7 @@ function App() {
 
   return (
     <UserContext.Provider value={roleProvider}>
-      <Router />;
+      <Router />
     </UserContext.Provider>
   );
 }

@@ -151,7 +151,7 @@ function User({ data, setUsersList }) {
             personType: userInfo?.personType?.description,
           }}
         >
-          {msg ? <Alert type="error" message={msg} banner /> : null}
+          {msg ? <Alert closable type="error" message={msg} banner /> : null}
           <Form.Item
             name="firstName"
             label="Nombre/s"

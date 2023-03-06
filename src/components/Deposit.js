@@ -29,7 +29,7 @@ const CreateDeposit = ({ open, onCreate, onCancel, msg }) => {
         }}
       >
         <Form form={form} layout="vertical" name="form-create">
-          {msg ? <Alert type="error" message={msg} banner /> : null}
+          {msg ? <Alert closable type="error" message={msg} banner /> : null}
           <Form.Item
             name="balance"
             label="Monto a Depositar"

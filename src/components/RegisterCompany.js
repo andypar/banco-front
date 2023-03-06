@@ -34,7 +34,7 @@ const RegisterCompany = ({ open, onCreate, onCancel, msg }) => {
             .validateFields()
             .then((values) => {
               onCreate(values);
-              form.resetFields();
+              // form.resetFields();
             })
             .catch((info) => {
               console.log("Validate Failed:", info);
@@ -51,7 +51,7 @@ const RegisterCompany = ({ open, onCreate, onCancel, msg }) => {
             personType: "Física",
           }}
         >
-          {msg ? <Alert type="error" message={msg} banner /> : null}
+          {msg ? <Alert closable type="error" message={msg} banner /> : null}
           <Form.Item
             name="firstName"
             label="Razón Social"

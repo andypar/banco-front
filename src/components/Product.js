@@ -153,7 +153,7 @@ function Product({
             });
         }}
       >
-        {msg ? <Alert type="error" message={msg} banner /> : null}
+        {msg ? <Alert closable type="error" message={msg} banner /> : null}
         <Form
           form={form}
           layout="vertical"

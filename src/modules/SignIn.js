@@ -157,7 +157,7 @@ function SignIn() {
         </Content>
       </Layout>
     </>
-  );
+  )
 }
 
 export default SignIn;

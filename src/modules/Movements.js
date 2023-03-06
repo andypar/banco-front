@@ -152,7 +152,7 @@ function Movements() {
   }
 
   function MovementDelete({ movementId, productId }) {
-    const text = "Segur@ que quieres borrar el producto?";
+    const text = "Segur@ que quieres borrar el movimiento?";
     const confirm = () => eliminarMovimiento();
 
     const eliminarMovimiento = async () => {
