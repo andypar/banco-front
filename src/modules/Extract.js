@@ -13,11 +13,13 @@ import {
   Button,
   Card,
   Descriptions,
+  Alert,
+  Space,
 } from "antd";
 import { DollarOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 function Extract() {
   const { id, userid } = useParams();
@@ -26,6 +28,7 @@ function Extract() {
   const [balanceInfo, setBalanceInfo] = useState([]);
   const [userInfo, setUserInfo] = useState({});
   const [productInfo, setProducts] = useState([]);
+  const [date, setDate] = useState(false);
 
   const disabledDate = (current) => {
     return current && current > dayjs().endOf("month");
@@ -38,6 +41,7 @@ function Extract() {
     const dateTo = dayjs(dayjs(date, "MM-YYYY").endOf("month")).format(
       "YYYY-MM-DD"
     );
+    setDate(dateString);
 
     try {
       const extractInfo = await movementService.getProductMovementsDates(
@@ -130,7 +134,6 @@ function Extract() {
             <Col span={20}>
               <Card bordered={false}>
                 <Descriptions>
-                  
                   {userInfo?.personType?.description === "Física" ? (
                     <Descriptions.Item label="Nombre">
                       {userInfo?.name?.firstName +
@@ -269,10 +272,13 @@ function Extract() {
   }
 
   function NoExtractInfo() {
-    if (extractInfo.length === 0) {
+    if (extractInfo.length === 0 && date) {
       return (
         <p>
-          <Text type="danger">No hay resumen para el mes seleccionado</Text>
+          {/* <Text type="danger">No hay resumen para el mes seleccionado</Text> */}
+          <Space direction="horizontal" style={{ width: '50%' }}>
+          <Alert closable type="error" message="No hay resumen para el mes seleccionado" banner /> 
+          </Space>
         </p>
       );
     }
@@ -288,12 +294,15 @@ function Extract() {
     <>
       <Title level={4}>Resumen</Title>
       <Title level={5}>Elija el mes del resumen</Title>
-      <DatePicker
-        picker="month"
-        onChange={onChange}
-        placeholder="Mes"
-        disabledDate={disabledDate}
-      />
+      <Space direction="vertical">
+        <DatePicker
+          picker="month"
+          onChange={onChange}
+          placeholder="Mes"
+          disabledDate={disabledDate}
+        />
+        {!date ? <Alert closable type="warning" message="Seleccione el Mes" banner /> : null}
+      </Space>
       <NoExtractInfo></NoExtractInfo>
       <br></br>
       <br></br>
