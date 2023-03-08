@@ -4,7 +4,7 @@
 
 `npm i`
 
-### 2) Generar nuevo archivo .env con las siguientes variables de ambiente:
+### 2) Generar nuevo archivo .env con las siguientes variables de ambiente (ejemplos):
 
 	REACT_APP_ENV = "DEV"
 	REACT_APP_API_TIMEOUT = 15000
